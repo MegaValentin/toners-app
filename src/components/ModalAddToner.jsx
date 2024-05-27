@@ -4,7 +4,7 @@ const AddTonerModal = () => {
   return (
     
     
-    <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <div className="bg-white p-8 rounded-lg  w-full max-w-md">
       <h2 className='text-center text-2xl font-bold mb-6'>AGREGAR TONER</h2>
       
       <form className="space-y-5">
