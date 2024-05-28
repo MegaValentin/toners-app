@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import EditTonerModal from './EditTonerModal';
 
 
-const TonersTable = ( { toner, setToner } ) => {
+const TonersTable = () => {
   const [toners, setToners] = useState([]);
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [selectedToner, setSelectedToner] = useState(null);
   
   const fetchToners = async () => {
     try {
@@ -14,11 +17,23 @@ const TonersTable = ( { toner, setToner } ) => {
     }
   };
 
+  const handleEdit = (toner) => {
+    console.log(toner);
+    setSelectedToner(toner);
+    setEditModalIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setEditModalIsOpen(false);
+    setSelectedToner(null);
+    fetchToners();
+  };
+
   useEffect(() => {
     fetchToners();
   }, []);
 
-  
+ 
   const handleDelete = async (id) => {
     try {
      
@@ -58,7 +73,7 @@ const TonersTable = ( { toner, setToner } ) => {
                 <td className="px-4 py-2 text-gray-900">{toner.cantidad}</td>
                 <td className="px-4 py-2 text-gray-900">
                   <button
-                    onClick={() => handleEdit(toner._id)}
+                    onClick={() => handleEdit(toner)}
                     className="text-yellow-500 hover:text-yellow-700 mr-2"
                   >
                     <svg
@@ -109,7 +124,13 @@ const TonersTable = ( { toner, setToner } ) => {
           </tbody>
         </table>
       </div>
-     
+      <EditTonerModal
+        toner={selectedToner}
+        isOpen={editModalIsOpen}
+        onClose={handleCloseModal}
+        onSave={fetchToners}
+      />
+
     </div>
   );
 };
