@@ -5,6 +5,7 @@ import AddTonerModal from "../components/ModalAddToner";
 
 const Toners = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [toner, setToner] = useState([]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -14,12 +15,17 @@ const Toners = () => {
     setModalIsOpen(false);
   };
 
+  const handleTonerAdded = (newToner) => {
+    setToner((prevToners) => [...prevToners, newToner]);
+    
+  };
+
   return (
     <div>
       <h1 className="text-3xl font-medium whitespace-nowrap text-center mb-6">
         TONERS
       </h1>
-      <TonersTable />
+      <TonersTable toners={toner} setToners={setToner} />
       <div className="text-center mt-6">
         <button
           onClick={openModal}
@@ -29,6 +35,7 @@ const Toners = () => {
         </button>
       </div>
       <Modal
+      
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Agregar Toner"
@@ -56,7 +63,7 @@ const Toners = () => {
             <path d="M9 9l6 6m0 -6l-6 6" />
           </svg>
         </button>
-        <AddTonerModal />
+        <AddTonerModal onTonerAdded={handleTonerAdded} onClose={closeModal} />
       </Modal>
     </div>
   );
