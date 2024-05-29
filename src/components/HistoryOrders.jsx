@@ -5,6 +5,7 @@ const HistoryOrders = () => {
     const [orders, setOrders] = useState([]);
 
     const fetchOrders = async () => {
+        
         try {
             const response = await axios.get("http://localhost:3500/api/orders");
             setOrders(response.data);
@@ -18,8 +19,8 @@ const HistoryOrders = () => {
     }, []);
 
     return (
-    <div className="flex justify-center w-[62rem] bg-transparent">
-      <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg size-4/5 max-h-96">
+    <div className="flex justify-center w-[40em] h-[25em]">
+      <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg ">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-sky-900 text-gray-400">
             <tr className="text-white">
