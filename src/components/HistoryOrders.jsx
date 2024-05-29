@@ -1,0 +1,61 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const HistoryOrders = () => {
+    const [orders, setOrders] = useState([]);
+
+    const fetchOrders = async () => {
+        try {
+            const response = await axios.get("http://localhost:3500/api/orders");
+            setOrders(response.data);
+        } catch (error) {
+            console.error("Error fetching toners:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchOrders();
+    }, []);
+
+    return (
+    <div className="flex justify-center w-[62rem] bg-transparent">
+      <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg size-4/5 max-h-96">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-sky-900 text-gray-400">
+            <tr className="text-white">
+              <th scope="col" className="px-6 py-3">
+                <div className="flex items-center">Area</div>
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Toner
+              </th>
+              <th scope="col" className="px-6 py-3">
+                <div className="flex items-center">Cantidad</div>
+              </th>
+              <th scope="col" className="px-6 py-3">
+                <div className="flex items-center">Fecha</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((orders) => (
+              <tr key={orders._id} className="border-b bg-white  text-black">
+                <td className="px-4 py-2 text-gray-900">{orders.areaName}</td>
+                <td className="px-6 py-4 font-medium whitespace-nowrap ">
+                  {orders.tonerName}
+                </td>
+                <td className="px-4 py-2 text-gray-900">{orders.cantidad}</td>
+                <td className="px-4 py-2 text-gray-900">{orders.fecha}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+
+    </div>
+    )
+
+}
+
+export default HistoryOrders;
