@@ -21,10 +21,10 @@ const Toners = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-medium whitespace-nowrap text-center mb-6">
+    <div className="bg-white p-8 rounded-lg w-full  mt-10">
+      <h2 className="text-center text-2xl font-bold mb-6">
         TONERS
-      </h1>
+      </h2>
       <TonersTable toners={toner} setToners={setToner} />
       <div className="text-center mt-6">
         <button

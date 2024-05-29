@@ -48,10 +48,11 @@ const TonersTable = () => {
   };
 
   return (
+    
     <div className="flex justify-center ">
       <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg size-4/5 max-h-96">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-sky-900 text-gray-400">
+        <table className="w-full text-sm text-left rtl:text-right  text-gray-400">
+          <thead className="text-xs  uppercase bg-sky-900 ">
             <tr className="text-white">
               <th scope="col" className="px-6 py-3">
                 Toner
