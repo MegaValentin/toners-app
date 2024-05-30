@@ -17,7 +17,7 @@ const Orders = () => {
 
 
   return (
-    <div className="bg-white p-8 rounded-lg w-full mt-10 ">  
+    <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">  
       <h2 className="text-center text-2xl font-bold mb-6">AGREGAR ORDEN</h2>
       <OrderForm />
       <div className=" ml-1 mt-6">

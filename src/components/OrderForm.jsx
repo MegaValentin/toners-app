@@ -52,87 +52,89 @@ const OrderForm = () => {
   };
 
   return (
-    <div className="flex justify-center ">
-
-    <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg size-4/5 max-h-96">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full text-sm text-left rtl:text-right  text-gray-400 " 
-      >
-        <div className="mb-5">
-          <label
-            htmlFor="toner"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Toner
-          </label>
-          <select
-            id="toner"
-            value={selectedToner}
-            onChange={(e) => setSelectedToner(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            required
-          >
-            <option value="" disabled>
-              Seleccione un toner
-            </option>
-            {toners.map((toner) => (
-              <option key={toner._id} value={toner._id}>
-                {toner.toner}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-5">
-          <label
-            htmlFor="cantidad"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Cantidad
-          </label>
-          <input
-            type="number"
-            id="cantidad"
-            value={cantidad}
-            onChange={(e) => setCantidad(Number(e.target.value))}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Cantidad"
-            min="1"
-            required
-          />
-        </div>
-        <div className="mb-5">
-          <label
-            htmlFor="area"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Área
-          </label>
-          <select
-            id="area"
-            value={selectedArea}
-            onChange={(e) => setSelectedArea(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            required
-          >
-            <option value="" disabled>
-              Seleccione un área
-            </option>
-            {areas.map((area) => (
-              <option key={area._id} value={area._id}>
-                {area.area}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+    <div className="flex justify-center">
+      <div className="bg-sky-900 p-8 relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg size-4/5 max-h-96 flex justify-center ">
+        <form
+          onSubmit={handleSubmit}
+          className="w-11/12 text-sm text-left rtl:text-right  text-gray-400 mb-10 "
         >
-          Agregar Orden
-        </button>
-      </form>
-    </div>
+          <div className="mb-5 uppercase">
+            <label
+              htmlFor="toner"
+              className="block text-sm font-medium text-white"
+            >
+              Toner
+            </label>
+            <select
+              id="toner"
+              value={selectedToner}
+              onChange={(e) => setSelectedToner(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            >
+              <option value="" disabled>
+                Seleccione un toner
+              </option>
+              {toners.map((toner) => (
+                <option key={toner._id} value={toner._id}>
+                  {toner.toner}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-5">
+            <label
+              htmlFor="cantidad"
+              className="block text-sm font-medium text-white uppercase"
+            >
+              Cantidad
+            </label>
+            <input
+              type="number"
+              id="cantidad"
+              value={cantidad}
+              onChange={(e) => setCantidad(Number(e.target.value))}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              placeholder="Cantidad"
+              min="1"
+              required
+            />
+          </div>
+          <div className="mb-5">
+            <label
+              htmlFor="area"
+              className="block text-sm font-medium text-white uppercase"
+            >
+              Área
+            </label>
+            <select
+              id="area"
+              value={selectedArea}
+              onChange={(e) => setSelectedArea(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            >
+              <option value="" disabled>
+                Seleccione un área
+              </option>
+              {areas.map((area) => (
+                <option key={area._id} value={area._id}>
+                  {area.area}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex justify-center">
+          <button
+            type="submit"
+            className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
+            Agregar Orden
+          </button>
+
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
