@@ -4,17 +4,10 @@ import Home from "./pages/Home.jsx";
 import React, { useState } from "react";
 import Toners from "./pages/Toners.jsx";
 import Orders from "./pages/Orders.jsx";
+import Areas from "./pages/Areas.jsx";
 import logoMuni from "./assets/logoMuni.svg";
 function App() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
+  
   return (
     
       <div className="flex h-screen">
@@ -34,12 +27,19 @@ function App() {
           >
             Stock de Toners
           </Link>
+          <Link
+            to="/areas"
+            className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2  lg:py-2 md:px-4 hover:bg-gray-300"
+          >
+            Gestion de Areas
+          </Link>
         </nav>
         <div className="flex-1 p-6 bg-gray-100">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/toners" element={<Toners />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/areas" element={<Areas />} />
           </Routes>
         </div>
         
