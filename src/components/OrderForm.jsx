@@ -7,6 +7,7 @@ const OrderForm = () => {
   const [selectedArea, setSelectedArea] = useState("");
   const [toners, setToners] = useState([]);
   const [areas, setAreas] = useState([]);
+  const [confirmationMessage, setConfirmationMessage] = useState("")
 
   useEffect(() => {
     const fetchTonersAndAreas = async () => {
@@ -42,6 +43,10 @@ const OrderForm = () => {
       setCantidad(1);
       setSelectedToner("");
       setSelectedArea("");
+
+      setConfirmationMessage("Orden agregada exitosamente")
+      setTimeout(() => setConfirmationMessage(""), 3000)
+
     } catch (error) {
       console.error("Error adding order:", error);
       alert(
@@ -134,6 +139,12 @@ const OrderForm = () => {
           </button>
 
           </div>
+
+          {confirmationMessage && (
+            <div className="mt-4 text-center text-green-500 font-semibold">
+              {confirmationMessage}
+            </div>
+          )}
         </form>
       </div>
     </div>
