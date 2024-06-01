@@ -1,9 +1,10 @@
 import React from 'react';
+import LowToners from '../components/LowToners';
 
 const Home = () => (
-  <div>
-    <h1 className="text-3xl font-bold mb-4">Area de Sistemas</h1>
+  <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
     
+    <LowToners/>
   </div>
 );
 

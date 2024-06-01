@@ -58,6 +58,29 @@ const OrderForm = () => {
           onSubmit={handleSubmit}
           className="w-11/12 text-sm text-left rtl:text-right  text-gray-400 mb-10 "
         >
+          <div className="mb-5">
+            <label
+              htmlFor="area"
+              className="block text-sm font-medium text-white uppercase "
+            >
+              Área
+            </label>
+            <select
+              id="area"
+              value={selectedArea}
+              onChange={(e) => setSelectedArea(e.target.value)}
+              className="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            >
+              <option value="" disabled>
+                Seleccione un área
+              </option>
+              {areas.map((area) => (
+                <option key={area._id} value={area._id}>
+                  {area.area}
+                </option>
+              ))}
+            </select>
           <div className="mb-5 uppercase">
             <label
               htmlFor="toner"
@@ -100,29 +123,7 @@ const OrderForm = () => {
               required
             />
           </div>
-          <div className="mb-5">
-            <label
-              htmlFor="area"
-              className="block text-sm font-medium text-white uppercase"
-            >
-              Área
-            </label>
-            <select
-              id="area"
-              value={selectedArea}
-              onChange={(e) => setSelectedArea(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              required
-            >
-              <option value="" disabled>
-                Seleccione un área
-              </option>
-              {areas.map((area) => (
-                <option key={area._id} value={area._id}>
-                  {area.area}
-                </option>
-              ))}
-            </select>
+          
           </div>
           <div className="flex justify-center">
           <button
