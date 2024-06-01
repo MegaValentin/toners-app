@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ButtonClose from './ButtonCloese';
 
 const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
     const [tonerName, setTonerName] = useState('');
@@ -34,27 +35,7 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
 
     return (
         <div className="modal">
-            <button
-                onClick={onClose}
-                className="mt-4 text-gray-600 hover:text-red-500"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="icon icon-tabler icons-tabler-outline icon-tabler-square-x"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" />
-                    <path d="M9 9l6 6m0 -6l-6 6" />
-                </svg>
-            </button>
+            <ButtonClose onClick={onClose} />
             <div className="bg-white p-8 rounded-lg w-full max-w-md">
                 <h2 className="text-center text-2xl font-bold mb-6">EDITAR TONER</h2>
                 <form className="space-y-5" onSubmit={handleSubmit}>
