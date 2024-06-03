@@ -29,7 +29,7 @@ const RecalledToner = () => {
               <h3 className='mb-3 text-sm md:text-base lg:text-lg font-normal text-gray-700 '>Toners:</h3>
               <ul>
                 {area.toners.map((toner) => (
-                  <li key={toner.toner}>
+                  <li key={toner.toner} className=''>
                     <span className='text-sm md:text-base lg:text-lg'>{toner.tonerName}</span>: {toner.cantidad}
                   </li>
                 ))}
