@@ -6,6 +6,7 @@ import Toners from "./pages/Toners.jsx";
 import Orders from "./pages/Orders.jsx";
 import Areas from "./pages/Areas.jsx";
 import logoMuni from "./assets/logoMuni.svg";
+import ReStock from "./pages/ReStock.jsx";
 function App() {
   
   return (
@@ -22,16 +23,22 @@ function App() {
             Solicitar Toner
           </Link>
           <Link
+            to="/areas"
+            className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2  lg:py-2 md:px-4 hover:bg-gray-300"
+          >
+            Gestion de Areas
+          </Link>
+          <Link
             to="/toners"
             className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2  lg:py-2 md:px-4 hover:bg-gray-300"
           >
             Stock de Toners
           </Link>
           <Link
-            to="/areas"
+            to="/restock"
             className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2  lg:py-2 md:px-4 hover:bg-gray-300"
           >
-            Gestion de Areas
+            Restock de Toners
           </Link>
         </nav>
         <div className="flex-1 p-6 bg-gray-100">
@@ -40,6 +47,7 @@ function App() {
             <Route path="/toners" element={<Toners />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/areas" element={<Areas />} />
+            <Route path="/restock" element={<ReStock />} />
           </Routes>
         </div>
         
