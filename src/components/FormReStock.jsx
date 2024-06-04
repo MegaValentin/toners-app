@@ -56,7 +56,7 @@ const RestockForm = () => {
       <div className="bg-sky-900 p-8 size-4/5 max-h-96 sm:rounded-lg flex justify-center">
 
         <form onSubmit={handleSubmit} className="w-11/12 text-sm text-left rtl:text-right  text-gray-400 mb-10 ">
-          <div className='relative overflow-x-auto overflow-y-auto shadow-md h-full mb-3'>
+          <div className='relative overflow-x-auto overflow-y-auto h-full mb-3'>
             {toners.map((toner) => (
               <div key={toner._id} className="mb-5">
                 <label className="block text-sm font-medium text-white uppercase">
@@ -73,12 +73,15 @@ const RestockForm = () => {
             ))}
 
           </div>
+          <div className="flex justify-center">
+
           <button
             type="submit"
-            className="w-full bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           >
             Completar Restock
           </button>
+          </div>
           {confirmationMessage && (
             <div className="mt-4 text-center text-green-500 font-semibold">
               {confirmationMessage}

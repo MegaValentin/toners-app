@@ -19,15 +19,16 @@ const LowToners = () => {
   }, []);
 
   return (
-    <div className="bg-transparent p-8 rounded-lg w-full mt-10">
+    <div>
+
       {toners.length === 0 ? (
         <OkMessage />
       ) : (
-        toners.map((toner) => (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+       { toners.map((toner) => (
             <div
               key={toner._id}
-              className="max-w-sm p-6 bg-red-500 border border-red-700 rounded-lg shadow "
+              className="max-w-sm p-6 bg-red-500 border border-red-900 rounded-lg shadow "
             >
               <h2 className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
                 {toner.toner}
@@ -37,9 +38,10 @@ const LowToners = () => {
                 Cantidad: {toner.cantidad}
               </p>
             </div>
+        ))}
           </div>
-        ))
       )}
+    
     </div>
   );
 };
