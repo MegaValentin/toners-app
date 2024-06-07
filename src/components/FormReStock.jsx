@@ -53,10 +53,10 @@ const RestockForm = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="bg-sky-900 p-8 size-4/5 max-h-96 sm:rounded-lg flex justify-center">
+      <div className="bg-sky-900 p-8 size-4/5  sm:rounded-lg flex justify-center">
 
         <form onSubmit={handleSubmit} className="w-11/12 text-sm text-left rtl:text-right  text-gray-400 mb-10 ">
-          <div className='relative overflow-x-auto overflow-y-auto h-full mb-3'>
+          <div className='relative  h-full mb-3'>
             {toners.map((toner) => (
               <div key={toner._id} className="mb-5">
                 <label className="block text-sm font-medium text-white uppercase">

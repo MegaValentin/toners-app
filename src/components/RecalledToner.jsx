@@ -21,7 +21,7 @@ const RecalledToner = () => {
     
     return(
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 overflow-x-auto overflow-y-auto h-96'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6  h-96'>
         {areas.map((area) => (
           <div key={area._id} className=' max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow '>
             <h2 className='mb-2 text-xl md:text-2xl lg:text-1xl font-bold tracking-tight text-gray-900 text-center uppercase'>{area.areaName}</h2>
