@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import TonersTable from './TonerTable';
+import PedidoRecomendado from './PedidoRecomendado';
 const UploadExcel = () => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -56,7 +56,7 @@ const UploadExcel = () => {
   if (dataExists) {
     return (
       <div>
-        <TonersTable/>
+        <PedidoRecomendado/>
       </div>
     );
   }
