@@ -3,8 +3,11 @@ import TonersTable from "../components/TonerTable";
 import Modal from "react-modal";
 import AddTonerModal from "../components/ModalAddToner";
 import ButtonClose from "../components/ButtonCloese";
+import StockToner from "../components/StockTonerCompleto";
+
 const Toners = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [uploadExcelModalIsOpen, setUploadExcelModalIsOpen] = useState(false);
   const [toner, setToner] = useState([]);
 
   const openModal = () => {
@@ -15,9 +18,17 @@ const Toners = () => {
     setModalIsOpen(false);
   };
 
+  const openUploadExcelModal = () => {
+    setUploadExcelModalIsOpen(true);
+  };
+
+  const closeUploadExcelModal = () => {
+    setUploadExcelModalIsOpen(false);
+  };
+
   const handleTonerAdded = (newToner) => {
     setToner((prevToners) => [...prevToners, newToner]);
-    
+
   };
 
   return (
@@ -26,24 +37,48 @@ const Toners = () => {
         TONERS
       </h2>
       <TonersTable toners={toner} setToners={setToner} />
-      <div className="text-center mt-6">
-        <button
-          onClick={openModal}
-          className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-        >
-          Agregar Toner
-        </button>
+      <div>
+        <div className="text-center mt-6">
+          <button
+            onClick={openModal}
+            className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          >
+            Agregar Toner
+          </button>
+        </div>
+        <div className=" ml-1">
+          <button
+            onClick={openUploadExcelModal}
+            className="text-gray-500 hover:text-gray-700 "
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
+          </button>
+        </div>
       </div>
+
       <Modal
-      
+
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Agregar Toner"
         className="modal"
         overlayClassName="overlay"
       >
-       <ButtonClose onClick={closeModal} />
+        <ButtonClose onClick={closeModal} />
         <AddTonerModal onTonerAdded={handleTonerAdded} onClose={closeModal} />
+      </Modal>
+
+      <Modal
+
+        isOpen={uploadExcelModalIsOpen}
+        onRequestClose={closeUploadExcelModal}
+        contentLabel="Agregar Toner"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <ButtonClose onClick={closeUploadExcelModal} />
+        <h2>IMPORTAR TONERS</h2>
+        <StockToner onTonerAdded={handleTonerAdded} onClose={closeUploadExcelModal} />
       </Modal>
     </div>
   );
