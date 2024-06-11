@@ -26,3 +26,15 @@
     background-color: rgba(0, 0, 0, 0.75);
     z-index: 1000;
   }
+
+  .table-container {
+    max-height: 400px; 
+    overflow-y: auto;
+  }
+  
+  .table-fixed-header thead {
+    position: sticky;
+    top: 0;
+    background-color: #0284c7; 
+    z-index: 1;
+  }

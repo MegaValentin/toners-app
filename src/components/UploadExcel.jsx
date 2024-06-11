@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PedidoRecomendado from './PedidoRecomendado';
+import SendOrderButton from './SendOrderButton';
 const UploadExcel = () => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -57,6 +58,7 @@ const UploadExcel = () => {
     return (
       <div>
         <PedidoRecomendado/>
+        <SendOrderButton />
       </div>
     );
   }

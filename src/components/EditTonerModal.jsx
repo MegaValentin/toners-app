@@ -5,14 +5,17 @@ import ButtonClose from './ButtonCloese';
 const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
     const [tonerName, setTonerName] = useState('');
     const [cantidad, setCantidad] = useState('');
+    const [marcaName, setMarcaName] = useState('')
 
     useEffect(() => {
         if (toner) {
-            setTonerName(toner.toner || '');
-            setCantidad(toner.cantidad || '');
+            setMarcaName(toner.marca || '')
+            setTonerName(toner.toner || '')
+            setCantidad(toner.cantidad || '')
         } else {
-            setTonerName('');
-            setCantidad('');
+            setMarcaName('')
+            setTonerName('')
+            setCantidad('')
         }
     }, [toner]);
 
@@ -21,6 +24,7 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
         e.preventDefault();
         try {
             await axios.put(`http://localhost:3500/api/toner/${toner._id}`, {
+                marca: marcaName,
                 toner: tonerName,
                 cantidad: parseInt(cantidad, 10),
             });
@@ -39,6 +43,17 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
             <div className="bg-white p-8 rounded-lg w-full max-w-md">
                 <h2 className="text-center text-2xl font-bold mb-6">EDITAR TONER</h2>
                 <form className="space-y-5" onSubmit={handleSubmit}>
+                <div className="mb-5">
+                        <input
+                            type="text"
+                            id="marcaName"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Nombre del toner"
+                            value={marcaName}
+                            onChange={(e) => setMarcaName(e.target.value)}
+                            required
+                        />
+                    </div>
                     <div className="mb-5">
                         <input
                             type="text"

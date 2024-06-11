@@ -50,10 +50,15 @@ const TonersTable = () => {
   return (
     
     <div className="flex justify-center ">
-      <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg size-4/5 max-h-96">
-        <table className="w-full text-sm text-left rtl:text-right  text-gray-400">
+      <div className="w-full">
+
+      <div className="table-container overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-400 table-fixed-header">
           <thead className="text-xs  uppercase bg-sky-900 ">
             <tr className="text-white">
+            <th scope="col" className="px-6 py-3">
+                Marca
+              </th>
               <th scope="col" className="px-6 py-3">
                 Toner
               </th>
@@ -68,6 +73,9 @@ const TonersTable = () => {
           <tbody>
             {toners.map((toner) => (
               <tr key={toner._id} className="border-b bg-white  text-black">
+                <td className="px-6 py-4 font-medium whitespace-nowrap ">
+                  {toner.marca}
+                </td>
                 <td className="px-6 py-4 font-medium whitespace-nowrap ">
                   {toner.toner}
                 </td>
@@ -124,6 +132,7 @@ const TonersTable = () => {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
       <EditTonerModal
         toner={selectedToner}

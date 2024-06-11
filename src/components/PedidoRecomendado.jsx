@@ -20,40 +20,35 @@ const PedidoRecomendado = () => {
   }, []);
 
   return (
-    <div className="flex justify-center ">
-      <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg size-4/5 max-h-96">
-        <table className="w-full text-sm text-left rtl:text-right  text-gray-400">
-          <thead className="text-xs  uppercase bg-sky-900 ">
-            <tr className="text-white">
-              <th scope="col" className="px-6 py-3">
-                Toner
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <div className="flex items-center">Stock Ideal</div>
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <div className="flex items-center">Stock Actual</div>
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <div className="flex items-center">Pedido Recomendado</div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {toners.map((toner) => (
-              <tr key={toner._id} className="border-b bg-white  text-black">
-                <td className="px-6 py-4 font-medium whitespace-nowrap ">
-                  {toner.toner}
-                </td>
-                <td className="px-4 py-2 text-gray-900">{toner.ideal}</td>
-                <td className="px-4 py-2 text-gray-900">{toner.current}</td>
-                <td className="px-4 py-2 text-gray-900">{toner.needed}</td>
+    <div className="flex justify-center">
+      <div className="w-full">
+        <div className="table-container overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-400 table-fixed-header">
+            <thead className="text-xs uppercase bg-sky-900">
+              <tr className="text-white">
+                <th scope="col" className="px-6 py-3">Marca</th>
+                <th scope="col" className="px-6 py-3">Toner</th>
+                <th scope="col" className="px-6 py-3">Stock Ideal</th>
+                <th scope="col" className="px-6 py-3">Stock Actual</th>
+                 <th scope="col" className="px-6 py-3">Pedido Recomendado</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-xs uppercase bg-white">
+              {toners.map((toner) => (
+                <tr key={toner._id} className="border-b">
+                  <td className="px-6 py-4 font-medium whitespace-nowrap ">{toner.marca}</td>
+                  <td className="px-4 py-2 text-gray-900">{toner.toner}</td>
+                  <td className="px-4 py-2 text-gray-900">{toner.ideal}</td>
+                  <td className="px-4 py-2 text-gray-900">{toner.current}</td>
+                  <td className="px-4 py-2 text-gray-900">{toner.needed}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+    
   );
 };
 

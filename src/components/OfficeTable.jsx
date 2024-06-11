@@ -35,9 +35,11 @@ const OfficeTable = () => {
 
   return (
     
-    <div className="flex justify-center w-[40em] h-[25em]">
-      <div className="relative overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg ">
-        <table className="w-full text-sm text-left rtl:text-right ">
+    <div className="flex justify-center">
+      <div className="w-full">
+
+      <div className="table-container overflow-x-auto shadow-md sm:rounded-lg ">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-400 table-fixed-header ">
           <thead className="text-xs  uppercase bg-sky-900 ">
             <tr className="text-white">
               <th scope="col" className="px-6 py-3">
@@ -84,6 +86,7 @@ const OfficeTable = () => {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
       
 
