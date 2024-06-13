@@ -58,7 +58,10 @@ const UploadExcel = () => {
     return (
       <div>
         <PedidoRecomendado/>
+        <div className="text-center mt-6">
+
         <SendOrderButton />
+        </div>
       </div>
     );
   }
