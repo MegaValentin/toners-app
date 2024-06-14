@@ -1,10 +1,12 @@
 import React, { useState} from 'react';
 import axios from 'axios';
 
+
 const AddOffices = ({ onOfficeAdded, onClose }) => {
-    const [file, setFile] = useState(null);
-    const [isUploading, setIsUploading] = useState(false);
-    const [uploadError, setUploadError] = useState(null);
+  const [file, setFile] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -23,7 +25,7 @@ const AddOffices = ({ onOfficeAdded, onClose }) => {
         setUploadError(null);
 
         try {
-            const response = await axios.post('http://localhost:3500/api/addalloffice', formData, {
+            const response = await axios.post(`${apiUrl}/addalloffice`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

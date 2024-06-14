@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const HistoryOrders = () => {
-    const [orders, setOrders] = useState([]);
 
+const HistoryOrders = () => {
+  const [orders, setOrders] = useState([]);
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  
     const fetchOrders = async () => {
         
         try {
-            const response = await axios.get("http://localhost:3500/api/orders");
+            const response = await axios.get(`${apiUrl}/orders`);
             setOrders(response.data);
         } catch (error) {
             console.error("Error fetching toners:", error);

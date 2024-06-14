@@ -1,10 +1,12 @@
 import React from 'react';
 import axios from 'axios';
 
+
 const SendOrderButton = () => {
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
     const handleSendOrder = async () => {
         try {
-          const response = await axios.post('http://localhost:3500/api/sendorder');
+          const response = await axios.post(`${apiUrl}/sendorder`);
           alert(response.data);
         } catch (error) {
           console.error('Error sending order:', error);

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 const RestockForm = () => {
   const [toners, setToners] = useState([]);
   const [restockData, setRestockData] = useState({});
   const [confirmationMessage, setConfirmationMessage] = useState("")
-
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  
   useEffect(() => {
     const fetchToners = async () => {
       try {
-        const response = await axios.get('http://localhost:3500/api/toners');
+        const response = await axios.get(`${apiUrl}/toners`);
         setToners(response.data);
         setRestockData(response.data.reduce((acc, toner) => {
           acc[toner._id] = 0; // Inicializa la cantidad de restock a 0 para cada tóner
@@ -39,7 +41,7 @@ const RestockForm = () => {
     }));
 
     try {
-      const response = await axios.post('http://localhost:3500/api/restockall', { restocks });
+      const response = await axios.post(`${apiUrl}/restockall`, { restocks });
       console.log(response);
 
       setConfirmationMessage("Restock guardado exitosamente")

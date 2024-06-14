@@ -7,10 +7,11 @@ const TonersTable = () => {
   const [toners, setToners] = useState([]);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [selectedToner, setSelectedToner] = useState(null);
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   
   const fetchToners = async () => {
     try {
-      const response = await axios.get("http://localhost:3500/api/toners");
+      const response = await axios.get(`${apiUrl}/toners`);
       setToners(response.data);
     } catch (error) {
       console.error("Error fetching toners:", error);
@@ -37,7 +38,7 @@ const TonersTable = () => {
   const handleDelete = async (id) => {
     try {
      
-      await axios.delete(`http://localhost:3500/api/toner/${id}`);
+      await axios.delete(`${apiUrl}/toner/${id}`);
       // Eliminar el toner de la lista toners
       
       setToners(toners.filter((toner) => toner.id !== id));

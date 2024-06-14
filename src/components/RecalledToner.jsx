@@ -3,13 +3,14 @@ import axios from 'axios';
 
 
 const RecalledToner = () => {
-
-    const [areas, setAreas] = useState([]);
+  
+  const [areas, setAreas] = useState([]);
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
     
     useEffect(() => {
     const fetchAreas = async () => {
       try {
-        const response = await axios.get('http://localhost:3500/api/history');
+        const response = await axios.get(`${apiUrl}/history`);
         setAreas(response.data);
       } catch (error) {
         console.error('Error fetching area usage data:', error);
@@ -17,7 +18,7 @@ const RecalledToner = () => {
     };
     
     fetchAreas();
-    }, []);
+    }, [apiUrl]);
     
     return(
 

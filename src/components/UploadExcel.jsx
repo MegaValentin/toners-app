@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PedidoRecomendado from './PedidoRecomendado';
 import SendOrderButton from './SendOrderButton';
+
+
 const UploadExcel = () => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const [dataExists, setDataExists] = useState(false);
-
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  
   useEffect(() => {
     const checkData = async () => {
       try {
-        const response = await axios.get('http://localhost:3500/api/checkdata');
+        const response = await axios.get(`${apiUrl}/checkdata`);
         setDataExists(response.data.dataExists);
       } catch (error) {
         console.error('Error checking data:', error);
@@ -38,7 +41,7 @@ const UploadExcel = () => {
     setUploadError(null);
 
     try {
-      const response = await axios.post('http://localhost:3500/api/addstockideal', formData, {
+      const response = await axios.post(`${apiUrl}/addstockideal`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
