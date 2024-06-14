@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 
+
 const OfficeTable = () => {
   const [areas, setAreas] = useState([]);
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
  
   
   const fetchOffices = async () => {
     try {
-      const response = await axios.get("http://localhost:3500/api/offices");
+      const response = await axios.get(`${apiUrl}/offices`);
       setAreas(response.data);
     } catch (error) {
       console.error("Error fetching toners:", error);
@@ -23,7 +25,7 @@ const OfficeTable = () => {
   const handleDelete = async (id) => {
     try {
      
-      await axios.delete(`http://localhost:3500/api/office/${id}`);
+      await axios.delete(`${apiUrl}/office/${id}`);
      
       
       setAreas(areas.filter((area) => area.id !== id));

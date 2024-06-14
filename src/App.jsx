@@ -8,6 +8,7 @@ import Areas from "./pages/Areas.jsx";
 import logoMuni from "./assets/logoMuni.svg";
 import ReStock from "./pages/ReStock.jsx";
 import StockIdeal from "./pages/StockIdeal.jsx";
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 

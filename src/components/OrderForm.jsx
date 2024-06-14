@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 const OrderForm = () => {
   const [cantidad, setCantidad] = useState(1);
   const [selectedToner, setSelectedToner] = useState("");
@@ -8,15 +9,16 @@ const OrderForm = () => {
   const [toners, setToners] = useState([]);
   const [areas, setAreas] = useState([]);
   const [confirmationMessage, setConfirmationMessage] = useState("")
-
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  
   useEffect(() => {
     const fetchTonersAndAreas = async () => {
       try {
         const tonersResponse = await axios.get(
-          "http://localhost:3500/api/toners"
+          `${apiUrl}/toners`
         );
         const areasResponse = await axios.get(
-          "http://localhost:3500/api/offices"
+          `${apiUrl}/offices`
         );
         setToners(tonersResponse.data);
         setAreas(areasResponse.data);
@@ -39,7 +41,7 @@ const OrderForm = () => {
 
       console.log(orderData);
 
-      await axios.post("http://localhost:3500/api/addorders", orderData);
+      await axios.post(`${apiUrl}/addorders`, orderData);
       setCantidad(1);
       setSelectedToner("");
       setSelectedArea("");

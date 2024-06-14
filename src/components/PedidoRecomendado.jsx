@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+
 const PedidoRecomendado = () => {
   const [toners, setToners] = useState([]);
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const fetchToners = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3500/api/pedidorecomendado"
+        `${apiUrl}/pedidorecomendado`
       );
       setToners(response.data);
     } catch (error) {

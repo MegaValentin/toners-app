@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ButtonClose from './ButtonCloese';
 
+
 const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
     const [tonerName, setTonerName] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [marcaName, setMarcaName] = useState('')
-
+    const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+    
     useEffect(() => {
         if (toner) {
             setMarcaName(toner.marca || '')
@@ -23,7 +25,7 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
 
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:3500/api/toner/${toner._id}`, {
+            await axios.put(`${apiUrl}/toner/${toner._id}`, {
                 marca: marcaName,
                 toner: tonerName,
                 cantidad: parseInt(cantidad, 10),

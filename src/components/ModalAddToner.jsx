@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const AddTonerModal = ({ onTonerAdded, onClose }) => {
   const [tonerName, setTonerName] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [marcaName, setMarcaName] = useState('') 
-
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3500/api/addtoners', {
+      const response = await axios.post(`${apiUrl}/addtoners`, {
         marca: marcaName,
         toner: tonerName,
         cantidad: parseInt(cantidad, 10),
