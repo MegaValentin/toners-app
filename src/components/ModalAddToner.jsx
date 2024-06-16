@@ -11,7 +11,7 @@ const AddTonerModal = ({ onTonerAdded, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiUrl}/addtoners`, {
+      const response = await axios.post(`${apiUrl}/api/addtoners`, {
         marca: marcaName,
         toner: tonerName,
         cantidad: parseInt(cantidad, 10),

@@ -6,7 +6,7 @@ const SendOrderButton = () => {
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
     const handleSendOrder = async () => {
         try {
-          const response = await axios.post(`${apiUrl}/sendorder`);
+          const response = await axios.post(`${apiUrl}/api/sendorder`);
           alert(response.data);
         } catch (error) {
           console.error('Error sending order:', error);

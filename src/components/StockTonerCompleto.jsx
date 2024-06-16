@@ -25,7 +25,7 @@ const StockToner = ({ onTonerAdded, onClose }) => {
         setUploadError(null);
 
         try {
-            const response = await axios.post(`${apiUrl}/addalltoners`, formData, {
+            const response = await axios.post(`${apiUrl}/api/addalltoners`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

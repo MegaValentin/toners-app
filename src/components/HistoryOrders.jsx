@@ -9,7 +9,7 @@ const HistoryOrders = () => {
     const fetchOrders = async () => {
         
         try {
-            const response = await axios.get(`${apiUrl}/orders`);
+            const response = await axios.get(`${apiUrl}/api/orders`);
             setOrders(response.data);
         } catch (error) {
             console.error("Error fetching toners:", error);

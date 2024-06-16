@@ -25,7 +25,7 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
 
         e.preventDefault();
         try {
-            await axios.put(`${apiUrl}/toner/${toner._id}`, {
+            await axios.put(`${apiUrl}/api/toner/${toner._id}`, {
                 marca: marcaName,
                 toner: tonerName,
                 cantidad: parseInt(cantidad, 10),
