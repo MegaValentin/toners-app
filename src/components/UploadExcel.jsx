@@ -41,7 +41,7 @@ const UploadExcel = () => {
     setUploadError(null);
 
     try {
-      const response = await axios.post(`${apiUrl}/addstockideal`, formData, {
+      const response = await axios.post(`${apiUrl}/api/addstockideal`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

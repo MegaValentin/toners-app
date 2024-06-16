@@ -25,7 +25,7 @@ const AddOffices = ({ onOfficeAdded, onClose }) => {
         setUploadError(null);
 
         try {
-            const response = await axios.post(`${apiUrl}/addalloffice`, formData, {
+            const response = await axios.post(`${apiUrl}/api/addalloffice`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

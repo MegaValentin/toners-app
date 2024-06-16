@@ -11,7 +11,7 @@ const TonersTable = () => {
   
   const fetchToners = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/toners`);
+      const response = await axios.get(`${apiUrl}/api/toners`);
       setToners(response.data);
     } catch (error) {
       console.error("Error fetching toners:", error);
@@ -38,7 +38,7 @@ const TonersTable = () => {
   const handleDelete = async (id) => {
     try {
      
-      await axios.delete(`${apiUrl}/toner/${id}`);
+      await axios.delete(`${apiUrl}/api/toner/${id}`);
       // Eliminar el toner de la lista toners
       
       setToners(toners.filter((toner) => toner.id !== id));
