@@ -15,10 +15,14 @@ const OrderForm = () => {
     const fetchTonersAndAreas = async () => {
       try {
         const tonersResponse = await axios.get(
-          `${apiUrl}/api/toners`
+          `${apiUrl}/api/toners` ,{
+            withCredentials: true, 
+          }
         );
         const areasResponse = await axios.get(
-          `${apiUrl}/api/offices`
+          `${apiUrl}/api/offices`,  {
+            withCredentials: true, 
+          }
         );
         setToners(tonersResponse.data);
         setAreas(areasResponse.data);
@@ -41,7 +45,9 @@ const OrderForm = () => {
 
       console.log(orderData);
 
-      await axios.post(`${apiUrl}/api/addorders`, orderData);
+      await axios.post(`${apiUrl}/api/addorders`, orderData , {
+        withCredentials: true, 
+      });
       setCantidad(1);
       setSelectedToner("");
       setSelectedArea("");

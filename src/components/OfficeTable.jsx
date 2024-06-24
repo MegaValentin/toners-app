@@ -10,7 +10,9 @@ const OfficeTable = () => {
   
   const fetchOffices = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/offices`);
+      const response = await axios.get(`${apiUrl}/api/offices`, {
+        withCredentials: true, 
+      });
       setAreas(response.data);
     } catch (error) {
       console.error("Error fetching toners:", error);

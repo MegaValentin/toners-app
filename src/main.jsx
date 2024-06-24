@@ -9,8 +9,8 @@ Modal.setAppElement('#root');
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Router>
+    
       <App />
-    </Router>
+    
   </React.StrictMode>,
 )

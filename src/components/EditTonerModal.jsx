@@ -29,7 +29,9 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
                 marca: marcaName,
                 toner: tonerName,
                 cantidad: parseInt(cantidad, 10),
-            });
+            }, {
+                withCredentials: true, 
+              });
             onSave();
             onClose();
         } catch (error) {
