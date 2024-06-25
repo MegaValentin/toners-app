@@ -8,7 +8,7 @@ import Home from "./pages/Home.jsx";
 import Toners from "./pages/Toners.jsx";
 import Orders from "./pages/Orders.jsx";
 import Areas from "./pages/Areas.jsx";
-
+import AddUserPage from "./pages/AddUserPage.jsx";
 import ReStock from "./pages/ReStock.jsx";
 import StockIdeal from "./pages/StockIdeal.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -40,6 +40,7 @@ function App() {
                   <Route path="/areas" element={<Areas />} />
                   <Route path="/restock" element={<ReStock />} />
                   <Route path="/stockideal" element={<StockIdeal />} />
+                  <Route path="/adduser" element={<AddUserPage/>}/>
                 </Route>
               </Routes>
             </div>

@@ -27,7 +27,9 @@ const OfficeTable = () => {
   const handleDelete = async (id) => {
     try {
      
-      await axios.delete(`${apiUrl}/api/office/${id}`);
+      await axios.delete(`${apiUrl}/api/office/${id}`, {
+        withCredentials: true, 
+      });
      
       
       setAreas(areas.filter((area) => area.id !== id));

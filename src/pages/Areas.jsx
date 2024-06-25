@@ -5,11 +5,15 @@ import StockToner from "../components/StockTonerCompleto";
 import ButtonClose from "../components/ButtonCloese";
 import OfficeTable from "../components/OfficeTable";
 import AddOffices from "../components/AddOffices";
+import { useAuth } from "../context/AuthContext"
+import UnauthorizedAcess from "../components/UnauthorizedAccess";
+
 const Areas = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [officesModalOpen, setOfficesModalOpen] = useState(false)
   const [area, setArea] = useState([]);
-
+  const {user} = useAuth()
+  
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -32,7 +36,8 @@ const Areas = () => {
 
   return (
     <div className='bg-transparent p-8 rounded-lg w-full mt-10'>
-      
+      {user.role === 'admin' && (
+        <>
       <h1 className="text-3xl font-bold mb-4">Gestión de Áreas</h1>
       <div className="flex item-center">
       <div className=" ml-1">
@@ -82,6 +87,12 @@ const Areas = () => {
         <h2>Tabla Areas</h2>
         <OfficeTable areas={area} setAreas={setArea}/>
       </Modal>
+        </>
+      )}
+       {user.role === 'empleado' && (
+        <UnauthorizedAcess/>
+      )}
+      
     </div>
 
   )

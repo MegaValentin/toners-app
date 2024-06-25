@@ -25,14 +25,14 @@ const StockToner = ({  onClose }) => {
         setUploadError(null);
 
         try {
-            const response = await axios.post(`${apiUrl}/api/addalltoners`, formData, {
+            await axios.post(`${apiUrl}/api/addalltoners`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             }, {
               withCredentials: true, 
             });
-            onTonerAdded(response.data);
+            
             // Cierra el modal
             onClose();
             window.location.reload();
