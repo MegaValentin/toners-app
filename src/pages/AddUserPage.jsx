@@ -43,6 +43,9 @@ const AddUserPage = () => {
           <form onSubmit={handleSubmit}
           className="w-11/12 text-sm text-left rtl:text-right  text-gray-400 mb-10 "
           >
+            <div className='mb-5'>
+
+            <div className="mb-5">
             <input
             className="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               type="text"
@@ -52,6 +55,10 @@ const AddUserPage = () => {
               placeholder="Username"
               required
             />
+
+            </div>
+            <div className="mb-5 uppercase">
+
             <input
             className="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               type="password"
@@ -61,8 +68,9 @@ const AddUserPage = () => {
               placeholder="Password"
               required
             />
+            </div>
             <select
-            className="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               name="role"
               value={formData.role}
               onChange={handleChange}
@@ -72,7 +80,7 @@ const AddUserPage = () => {
               <option value="admin">Admin</option>
               <option value="empleado">Empleado</option>
             </select>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-5">
           <button
             type="submit"
             className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -81,8 +89,14 @@ const AddUserPage = () => {
           </button>
 
           </div>
+            </div>
+          {successMessage && (
+            <div className="mt-4 text-center text-green-500 font-semibold">
+              
+              <p>{successMessage}</p>
+              </div>
+              )}
           </form>
-          {successMessage && <p>{successMessage}</p>}
         </div>
         </div>
         </>
