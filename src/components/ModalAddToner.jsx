@@ -15,6 +15,8 @@ const AddTonerModal = ({ onTonerAdded, onClose }) => {
         marca: marcaName,
         toner: tonerName,
         cantidad: parseInt(cantidad, 10),
+      }, {
+        withCredentials: true, 
       });
       // Llama a la función para actualizar la lista de toners
       onTonerAdded(response.data);

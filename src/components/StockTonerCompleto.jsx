@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import axios from 'axios';
 
 
-const StockToner = ({ onTonerAdded, onClose }) => {
+const StockToner = ({  onClose }) => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
@@ -25,12 +25,14 @@ const StockToner = ({ onTonerAdded, onClose }) => {
         setUploadError(null);
 
         try {
-            const response = await axios.post(`${apiUrl}/api/addalltoners`, formData, {
+            await axios.post(`${apiUrl}/api/addalltoners`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+            }, {
+              withCredentials: true, 
             });
-            onTonerAdded(response.data);
+            
             // Cierra el modal
             onClose();
             window.location.reload();

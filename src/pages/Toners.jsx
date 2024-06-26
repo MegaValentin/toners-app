@@ -4,11 +4,14 @@ import Modal from "react-modal";
 import AddTonerModal from "../components/ModalAddToner";
 import ButtonClose from "../components/ButtonCloese";
 import StockToner from "../components/StockTonerCompleto";
+import UnauthorizedAcess from "../components/UnauthorizedAccess";
+import { useAuth } from "../context/AuthContext"
 
 const Toners = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [uploadExcelModalIsOpen, setUploadExcelModalIsOpen] = useState(false);
   const [toner, setToner] = useState([]);
+  const {user} = useAuth()
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -33,6 +36,8 @@ const Toners = () => {
 
   return (
     <div className="bg-transparent p-8 rounded-lg w-full  mt-10">
+      {user.role === 'admin' && (
+        <>
       <h2 className="text-center text-2xl font-bold mb-6">
         TONERS
       </h2>
@@ -80,6 +85,15 @@ const Toners = () => {
         <h2>IMPORTAR TONERS</h2>
         <StockToner onTonerAdded={handleTonerAdded} onClose={closeUploadExcelModal} />
       </Modal>
+        </>
+      )}
+
+{user.role === 'empleado' && (
+        <>
+          
+            <UnauthorizedAcess />
+        </>
+      )}
     </div>
   );
 };

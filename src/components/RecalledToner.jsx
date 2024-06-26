@@ -10,7 +10,9 @@ const RecalledToner = () => {
     useEffect(() => {
     const fetchAreas = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/history`);
+        const response = await axios.get(`${apiUrl}/api/history`, {
+          withCredentials: true, 
+        });
         setAreas(response.data);
       } catch (error) {
         console.error('Error fetching area usage data:', error);

@@ -9,7 +9,9 @@ const PedidoRecomendado = () => {
   const fetchToners = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/api/pedidorecomendado`
+        `${apiUrl}/api/pedidorecomendado`, {
+          withCredentials: true, 
+        }
       );
       setToners(response.data);
     } catch (error) {

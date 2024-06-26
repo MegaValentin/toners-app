@@ -29,6 +29,8 @@ const AddOffices = ({ onOfficeAdded, onClose }) => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+            }, {
+              withCredentials: true, 
             });
             onOfficeAdded(response.data);
             // Cierra el modal

@@ -14,7 +14,9 @@ const UploadExcel = () => {
   useEffect(() => {
     const checkData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/checkdata`);
+        const response = await axios.get(`${apiUrl}/api/checkdata`, {
+          withCredentials: true, 
+        });
         setDataExists(response.data.dataExists);
       } catch (error) {
         console.error('Error checking data:', error);
@@ -45,6 +47,8 @@ const UploadExcel = () => {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+      }, {
+        withCredentials: true, 
       });
       alert('File uploaded successfully!');
       window.location.reload();

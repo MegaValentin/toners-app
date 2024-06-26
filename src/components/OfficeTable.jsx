@@ -10,7 +10,9 @@ const OfficeTable = () => {
   
   const fetchOffices = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/offices`);
+      const response = await axios.get(`${apiUrl}/api/offices`, {
+        withCredentials: true, 
+      });
       setAreas(response.data);
     } catch (error) {
       console.error("Error fetching toners:", error);
@@ -25,7 +27,9 @@ const OfficeTable = () => {
   const handleDelete = async (id) => {
     try {
      
-      await axios.delete(`${apiUrl}/api/office/${id}`);
+      await axios.delete(`${apiUrl}/api/office/${id}`, {
+        withCredentials: true, 
+      });
      
       
       setAreas(areas.filter((area) => area.id !== id));
