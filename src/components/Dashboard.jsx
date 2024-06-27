@@ -9,7 +9,7 @@ const Dashborad = () => {
 
   return (
     <nav className="bg-gray-600 w-full lg:w-64 flex flex-col p-4 lg:h-full">
-      <div className="flex justify-between items-center mb-10">
+      <div className="flex justify-between lg:justify-center items-center mb-10">
         <Link to="/" className="flex justify-center items-center">
           <img src={logoMuni} className="size-10 lg:size-20" alt="Logo" />
         </Link>
@@ -41,7 +41,7 @@ const Dashborad = () => {
           <div className={`lg:flex flex-col ${menuOpen ? "block" : "hidden"}`}>
               <Link
                 to="/orders"
-                className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
+                className="rounded-lg text-white mb-4 border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
                 onClick={() => setMenuOpen(false)}
               >
                 Solicitar Toner
@@ -49,7 +49,7 @@ const Dashborad = () => {
               </Link>
               <Link
                 to="/areas"
-                className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
+                className="rounded-lg text-white mb-4 border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
                 onClick={() => setMenuOpen(false)}
               >
                 Gestión de Áreas
@@ -57,7 +57,7 @@ const Dashborad = () => {
               </Link>
               <Link
                 to="/toners"
-                className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
+                className="rounded-lg text-white mb-4 border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
                 onClick={() => setMenuOpen(false)}
               >
                 Stock de Toners
@@ -65,7 +65,7 @@ const Dashborad = () => {
               </Link>
               <Link
                 to="/stockideal"
-                className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
+                className="rounded-lg text-white mb-4 border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
                 onClick={() => setMenuOpen(false)}
               >
                 Pedido Recomendado
@@ -73,7 +73,7 @@ const Dashborad = () => {
               </Link>
               <Link
                 to="/restock"
-                className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
+                className="rounded-lg text-white mb-4 border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
                 onClick={() => setMenuOpen(false)}
               >
                 Restock de Toners
@@ -81,7 +81,7 @@ const Dashborad = () => {
               </Link>
               <Link
                 to="/adduser"
-                className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
+                className="rounded-lg text-white mb-4 border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
                 onClick={() => setMenuOpen(false)}
               >
                 Agregar Usuario
@@ -89,7 +89,7 @@ const Dashborad = () => {
               </Link>
               <Link
                 to="/"
-                className="rounded-lg text-white mb-4 border-black/40 flex justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
+                className="rounded-lg text-white mb-4 border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300"
                 onClick={() => { logout(), setMenuOpen(false) }}
               >
                 Salir

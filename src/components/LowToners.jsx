@@ -29,7 +29,7 @@ const LowToners = () => {
       {toners.length === 0 ? (
         <OkMessage />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
        { toners.map((toner) => (
             <div
               key={toner._id}
@@ -40,7 +40,7 @@ const LowToners = () => {
               </h2>
 
               <p className="text-base sm:text-lg md:text-xl font-medium text-gray-700 dark:text-gray-400">
-                Cantidad: {toner.cantidad}
+                Cantidad: {toner.current}
               </p>
             </div>
         ))}
