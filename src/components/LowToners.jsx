@@ -24,30 +24,41 @@ const LowToners = () => {
     fetchLowToners();
   }, []);
   return (
-    <div>
+    
+    <div className="flex justify-center">
 
       {toners.length === 0 ? (
         <OkMessage />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-       { toners.map((toner) => (
-            <div
-              key={toner._id}
-              className="max-w-sm p-6 bg-red-500 border border-red-900 rounded-lg shadow "
-            >
-              <h2 className="mb-2 text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
-                {toner.toner}
-              </h2>
+          <ul className="divide-y divide-gray-200 dark:divide-gray-700">
 
-              <p className="text-base sm:text-lg md:text-xl font-medium text-gray-700 dark:text-gray-400">
-                Cantidad: {toner.current}
-              </p>
-            </div>
-        ))}
-          </div>
-      )}
-    
-    </div>
+            { toners.map((toner) => (
+             <li key={toner._id} className="pb-3 sm:pb-4 mt-3">
+               <div className=" flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
+               <div className="flex-1 min-w-0">
+                   <h2 className="text-sm font-medium text-gray-900 truncate">
+                     {toner.toner}
+                   </h2>
+     
+               </div>
+               <div className="inline-flex items-center text-base font-semibold">
+     
+                   <p className="text-sm font-medium text-red-500 truncate">
+                     Cantidad: {toner.current}
+                   </p>
+               </div>
+     
+     
+               </div>
+     
+             </li>
+                 
+             ))}
+          </ul>
+        )}
+        
+        </div>
+   
   );
 };
 

@@ -4,9 +4,12 @@ import Modal from "react-modal";
 import HistoryOrders from "../components/HistoryOrders";
 import ButtonClose from "../components/ButtonCloese";
 import ListOrders from "../components/ListOrders";
+import { useAuth } from "../context/AuthContext"
 
 const Orders = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { user } = useAuth()
+
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -21,8 +24,9 @@ const Orders = () => {
   return (
     <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">  
       <h2 className="text-center text-2xl font-bold mb-6">AGREGAR ORDEN</h2>
+    {user.role === 'admin' && (
+      <>
       <OrderForm />
-      <ListOrders/>
       <div className=" ml-1 mt-6">
         <button
           onClick={openModal}
@@ -55,6 +59,12 @@ const Orders = () => {
         <ButtonClose onClick={closeModal} />
         <HistoryOrders />
       </Modal>
+      <ListOrders/>
+      </>
+    )}
+    {user.role === 'empleado' && (
+      <OrderForm />
+    )}
     </div>
 
   )

@@ -55,7 +55,7 @@ const OrderForm = () => {
       setConfirmationMessage("Orden agregada exitosamente")
       setTimeout(() => {
         setConfirmationMessage("")
-      window.location.reload()}, 3000)
+      window.location.reload()}, 1500)
       
 
     } catch (error) {
