@@ -53,7 +53,10 @@ const OrderForm = () => {
       setSelectedArea("");
 
       setConfirmationMessage("Orden agregada exitosamente")
-      setTimeout(() => setConfirmationMessage(""), 3000)
+      setTimeout(() => {
+        setConfirmationMessage("")
+      window.location.reload()}, 3000)
+      
 
     } catch (error) {
       console.error("Error adding order:", error);

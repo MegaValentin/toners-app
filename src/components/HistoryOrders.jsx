@@ -42,6 +42,9 @@ const HistoryOrders = () => {
               <th scope="col" className="px-6 py-3">
                 <div className="flex items-center">Fecha</div>
               </th>
+              <th scope="col" className="px-6 py-3">
+                <div className="flex items-center">Estado</div>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -53,6 +56,7 @@ const HistoryOrders = () => {
                 </td>
                 <td className="px-4 py-2 text-gray-900">{orders.cantidad}</td>
                 <td className="px-4 py-2 text-gray-900">{orders.fecha}</td>
+                <td className='px-4 py-2 text-gray-900'>{orders.isDelivered ? "Entregado" : "No Entregado"}</td>
               </tr>
             ))}
           </tbody>

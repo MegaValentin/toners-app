@@ -3,6 +3,7 @@ import OrderForm from '../components/OrderForm';
 import Modal from "react-modal";
 import HistoryOrders from "../components/HistoryOrders";
 import ButtonClose from "../components/ButtonCloese";
+import ListOrders from "../components/ListOrders";
 
 const Orders = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -21,6 +22,7 @@ const Orders = () => {
     <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">  
       <h2 className="text-center text-2xl font-bold mb-6">AGREGAR ORDEN</h2>
       <OrderForm />
+      <ListOrders/>
       <div className=" ml-1 mt-6">
         <button
           onClick={openModal}
