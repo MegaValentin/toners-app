@@ -23,24 +23,42 @@ const RecalledToner = () => {
     }, []);
     
     return(
+      
+      <div className="flex justify-center">
 
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6  h-96'>
-        {areas.map((area) => (
-          <div key={area._id} className=' max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow '>
-            <h2 className='mb-2 text-xl md:text-2xl lg:text-1xl font-bold tracking-tight text-gray-900 text-center uppercase'>{area.areaName}</h2>
-            <div>
-              <h3 className='mb-3 text-sm md:text-base lg:text-lg font-normal text-gray-700 '>Toners:</h3>
-              <ul>
+      <ul className=" divide-y divide-gray-200 dark:divide-gray-700">
+        
+          {areas.map((area) => (
+           <li key={area._id} className="pb-3 sm:pb-4 mt-3">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-44">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-44">
+          <p className='"text-sm font-medium text-gray-900 truncate"'>{area.areaName}</p>
+            
+            <div className="flex-1 min-w-0">
+
+            </div>
+            </div>
+
+            <div >
+              
+              <ul className='flex flex-row sapace-x-4'>
                 {area.toners.map((toner) => (
-                  <li key={toner.toner} className=''>
+                  <li key={toner.toner} className="p-2 ">
                     <span className='text-sm md:text-base lg:text-lg'>{toner.tonerName}</span>: {toner.cantidad}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
+          </li>
         ))}
-      </div>
+          
+          
+         
+      </ul>
+    </div>
+
+        
     )
     
 }
