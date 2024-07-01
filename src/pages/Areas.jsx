@@ -7,6 +7,7 @@ import OfficeTable from "../components/OfficeTable";
 import AddOffices from "../components/AddOffices";
 import { useAuth } from "../context/AuthContext"
 import UnauthorizedAcess from "../components/UnauthorizedAccess";
+import ReportGenerator from "../components/ReportGenerator";
 
 const Areas = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -59,8 +60,11 @@ const Areas = () => {
       
       
       </div>
+        <div className="divide-y divide-gray-200">
 
         <RecalledToner />
+        <ReportGenerator/>
+        </div>
 
         <Modal
 
