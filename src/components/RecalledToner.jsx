@@ -23,42 +23,32 @@ const RecalledToner = () => {
     }, []);
     
     return(
-      
+
       <div className="flex justify-center">
 
-      <ul className=" divide-y divide-gray-200 dark:divide-gray-700">
-        
-          {areas.map((area) => (
-           <li key={area._id} className="pb-3 sm:pb-4 mt-3">
-          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-44">
-          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-44">
-          <p className='"text-sm font-medium text-gray-900 truncate"'>{area.areaName}</p>
-            
-            <div className="flex-1 min-w-0">
+        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        {areas.map((area) => (
+          <li key={area._id} className="">
+            <div className=" flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-60">
+              <div className="flex-1 min-w-0">
 
-            </div>
-            </div>
-
-            <div >
-              
-              <ul className='flex flex-row sapace-x-4'>
+              <h2 className="text-sm font-medium text-gray-900 truncate">{area.areaName}</h2>
+              </div>
+              <ul className="inline-flex items-center text-base font-semibold">
                 {area.toners.map((toner) => (
-                  <li key={toner.toner} className="p-2 ">
-                    <span className='text-sm md:text-base lg:text-lg'>{toner.tonerName}</span>: {toner.cantidad}
+                  <li key={toner.toner} className='p-2'>
+                    <span className="text-sm font-medium text-sky-500 truncate">{toner.tonerName}</span>: {toner.cantidad}
+
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
+
           </li>
         ))}
-          
-          
-         
       </ul>
-    </div>
+      </div>
 
-        
     )
     
 }
