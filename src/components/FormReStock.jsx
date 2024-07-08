@@ -16,7 +16,7 @@ const RestockForm = () => {
         });
         setToners(response.data);
         setRestockData(response.data.reduce((acc, toner) => {
-          acc[toner._id] = 0; // Inicializa la cantidad de restock a 0 para cada tóner
+          acc[toner._id] = ""; // Inicializa la cantidad de restock a 0 para cada tóner
           return acc;
         }, {}));
       } catch (error) {
@@ -28,9 +28,12 @@ const RestockForm = () => {
   }, []);
 
   const handleInputChange = (tonerId, cantidad) => {
+
+    const cantidadValue = cantidad === "" ? 0 : Number(cantidad);
+
     setRestockData({
       ...restockData,
-      [tonerId]: cantidad,
+      [tonerId]: cantidadValue,
     });
   };
 
@@ -59,34 +62,28 @@ const RestockForm = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="bg-sky-900 p-8 size-4/5  sm:rounded-lg flex justify-center">
-
-        <form onSubmit={handleSubmit} className="w-11/12 text-sm text-left rtl:text-right  text-gray-400 mb-10 ">
-          <div className='relative  h-full mb-3'>
+      
+        <form onSubmit={handleSubmit} className="w-11/12 max-w-md mx-auto">
+          <div className="relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
             {toners.map((toner) => (
-              <div key={toner._id} className="mb-5">
-                <label className="block text-sm font-medium text-white uppercase">
-                  {toner.toner}
-                </label>
-                <input
-                  type="number"
+              <div key={toner._id} className="relative z-0 w-full mb-5 group">
+              <input  type="number"
                   min="0"
                   value={restockData[toner._id]}
-                  onChange={(e) => handleInputChange(toner._id, Number(e.target.value))}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                />
-              </div>
+                  onChange={(e) => handleInputChange(toner._id, Number(e.target.value))} 
+                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+              <label  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">{toner.toner}</label>
+          </div>
+              
             ))}
-
           </div>
           <div className="flex justify-center">
-
-          <button
-            type="submit"
-            className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            Completar Restock
-          </button>
+            <button
+              type="submit"
+              className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            >
+              Completar Restock
+            </button>
           </div>
           {confirmationMessage && (
             <div className="mt-4 text-center text-green-500 font-semibold">
@@ -95,7 +92,7 @@ const RestockForm = () => {
           )}
         </form>
       </div>
-    </div>
+    
   );
 };
 
