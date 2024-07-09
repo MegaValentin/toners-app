@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import axios from 'axios';
 
 
-const AddOffices = ({ onOfficeAdded, onClose }) => {
+const AddOfficesExcel = ({ onOfficeAdded, onClose }) => {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
@@ -69,4 +69,4 @@ const AddOffices = ({ onOfficeAdded, onClose }) => {
       );
 }
 
-export default AddOffices;
+export default AddOfficesExcel;

@@ -42,7 +42,7 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal">
+        <div className="modal z-50">
             <ButtonClose onClick={onClose} />
             <div className="bg-white p-8 rounded-lg w-full max-w-md">
                 <h2 className="text-center text-2xl font-bold mb-6">EDITAR TONER</h2>

@@ -4,10 +4,14 @@ import RecalledToner from '../components/RecalledToner';
 import StockToner from "../components/StockTonerCompleto";
 import ButtonClose from "../components/ButtonCloese";
 import OfficeTable from "../components/OfficeTable";
-import AddOffices from "../components/AddOffices";
+import AddOfficesExcel from "../components/AddOfficesExcel";
+import AddOffice from "../components/AddOfiices"
 import { useAuth } from "../context/AuthContext"
 import UnauthorizedAcess from "../components/UnauthorizedAccess";
 import ReportGenerator from "../components/ReportGenerator";
+import CustomCarousel from "../components/CustomCarousel";
+
+Modal.setAppElement('#root');
 
 const Areas = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -34,6 +38,11 @@ const Areas = () => {
     setArea((prevOffice) => [...prevOffice, newOffice]);
 
   };
+
+  const slides = [
+    <AddOffice onOfficeAdded={handleOfficeAdded} onClose={closeModal} />,
+    <AddOfficesExcel onOfficeAdded={handleOfficeAdded} onClose={closeModal} />
+  ];
 
   return (
     <div className='bg-transparent p-8 rounded-lg w-full mt-10'>
@@ -65,19 +74,20 @@ const Areas = () => {
         <RecalledToner />
         <ReportGenerator/>
         </div>
+        
 
         <Modal
-
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Agregar Area"
-        className="modal"
-        overlayClassName="overlay"
-      >
-        <ButtonClose onClick={closeModal} />
-        <AddOffices onOfficeAdded={handleOfficeAdded} onClose={closeModal}/>
-        
-      </Modal>
+           isOpen={modalIsOpen}
+           onRequestClose={closeModal}
+           contentLabel="Agregar Area"
+           className="modal1"
+           overlayClassName="overlay"
+          >
+            <ButtonClose onClick={closeModal} />
+            <div className="p-4">
+              <CustomCarousel slides={slides} />
+            </div>
+          </Modal>
       
       <Modal
 
