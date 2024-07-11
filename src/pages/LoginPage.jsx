@@ -23,9 +23,9 @@ function LoginPage() {
   }, [isAuthenticated])
 
   return (
-    <div className="bg-gray-50 ">
+    
 
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0  ">
+      <div className="flex flex-col items-center justify-center px-5 py-4 mx-auto  lg:py-0  ">
         <a href="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 ">
           <img src={printer} className="size-10 lg:size-20" alt="Logo" />
         </a>
@@ -71,7 +71,7 @@ function LoginPage() {
 
 
       </div>
-    </div>
+    
   );
 }
 
