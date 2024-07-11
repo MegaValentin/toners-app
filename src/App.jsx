@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Routes, Route, BrowserRouter, Link } from "react-router-dom";
-import Modal from "react-modal";
 
 import Dashborad from "./components/Dashboard.jsx"
+import Footer from "./components/Footer.jsx";
 
 import Home from "./pages/Home.jsx";
 import Toners from "./pages/Toners.jsx";
@@ -26,10 +26,10 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <ErrorBoundary>
-          <div className="flex flex-col lg:flex-row h-screen">
-            
-            <Dashborad/>
+          <div className="h-screen">
+            <div className="flex flex-col lg:flex-row h-screen">
 
+            <Dashborad/>
             <div className="flex-1 p-6 bg-gray-100 overflow-y-auto">
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
@@ -44,6 +44,9 @@ function App() {
                 </Route>
               </Routes>
             </div>
+            </div>
+            <Footer/>
+
           </div>
         </ErrorBoundary>
       </BrowserRouter>
