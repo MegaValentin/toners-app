@@ -30,10 +30,10 @@ const LowToners = () => {
       {toners.length === 0 ? (
         <OkMessage />
       ) : (
-          <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-
+        <>
+          <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
             { toners.map((toner) => (
-             <li key={toner._id} className="pb-3 sm:pb-4 mt-3">
+             <li key={toner._id} className="pb-3 sm:pb-4 mt-3 mr-4">
                <div className=" flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                <div className="flex-1 min-w-0">
                    <h2 className="text-sm font-medium text-gray-900 truncate">
@@ -55,6 +55,8 @@ const LowToners = () => {
                  
              ))}
           </ul>
+        </>
+
         )}
         
         </div>

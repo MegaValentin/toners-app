@@ -26,28 +26,31 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <ErrorBoundary>
-          <div className="h-screen">
-            <div className="flex flex-col lg:flex-row h-screen">
+          
+            <div className="flex flex-col h-screen">
 
-            <Dashborad/>
-            <div className="flex-1 p-6 bg-gray-100 overflow-y-auto">
-              <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route element={<ProtectedRoutes />}>
-                <Route path="/" element={<Home />} />
-                  <Route path="/toners" element={<Toners />} />
-                  <Route path="/orders" element={<Orders />} />
-                  <Route path="/areas" element={<Areas />} />
-                  <Route path="/restock" element={<ReStock />} />
-                  <Route path="/stockideal" element={<StockIdeal />} />
-                  <Route path="/adduser" element={<AddUserPage/>}/>
-                </Route>
-              </Routes>
-            </div>
+            <div className="flex flex-col lg:flex-row flex-grow">
+              <Dashborad />
+              <div className="flex-1 p-6 bg-gray-100 overflow-y-auto">
+                <Routes>
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route element={<ProtectedRoutes />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/toners" element={<Toners />} />
+                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/areas" element={<Areas />} />
+                    <Route path="/restock" element={<ReStock />} />
+                    <Route path="/stockideal" element={<StockIdeal />} />
+                    <Route path="/adduser" element={<AddUserPage />} />
+                  </Route>
+                </Routes>
+              </div>
             </div>
             <Footer/>
+            </div>
+            
 
-          </div>
+          
         </ErrorBoundary>
       </BrowserRouter>
     </AuthProvider>
