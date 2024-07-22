@@ -5,6 +5,7 @@ import AddTonerModal from "../components/ModalAddToner";
 import ButtonClose from "../components/ButtonCloese";
 import StockToner from "../components/StockTonerCompleto";
 import UnauthorizedAcess from "../components/UnauthorizedAccess";
+import ReportToners from "../components/ReportToner";
 import { useAuth } from "../context/AuthContext"
 
 const Toners = () => {
@@ -42,15 +43,17 @@ const Toners = () => {
         TONERS
       </h2>
       <TonersTable toners={toner} setToners={setToner} />
-      <div>
-        <div className="text-center mt-6">
+      <div className="flex item-center">
+        <div className="text-center mt-3 p-4">
           <button
             onClick={openModal}
-            className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Agregar Toner
           </button>
         </div>
+        <ReportToners/>
+      </div>
         <div className=" ml-1">
           <button
             onClick={openUploadExcelModal}
@@ -59,7 +62,6 @@ const Toners = () => {
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-upload"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" /><path d="M7 9l5 -5l5 5" /><path d="M12 4l0 12" /></svg>
           </button>
         </div>
-      </div>
 
       <Modal
 
