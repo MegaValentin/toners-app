@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { useState } from "react";
 import axios from 'axios';
 
 
 const SendOrderButton = () => {
+  const [errorMessage, setErrorMessage] = useState("");
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-    const handleSendOrder = async () => {
-        try {
-          const response = await axios.post(`${apiUrl}/api/sendorder`, {
-            withCredentials: true, 
-          });
-          alert(response.data);
-        } catch (error) {
-          console.error('Error sending order:', error);
-          alert('Failed to send order.');
-        }
-      };
+
+  const handleGenerateReport = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/sendorder`, {
+        responseType: 'blob',
+        withCredentials: true,
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Reporte_Stock.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Error generating stock report:", error);
+      setErrorMessage("Error generating stock report: " + (error.response?.data?.message || error.message));
+    }
+  };
+  
     
       return (
-        <button
-          onClick={handleSendOrder}
-          className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-        >
-          Enviar Pedido Recomendado
-        </button>
+        <div className="p-4">
+        {errorMessage && (
+          <div className="mb-4 text-red-500 text-center">
+            {errorMessage}
+          </div>
+        )}
+        <div className="mb-4">
+          <button
+            onClick={handleGenerateReport}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Generar Pedido Recomendado
+          </button>
+        </div>
+      </div>
       );
 
 }
