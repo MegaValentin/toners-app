@@ -4,6 +4,7 @@ import axios from 'axios';
 
 const HistoryOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   
     const fetchOrders = async () => {
@@ -21,6 +22,21 @@ const HistoryOrders = () => {
     useEffect(() => {
         fetchOrders();
     }, []);
+
+    const handleCancelOrder = async (id) => {
+      setLoading(true);
+      try {
+        const response = await axios.post(`${apiUrl}/api/cancel/${id}`, null, {
+          withCredentials: true,
+        });
+        console.log("Order canceled:", response.data);
+        fetchOrders(); 
+      } catch (error) {
+        console.error("Error canceling order:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
     return (
     <div className="flex justify-center">
@@ -45,6 +61,9 @@ const HistoryOrders = () => {
               <th scope="col" className="px-6 py-3">
                 <div className="flex items-center">Estado</div>
               </th>
+              <th scope="col" className="px-6 py-3">
+                  <div className="flex items-center">Acciones</div>
+                </th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +75,19 @@ const HistoryOrders = () => {
                 </td>
                 <td className="px-4 py-2 text-gray-900">{orders.cantidad}</td>
                 <td className="px-4 py-2 text-gray-900">{orders.fecha}</td>
-                <td className='px-4 py-2 text-gray-900'>{orders.isDelivered ? "Entregado" : "No Entregado"}</td>
+                <td className="px-4 py-2 text-gray-900">{orders.isDelivered ? "Entregado" : "No Entregado"}</td>
+                
+                <td className="px-4 py-2 text-gray-900">
+                    {orders.isDelivered && (
+                      <button
+                        onClick={() => handleCancelOrder(orders._id)}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        disabled={loading}
+                      >
+                        Cancelar
+                      </button>
+                    )}
+                  </td>
               </tr>
             ))}
           </tbody>
