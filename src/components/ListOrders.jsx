@@ -45,6 +45,27 @@ const Orders = () => {
     }
   };
 
+  const handleCancelOrder = async (orderId) => {
+    try {
+      await axios.delete(`${apiUrl}/api/remove/${orderId}`, {
+        withCredentials: true,
+      });
+      const response = await axios.get(`${apiUrl}/api/orders`, {
+        withCredentials: true,
+      });
+      setOrders(response.data);
+      setConfirmationMessage("Orden cancelada");
+
+      setTimeout(() => setConfirmationMessage(""), 750);
+
+      setErrorMessage("");
+    } catch (error) {
+      console.error("Error canceling order:", error);
+      setErrorMessage(error.response?.data?.message || "Error canceling order");
+      setTimeout(() => setErrorMessage(""), 1500);
+    }
+  };
+
   // Filtrar órdenes no entregadas
   const filteredOrders = orders.filter(order => !order.isDelivered);
 
@@ -76,12 +97,20 @@ const Orders = () => {
           <div className="inline-flex items-center text-base font-semibold">
             <p className="text-sm font-medium text-gray-900 truncate"><strong>Estado:</strong> {order.isDelivered ? "Entregado" : "No Entregado"}</p>
             {!order.isDelivered && (
+              <>
               <button
                 onClick={() => handleDelivery(order._id)}
                 className="bg-teal-500 hover:bg-teal-900 text-white px-4 py-2 rounded ml-4"
               >
                 <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
               </button>
+               <button
+               onClick={() => handleCancelOrder(order._id)}
+               className="bg-red-500 hover:bg-red-900 text-white px-4 py-2 rounded ml-4"
+             >
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+             </button>
+              </>
             )}
           </div>
           </div>
