@@ -38,6 +38,24 @@ const HistoryOrders = () => {
       }
     };
 
+    const handleDownloadReport = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/api/orders/report`, {
+          responseType: 'blob',
+          withCredentials: true,
+        });
+  
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Reporte_Ordenes.xlsx');
+        document.body.appendChild(link);
+        link.click();
+      } catch (error) {
+        console.error("Error downloading report:", error);
+      }
+    };
+
     return (
     <div className="flex justify-center">
       <div className="w-full">
@@ -103,7 +121,14 @@ const HistoryOrders = () => {
       </div>
       
       </div>
-
+      <div className="mt-4">
+        <button
+          onClick={handleDownloadReport}
+          className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        >
+          Descargar Reporte
+        </button>
+      </div>
     </div>
     )
 
