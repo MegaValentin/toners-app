@@ -37,7 +37,7 @@ const Toners = () => {
 
   return (
     <div className="bg-transparent p-8 rounded-lg w-full  mt-10">
-      {user.role === 'admin' && (
+      {(user.role === 'admin' || user.role === 'superadmin') && (
         <>
       <h2 className="text-center text-2xl font-bold mb-6">
         TONERS

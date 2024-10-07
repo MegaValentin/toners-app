@@ -14,7 +14,7 @@ const Home = () => {
             
         </>
       )}
-    {user.role === 'admin' && (
+    {(user.role === 'admin' || user.role === 'superadmin') && (
         <>
           
           <LowToners/>

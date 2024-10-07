@@ -24,7 +24,7 @@ const Orders = () => {
   return (
     <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">  
       <h2 className="text-center text-2xl font-bold mb-6">AGREGAR ORDEN</h2>
-    {user.role === 'admin' && (
+    {(user.role === 'admin' || user.role === 'superadmin') && (
       <>
       <OrderForm />
       <div className=" ml-1 mt-6">
