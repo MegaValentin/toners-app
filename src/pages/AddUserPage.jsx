@@ -21,7 +21,7 @@ const AddUserPage = () => {
 
   return (
     <div className='bg-transparent p-8 rounded-lg w-full mt-10'>
-    {user.role === 'admin' && (
+    {user.role === 'superadmin' && (
       <>
       <AddUserForm/>
       <div className=" ml-1 mt-6">

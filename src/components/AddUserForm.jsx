@@ -74,6 +74,7 @@ const AddUserForm = () => {
           required
         >
           <option value="">Select Role</option>
+          <option value="superadmin">SuperAdmin</option>
           <option value="admin">Admin</option>
           <option value="empleado">Empleado</option>
           

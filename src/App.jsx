@@ -16,6 +16,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
+import ToDoList from "./pages/ToDoList.jsx";
 
 //console.log(Home, Toners, Orders, Areas, ReStock, StockIdeal, LoginPage, ProtectedRoutes, ErrorBoundary);
 
@@ -42,6 +43,7 @@ function App() {
                     <Route path="/restock" element={<ReStock />} />
                     <Route path="/stockideal" element={<StockIdeal />} />
                     <Route path="/adduser" element={<AddUserPage />} />
+                    <Route path="/todolist" element={<ToDoList/>} />
                   </Route>
                 </Routes>
               </div>
