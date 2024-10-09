@@ -2,7 +2,6 @@ import { Link } from "react-router-dom"
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext"
 import logoMuni from "../assets/logoMuni.svg";
-import MenuAdmin from "./MenuAdmin";
 import IconAdd from "./Icons/IconAdd";
 import IconPendiente from "./Icons/IconPendiente";
 import IconProceso from "./Icons/IconProceso";
@@ -44,7 +43,7 @@ const Dashborad = () => {
     setMenuOpen(false)
   }
 
-  const handleAddUser = () => {
+  const handleAddMenu = () => {
     setMenuOpen(false)
   }
   const taskLinks = [
@@ -54,19 +53,30 @@ const Dashborad = () => {
     {to:"/",label:"Terminadas",icon: <IconFinish/>, click: handleTask},
   ]
   const tonersLinks = [
-    {to:"/orders",label:"Agregar Tareas",icon: <IconRequestToner/>,click: handleToners},
+    {to:"/orders",label:"Pedido de toner",icon: <IconRequestToner/>,click: handleToners},
     {to:"/areas",label:"Gestion de Areas",icon: <IconAreaManegement/>,click: handleToners},
     {to:"/toners",label:"Stock",icon: <IconStock/>, click: handleToners},
     {to:"/restock",label:"Ingreso",icon: <IconIncome/>, click: handleToners},
     {to:"/stockideal",label:"Pedido Recomendado",icon: <IconRecommendedOrder/>, click: handleToners},
   ]
 
+  const adminLinks = [
+    {to:"/orders",label:"Pedido de Toner",icon: <IconRequestToner/>,click: handleAddMenu},
+    {to:"/areas",label:"Gestion de Areas",icon: <IconAreaManegement/>,click: handleAddMenu},
+    {to:"/stockideal",label:"Pedido Recomendado",icon: <IconRecommendedOrder/>, click: handleAddMenu},
+    {to:"/",label:"Salir",icon: <IconGetOut/>, click: handleLogout},
+  ]
+
+  const stockLinks = [
+    {to:"/toners",label:"Stock",icon: <IconStock/>, click: handleToners},
+    {to:"/restock",label:"Ingreso",icon: <IconIncome/>, click: handleToners},
+  ]
   const superAdminLinks = [
-    {to:"/adduser",label:"Agregar Usuarios",icon: <IconAddUser/>, click: handleAddUser },
+    {to:"/adduser",label:"Agregar Usuarios",icon: <IconAddUser/>, click: handleAddMenu },
     {to:"/",label:"Salir",icon: <IconGetOut/>, click: handleLogout},
   ]
   const empleadoLinks = [
-    {to:"/orders",label:"Solicitar Toners",icon: <IconRequestToner/>, click: handleAddUser },
+    {to:"/orders",label:"Solicitar Toners",icon: <IconRequestToner/>, click: handleAddMenu },
     {to:"/",label:"Salir",icon: <IconGetOut/>, click: handleLogout},
   ]
 
@@ -153,7 +163,23 @@ const Dashborad = () => {
               </>
             )}
             {user.role === 'admin' && (
-              <MenuAdmin/>
+              <div className={`lg:flex flex-col ${menuOpen ? "block" : "hidden"}`}>
+                <div className="relative mb-4">
+                <button
+                  className="rounded-lg text-white border-black/40 flex lg:justify-between justify-center text-xs lg:text-base gap-x-2 py-1 px-2 lg:py-2 md:px-4 hover:bg-gray-300 w-full"
+                  onClick={toggleDropdown}
+                >
+                  Stock
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transform ${dropdownOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-200`}><path stroke="none" d="M0 0h24h24H0z" fill="none" /><path d="M6 9l6 6l6 -6" /></svg>
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute left-full top-0 mt-2 w-48 bg-gray-600 text-white z-10">
+                    {renderLinks(stockLinks)}
+                  </div>
+                )}
+              </div>
+              {renderLinks(adminLinks)}
+            </div>
             )}
             {user.role === 'empleado' && (
               <>
