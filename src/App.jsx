@@ -12,11 +12,12 @@ import AddUserPage from "./pages/AddUserPage.jsx";
 import ReStock from "./pages/ReStock.jsx";
 import StockIdeal from "./pages/StockIdeal.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import TaksList from "./pages/TaskList.jsx";
+import ToDoList from "./pages/ToDoList.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
-import ToDoList from "./pages/ToDoList.jsx";
 
 //console.log(Home, Toners, Orders, Areas, ReStock, StockIdeal, LoginPage, ProtectedRoutes, ErrorBoundary);
 
@@ -44,6 +45,7 @@ function App() {
                     <Route path="/stockideal" element={<StockIdeal />} />
                     <Route path="/adduser" element={<AddUserPage />} />
                     <Route path="/todolist" element={<ToDoList/>} />
+                    <Route path="/tasklist" element={<TaksList/>}/>
                   </Route>
                 </Routes>
               </div>

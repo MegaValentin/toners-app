@@ -48,7 +48,7 @@ const Dashborad = () => {
   }
   const taskLinks = [
     {to:"/todolist",label:"Agregar Tareas",icon: <IconAdd/>,click: handleTask},
-    {to:"/",label:"Pendientes",icon: <IconPendiente/>,click: handleTask},
+    {to:"/tasklist",label:"Pendientes",icon: <IconPendiente/>,click: handleTask},
     {to:"/",label:"En Proceso",icon: <IconProceso/>, click: handleTask},
     {to:"/",label:"Terminadas",icon: <IconFinish/>, click: handleTask},
   ]
