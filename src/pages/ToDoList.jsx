@@ -38,30 +38,36 @@ const ToDoList = () => {
 
     return (
         <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
+            
             <h2 className="text-center text-2xl font-bold mb-6">Agregar tarea</h2>
-            <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+            <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
+
                 <div className="block text-gray-700 font-bold mb-2">
-                    <label htmlFor="titulo" className="block text-gray-700 font-bold mb-2">Tarea:</label>
+                    <label htmlFor="titulo" className="block mb-2 text-sm font-medium text-gray-900 ">Tarea:</label>
                     <input type="text"
                         id="titulo"
                         value={titulo}
                         onChange={(e) => setTitulo(e.target.value)}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required />
                 </div>
+
                 <div className="mb-4">
-                    <label htmlFor="descripcion" className="block text-gray-700 font-bold mb-2">Descripcion:</label>
+                    <label htmlFor="descripcion" className="block mb-2 text-sm font-medium text-gray-900 ">Descripcion:</label>
                     <textarea id="descripcion"
                         cols="30"
                         rows="10"
                         value={descripcion}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         onChange={(e) => setDescripcion(e.target.value)}
                     />
                 </div>
+                <div className="flex justify-center">
                 <button type='submite'
-                    className="w-full py-2 px-4 bg-teal-500 hover:bg-teal-800 text-white font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Agregar Tarea</button>
+
+                </div>
             </form>
             {message && (
                 <p className={`mt-4 text-center font-semibold ${message.includes('error') ? 'text-red-500' : 'text-green-500'}`}>
