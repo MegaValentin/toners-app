@@ -13,6 +13,7 @@ import IconStock from "./Icons/IconStock";
 import IconIncome from "./Icons/IconIncome";
 import IconRecommendedOrder from "./Icons/IconRecommendedOrder";
 import IconAddUser from "./Icons/IconAddUser";
+import IconMyTasks from "./Icons/IconMyTasks"
 
 const Dashborad = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -64,6 +65,8 @@ const Dashborad = () => {
     {to:"/orders",label:"Pedido de Toner",icon: <IconRequestToner/>,click: handleAddMenu},
     {to:"/areas",label:"Gestion de Areas",icon: <IconAreaManegement/>,click: handleAddMenu},
     {to:"/stockideal",label:"Pedido Recomendado",icon: <IconRecommendedOrder/>, click: handleAddMenu},
+    {to:"/tasklist",label:"Tareas pendientes",icon: <IconPendiente/>,click: handleTask},
+    {to:"/mytasks",label:"Mis tareas",icon: <IconMyTasks/>,click: handleTask},
     {to:"/",label:"Salir",icon: <IconGetOut/>, click: handleLogout},
   ]
 

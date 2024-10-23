@@ -15,6 +15,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import TaksList from "./pages/TaskList.jsx";
 import ToDoList from "./pages/ToDoList.jsx";
 import InProgressTaskList from "./pages/InProgressTaksList.jsx";
+import MyTasks from "./pages/MyTasks.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
@@ -48,6 +49,8 @@ function App() {
                     <Route path="/todolist" element={<ToDoList/>} />
                     <Route path="/tasklist" element={<TaksList/>}/>
                     <Route path="/progresstasks" element={<InProgressTaskList/>}/>
+                    <Route path="/mytasks" element={<MyTasks/>}/>
+
                   </Route>
                 </Routes>
               </div>
