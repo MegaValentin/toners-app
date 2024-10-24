@@ -75,6 +75,7 @@ const Dashborad = () => {
     {to:"/restock",label:"Ingreso",icon: <IconIncome/>, click: handleToners},
   ]
   const superAdminLinks = [
+    {to:"/mytasks",label:"Mis tareas",icon: <IconMyTasks/>,click: handleTask},
     {to:"/adduser",label:"Agregar Usuarios",icon: <IconAddUser/>, click: handleAddMenu },
     {to:"/",label:"Salir",icon: <IconGetOut/>, click: handleLogout},
   ]

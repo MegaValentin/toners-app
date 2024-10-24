@@ -35,12 +35,12 @@ const MyTasks = () => {
             try {
                 await axios.put(`${apiUrl}/api/task/${selectedTask._id}/complete`, {
                     solucionDescripcion: solutionDesc,
-                })
+                }, { withCredentials: true })
                 setShowForm(false)
                 setSolutionDesc("")
                 setSelectedTask(null)
 
-                const response = await axios.get(`${apiUrl}/api/mytasks`)
+                const response = await axios.get(`${apiUrl}/api/mytasks`, { withCredentials: true })
                 setTasks(response.data)
             } catch (error) {
                 console.error("Error al completar la tarea: ", error)
@@ -48,38 +48,47 @@ const MyTasks = () => {
         }
     }
 
-    const inProgressTasks = tasks.filter((task) => task.estado === "en proceso")
-
     const completedTasks = tasks.filter((task) => task.estado === "finalizado")
 
+    const inProgressTasks = tasks.filter((task) => task.estado === "en proceso")
+
+
     return (
-        <div>
+        <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
             <h2 className="text-3xl font-semibold mb-4">Mis tareas</h2>
 
-            <h3 className="text-xl font-bold mb-2">Tareas en proceso</h3>
+            {inProgressTasks.length === 0 ? (
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
+                    <p className="font-semibold">No tenes tareas en proceso aún.</p>
+                </div>
 
-            <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
-                {inProgressTasks.map((task) => (
-                    <li key={task._id} className="pb-3 sm:pb-4 mt-3 mr-4">
-                        <div className="bg-gray-200 p-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
-                            <div className="flex-1 min-w-0">
-                                <strong>{task.titulo}</strong>: {task.descripcion}
-                            </div>
-                            <div className="inline-flex items-center text-base font-semibold">
+            ) :
+                <>
+                    <h3 className="text-xl font-bold mb-2">Tareas en proceso</h3>
+                    <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
+                        {inProgressTasks.map((task) => (
+                            <li key={task._id} className="pb-3 sm:pb-4 mt-3 mr-4">
+                                <div className="bg-gray-200 p-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
+                                    <div className="flex-1 min-w-0">
+                                        <strong>{task.titulo}</strong>: {task.descripcion}
+                                    </div>
+                                    <div className="inline-flex items-center text-base font-semibold">
 
-                                <button onClick={() => handleCompleteClick(task)}
-                                    className="py-2 px-4 bg-teal-500 hover:bg-teal-800 text-white font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                >Finalizar</button>
+                                        <button onClick={() => handleCompleteClick(task)}
+                                            className="py-2 px-4 bg-teal-500 hover:bg-teal-800 text-white font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                        >Finalizar</button>
 
-                            </div>
+                                    </div>
 
-                        </div>
-                    </li>
-                ))}
-            </ul>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            }
 
             {showForm && (
-                <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+                <div className="mt-6 p-4 bg-gray-100 bg-gray-200 ">
                     <h4 className="text-lg font-semibold mb-2">Finalizar tarea: {selectedTask?.titulo}</h4>
                     <form onSubmit={handleSubmit}>
                         <label className="block mb-2">
@@ -93,12 +102,12 @@ const MyTasks = () => {
                         </label>
                         <div className="flex gap-4 mt-4">
                             <button type="submit"
-                                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+                                className="py-2 px-4 bg-teal-500 hover:bg-teal-800 text-white font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-300"
                             >Enviar</button>
                             <button
                                 type="button"
                                 onClick={() => setShowForm(false)}
-                                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Cancelar</button>
+                                className="py-2 px-4 bg-red-500 hover:bg-red-800 text-white font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-300">Cancelar</button>
 
                         </div>
                     </form>
@@ -106,15 +115,22 @@ const MyTasks = () => {
             )}
 
             <h3 className="text-xl font-bold mt-8 mb-2">Tareas finalizadas</h3>
-            <ul className="space-y-4">
-                {completedTasks.map((task) => (
-                    <li key={task._id} className="bg-gray-200 p-4 rounded-lg shadow-md">
-                        <strong className="text-lg font-semibold">{task.titulo}</strong>: {task.descripcion}
-                        <br />
-                        <em className="text-gray-600">Solucion: {task.solucionDescripcion}</em>
-                    </li>
-                ))}
-            </ul>
+            {completedTasks.length === 0 ? (
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
+                    <p className="font-semibold">No tenes tareas finalizadas aún.</p>
+                </div>
+            ) : (
+                <ul className="space-y-4">
+                    {completedTasks.map((task) => (
+                        <li key={task._id} className="bg-gray-200 p-4 rounded-lg shadow-md">
+                            <strong className="text-lg font-semibold">{task.titulo}</strong>: {task.descripcion}
+                            <br />
+                            <em className="text-gray-600">Solucion: {task.solucionDescripcion}</em>
+                        </li>
+                    ))}
+                </ul>
+            )}
+
         </div>
     )
 }

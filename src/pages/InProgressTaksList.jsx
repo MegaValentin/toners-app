@@ -42,7 +42,9 @@ const InProgressTaskList = () => {
                     ))}
                 </ul>
             ) : (
-                <p className="text-center text-gray-700 mt-4">No hay tareas en proceso.</p>
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
+                    <p className="font-semibold">No hay tareas en proceso aún.</p>
+                </div>
             )}
 
         </div>

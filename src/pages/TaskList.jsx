@@ -44,8 +44,9 @@ const TaskList = () => {
 
     return (
         <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
-            <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Lista de Tareas</h2>
             {unassignedTasks.length > 0 ? (
+                <>
+            <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Lista de Tareas</h2>
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
                     {unassignedTasks.map((task) => (
                         <li key={task._id} className="pb-3 sm:pb-4 mt-3 mr-4">
@@ -68,8 +69,11 @@ const TaskList = () => {
                         </li>
                     ))}
                 </ul>
+                </>
             ) : (
-                <p className="text-center text-gray-700 mt-4">No hay tareas pendientes.</p>
+                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
+                    <p className="font-semibold">No hay tareas pendientes aún.</p>
+                </div>
             )}
 
         </div>
