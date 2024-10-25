@@ -33,7 +33,7 @@ const MyTasks = () => {
         e.preventDefault()
         if (selectedTask) {
             try {
-                await axios.put(`${apiUrl}/api/task/${selectedTask._id}/complete`, {
+                await axios.put(`${apiUrl}/api/task/${selectedTask._id}/complete`, {}, {
                     solucionDescripcion: solutionDesc,
                 }, { withCredentials: true })
                 setShowForm(false)
@@ -47,6 +47,26 @@ const MyTasks = () => {
             }
         }
     }
+
+    const handleRevertClick = async (taskId) => {
+        try {
+            console.log(`Revirtiendo tarea con ID: ${taskId}`);
+            const response = await axios.put(`${apiUrl}/api/task/${taskId}/revert`, {}, { withCredentials: true });
+            
+            if (response.status === 200) {
+                alert("La tarea ha sido revertida a pendiente.");
+                // Actualizar la lista de tareas
+                const tasksResponse = await axios.get(`${apiUrl}/api/mytasks`, { withCredentials: true });
+                setTasks(tasksResponse.data);
+            } else {
+                console.error("No se pudo revertir la tarea.");
+                alert("No se pudo revertir la tarea.");
+            }
+        } catch (error) {
+            console.error("Error al revertir el estado de la tarea:", error);
+            alert("Error al revertir el estado de la tarea.");
+        }
+    };
 
     const completedTasks = tasks.filter((task) => task.estado === "finalizado")
 
@@ -72,8 +92,15 @@ const MyTasks = () => {
                                     <div className="flex-1 min-w-0">
                                         <strong>{task.titulo}</strong>: {task.descripcion}
                                     </div>
+                                    
                                     <div className="inline-flex items-center text-base font-semibold">
 
+                                        <button
+                                            onClick={() => handleRevertClick(task._id)}
+                                            className="py-2 px-4 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                        >
+                                            Revertir a pendiente
+                                        </button>
                                         <button onClick={() => handleCompleteClick(task)}
                                             className="py-2 px-4 bg-teal-500 hover:bg-teal-800 text-white font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-300"
                                         >Finalizar</button>

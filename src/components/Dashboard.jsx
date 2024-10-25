@@ -51,7 +51,7 @@ const Dashborad = () => {
     {to:"/todolist",label:"Agregar Tareas",icon: <IconAdd/>,click: handleTask},
     {to:"/tasklist",label:"Pendientes",icon: <IconPendiente/>,click: handleTask},
     {to:"/progresstasks",label:"En Proceso",icon: <IconProceso/>, click: handleTask},
-    {to:"/",label:"Terminadas",icon: <IconFinish/>, click: handleTask},
+    {to:"/completed",label:"Terminadas",icon: <IconFinish/>, click: handleTask},
   ]
   const tonersLinks = [
     {to:"/orders",label:"Pedido de toner",icon: <IconRequestToner/>,click: handleToners},
