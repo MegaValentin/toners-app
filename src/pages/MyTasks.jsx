@@ -91,9 +91,13 @@ const MyTasks = () => {
                     <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
                         {inProgressTasks.map((task) => (
                             <li key={task._id} className="pb-3 sm:pb-4 mt-3 mr-4">
-                                <div className="bg-gray-200 p-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
+                                <div className="bg-gray-200 p-2 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                                     <div className="flex-1 min-w-0">
                                         <strong>{task.titulo}</strong>: {task.descripcion}
+                                    <p className="text-gray-600 mb-4"> Tarea creada el: {task.fechaCreacion}</p>
+                                       
+                                       <p className="text-gray-600 mb-4"> Tarea asisgnada el: {task.fechaInicio}</p>
+
                                     </div>
                                     
                                     <div className="inline-flex items-center text-base font-semibold">
