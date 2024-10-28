@@ -30,23 +30,26 @@ const MyTasks = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        if (selectedTask) {
-            try {
-                await axios.put(`${apiUrl}/api/task/${selectedTask._id}/complete`, {}, {
-                    solucionDescripcion: solutionDesc,
-                }, { withCredentials: true })
-                setShowForm(false)
-                setSolutionDesc("")
-                setSelectedTask(null)
+    e.preventDefault()
+    if (selectedTask) {
+        try {
+            await axios.put(
+                `${apiUrl}/api/task/${selectedTask._id}/complete`,
+                { solucionDescripcion: solutionDesc },
+                { withCredentials: true }
+            )
+            setShowForm(false)
+            setSolutionDesc("")
+            setSelectedTask(null)
 
-                const response = await axios.get(`${apiUrl}/api/mytasks`, { withCredentials: true })
-                setTasks(response.data)
-            } catch (error) {
-                console.error("Error al completar la tarea: ", error)
-            }
+            // Actualizar la lista de tareas después de completar
+            const response = await axios.get(`${apiUrl}/api/mytasks`, { withCredentials: true })
+            setTasks(response.data)
+        } catch (error) {
+            console.error("Error al completar la tarea: ", error)
         }
     }
+}
 
     const handleRevertClick = async (taskId) => {
         try {
