@@ -31,6 +31,9 @@ const TaksListCompleted = () => {
                                     <strong className="text-lg font-semibold">{task.titulo}</strong>: {task.descripcion}
                                     <br />
                                     <em className="text-gray-600">Solucion: {task.solucionDescripcion}</em>
+                                    <p className="text-gray-600 mt-4"> Tarea creada el: {task.fechaCreacion}</p>
+                                    <p className="text-gray-600"> Tarea finalizada el: {task.fechaFinalizacion}</p>
+
                                 </div>
                                 <div className="inline-flex items-center text-base font-semibold">
 
