@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext'; // Ruta donde tengas definido el contexto de autenticación
+import { AuthContext } from '../context/AuthContext';
 
 const TaskList = () => {
-    const { user } = useContext(AuthContext); // Supongamos que el contexto de autenticación contiene la información del usuario logueado
+    const { user } = useContext(AuthContext); 
     const [tasks, setTasks] = useState([]);
+    const [message, setMessage] = useState(null)
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => {
@@ -27,7 +28,11 @@ const TaskList = () => {
                 { username: user.username }, // Aquí usamos el nombre de usuario del contexto
                 { withCredentials: true }
             );
-            alert('Tarea asignada exitosamente');
+            
+            setMessage({ type: "success", text: "Tarea asignada exitosamente" })
+                setTimeout(() => {
+                    setMessage("")
+                }, 1000)
             setTasks(tasks.map(task =>
                 task._id === taskId ? { ...task, estado: "en proceso", usuarioAsignado: user.username } : task
             ));
@@ -35,7 +40,10 @@ const TaskList = () => {
             if (error.response) {
                 alert(`Hubo un error: ${error.response.data.error}`);
             } else {
-                alert('Hubo un error al asignar la tarea.');
+                setMessage({ type: "success", text: "Hubo un error al asignar la tarea." })
+                setTimeout(() => {
+                    setMessage("")
+                }, 1000)
             }
         }
     };

@@ -6,6 +6,8 @@ const MyTasks = () => {
     const [solutionDesc, setSolutionDesc] = useState("")
     const [selectedTask, setSelectedTask] = useState(null)
     const [showForm, setShowForm] = useState(false)
+    const [message, setMessage] = useState(null)
+
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => {
@@ -14,6 +16,7 @@ const MyTasks = () => {
                 const response = await axios.get(`${apiUrl}/api/mytasks`, { withCredentials: true })
                 setTasks(response.data)
             } catch (error) {
+                setMessage({ type: "error", text: "Error al obtener las tareas" })
                 console.error("Error al obtener las tareas: ", error)
             }
         }
@@ -45,7 +48,12 @@ const MyTasks = () => {
                 // Actualizar la lista de tareas después de completar
                 const response = await axios.get(`${apiUrl}/api/mytasks`, { withCredentials: true })
                 setTasks(response.data)
+                setMessage({ type: "success", text: "Tarea completada con éxito" })
+                setTimeout(() => {
+                    setMessage("")
+                }, 1000)
             } catch (error) {
+                setMessage({ type: "error", text: "Error al completar la tarea" })
                 console.error("Error al completar la tarea: ", error)
             }
         }
@@ -57,17 +65,24 @@ const MyTasks = () => {
             const response = await axios.put(`${apiUrl}/api/task/${taskId}/revert`, {}, { withCredentials: true });
 
             if (response.status === 200) {
-                alert("La tarea ha sido revertida a pendiente.");
+                setMessage({ type: "success", text: "La tarea ha sido revertida a pendiente." })
+                setTimeout(() => {
+                    setMessage("")
+                }, 1000)
                 // Actualizar la lista de tareas
                 const tasksResponse = await axios.get(`${apiUrl}/api/mytasks`, { withCredentials: true });
                 setTasks(tasksResponse.data);
             } else {
-                console.error("No se pudo revertir la tarea.");
-                alert("No se pudo revertir la tarea.");
+                setMessage({ type: "error", text: "No se pudo revertir la tarea." })
+                setTimeout(() => {
+                    setMessage("")
+                }, 1000)
             }
         } catch (error) {
-            console.error("Error al revertir el estado de la tarea:", error);
-            alert("Error al revertir el estado de la tarea.");
+            setMessage({ type: "error", text: "Error al revertir el estado de la tarea" })
+            setTimeout(() => {
+                setMessage("")
+            }, 1000)
         }
     };
 
@@ -79,6 +94,17 @@ const MyTasks = () => {
     return (
         <div className="bg-transparent  rounded-lg w-full mt-10 ">
             <h2 className="text-3xl font-semibold mb-4">Mis tareas</h2>
+
+             
+             {message && (
+                <div
+                    className={`p-4 mb-4 rounded-md shadow-md ${
+                        message.type === "success" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                    }`}
+                >
+                    {message.text}
+                </div>
+            )}
 
             {inProgressTasks.length === 0 ? (
                 <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
