@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const TaksListCompleted = () => {
     const [tasks, setTasks] = useState([])
+    const [areas, setAreas] = useState([]);
+    const [selectedArea, setSelectedArea] = useState('');
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => {
@@ -10,6 +12,7 @@ const TaksListCompleted = () => {
             try {
                 const response = await axios.get(`${apiUrl}/api/tasks`, { withCredentials: true });
                 setTasks(response.data);
+                setAreas([...new Set(response.data.map(task => task.areaName))]);
             } catch (error) {
                 console.error("Error fetching tasks:", error);
             }
@@ -17,11 +20,26 @@ const TaksListCompleted = () => {
         fetchTasks();
     }, [])
 
-    const inCompletedTasks = tasks.filter(task => task.estado === "finalizado");
+    const inCompletedTasks = tasks
+        .filter(task => task.estado === "finalizado")
+        .filter(task => (selectedArea ? task.areaName === selectedArea : true));
 
     return (
         <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
             <h2 className="text-2xl font-bold mb-6 text-center text-orange-600">Tareas Finalizadas</h2>
+            <div className="flex space-x-4 mb-6">
+                <select
+                    value={selectedArea}
+                    onChange={e => setSelectedArea(e.target.value)}
+                    className="p-2 border border-gray-300 rounded"
+                >
+                    <option value="">Todas las Áreas</option>
+                    {areas.map(area => (
+                        <option key={area} value={area}>{area}</option>
+                    ))}
+                </select>
+            </div>
+            
             {inCompletedTasks.length > 0 ? (
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
                     {inCompletedTasks.map((task) => (

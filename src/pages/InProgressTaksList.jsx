@@ -3,6 +3,10 @@ import axios from 'axios';
 
 const InProgressTaskList = () => {
     const [tasks, setTasks] = useState([])
+    const [areas, setAreas] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [selectedArea, setSelectedArea] = useState('');
+    const [selectedUser, setSelectedUser] = useState('');
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => {
@@ -10,6 +14,8 @@ const InProgressTaskList = () => {
             try {
                 const response = await axios.get(`${apiUrl}/api/tasks`, { withCredentials: true });
                 setTasks(response.data);
+                setAreas([...new Set(response.data.map(task => task.areaName))]);
+                setUsers([...new Set(response.data.map(task => task.usuarioAsignado))]);
             } catch (error) {
                 console.error("Error fetching tasks:", error);
             }
@@ -17,11 +23,37 @@ const InProgressTaskList = () => {
         fetchTasks();
     }, [])
 
-    const inProgressTasks = tasks.filter(task => task.estado === "en proceso");
+    const inProgressTasks = tasks
+        .filter(task => task.estado === "en proceso")
+        .filter(task => (selectedArea ? task.areaName === selectedArea : true))
+        .filter(task => (selectedUser ? task.usuarioAsignado === selectedUser : true));
 
     return (
         <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
             <h2 className="text-2xl font-bold mb-6 text-center text-orange-600">Tareas en Proceso</h2>
+            <div className="flex space-x-4 mb-6">
+                <select
+                    value={selectedArea}
+                    onChange={e => setSelectedArea(e.target.value)}
+                    className="p-2 border border-gray-300 rounded"
+                >
+                    <option value="">Todas las Áreas</option>
+                    {areas.map(area => (
+                        <option key={area} value={area}>{area}</option>
+                    ))}
+                </select>
+
+                <select
+                    value={selectedUser}
+                    onChange={e => setSelectedUser(e.target.value)}
+                    className="p-2 border border-gray-300 rounded"
+                >
+                    <option value="">Todos los Usuarios</option>
+                    {users.map(user => (
+                        <option key={user} value={user}>{user}</option>
+                    ))}
+                </select>
+            </div>
             {inProgressTasks.length > 0 ? (
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
                     {inProgressTasks.map((task) => (
