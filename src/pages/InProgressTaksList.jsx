@@ -31,7 +31,7 @@ const InProgressTaskList = () => {
     return (
         <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
             <h2 className="text-2xl font-bold mb-6 text-center text-orange-600">Tareas en Proceso</h2>
-            <div className="flex space-x-4 mb-6">
+            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
                 <select
                     value={selectedArea}
                     onChange={e => setSelectedArea(e.target.value)}
