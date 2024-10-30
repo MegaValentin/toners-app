@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
 const ToDoList = () => {
     const [titulo, setTitulo] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [message, setMessage] = useState('');
+    const [selectedArea, setSelectedArea] = useState("");
+    const [areas, setAreas] = useState([]);
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+
+    useEffect(() => {
+        const fetchOffices = async () => {
+          try {
+            const areasResponse = await axios.get(
+              `${apiUrl}/api/offices`,  {
+                withCredentials: true, 
+              }
+            );
+            setAreas(areasResponse.data);
+          } catch (error) {
+            console.error("Error fetching toners and areas:", error);
+          }
+        };
+    
+        fetchOffices();
+      }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -14,6 +33,7 @@ const ToDoList = () => {
             const response = await axios.post(
                 `${apiUrl}/api/addtask`, {
                 titulo,
+                area: selectedArea,
                 descripcion,
                 
             }, {
@@ -25,6 +45,7 @@ const ToDoList = () => {
             }, 1000)
             setTitulo('');
             setDescripcion('');
+            setSelectedArea("");
         } catch (error) {
             console.error('Error al agregar tarea:', error);
             setMessage('Hubo un error al agregar la tarea.');
@@ -50,6 +71,31 @@ const ToDoList = () => {
                         onChange={(e) => setTitulo(e.target.value)}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         required />
+                </div>
+                <div className="mb-4">
+                <label
+              htmlFor="area"
+              className="block mb-2 text-sm font-medium text-gray-900 "
+            >
+              Área
+            </label>
+            <select
+              id="area"
+              value={selectedArea}
+              onChange={(e) => setSelectedArea(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              required
+            >
+              <option value="" disabled>
+                Seleccione un área
+              </option>
+              {areas.map((area) => (
+                <option key={area._id} value={area._id}>
+                  {area.area}
+                </option>
+              ))}
+            </select>
+
                 </div>
 
                 <div className="mb-4">

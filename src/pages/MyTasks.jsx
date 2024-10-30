@@ -120,6 +120,7 @@ const MyTasks = () => {
                                 <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                                     <div className="flex-1 min-w-0">
                                         <strong>{task.titulo}</strong>: {task.descripcion}
+                                        <p className="text-gray-900 mt-2">{task.areaName}</p>
                                         <p className="text-gray-600 mt-4"> Tarea creada el: {task.fechaCreacion}</p>
 
                                         <p className="text-gray-600 "> Tarea asisgnada el: {task.fechaInicio}</p>
@@ -186,6 +187,7 @@ const MyTasks = () => {
                     {completedTasks.map((task) => (
                         <li key={task._id} className="bg-gray-200 p-4 rounded-lg shadow-md">
                             <strong className="text-lg font-semibold">{task.titulo}</strong>: {task.descripcion}
+                            <p className="text-gray-900 mt-2">{task.areaName}</p>
                             <br />
                             <em className="text-gray-600">Solucion: {task.solucionDescripcion}</em>
                             <p className="text-gray-600 mt-4"> Tarea creada el: {task.fechaCreacion}</p>

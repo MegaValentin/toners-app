@@ -29,6 +29,7 @@ const InProgressTaskList = () => {
                             <div className="bg-gray-200 p-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                                 <div className="flex-1 min-w-0">
                                     <h3 className="text-xl font-semibold text-gray-800">{task.titulo}</h3>
+                                    <p className="text-gray-900 mt-2">{task.areaName}</p>
                                     <p className="text-gray-600 mb-2">{task.descripcion}</p>
                                     <p className="text-gray-600 mt-4"> Tarea creada el: {task.fechaCreacion}</p>
                                     <p className="text-gray-600"> Tarea asignada el: {task.fechaInicio}</p>
