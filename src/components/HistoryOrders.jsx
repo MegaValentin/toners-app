@@ -6,6 +6,7 @@ const HistoryOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filterDate, setFilterDate] = useState("");
+  const [filterToner, setFilterToner] = useState("");
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const fetchOrders = async () => {
@@ -62,14 +63,19 @@ const HistoryOrders = () => {
     setFilterDate(e.target.value);
   };
 
-  const filteredOrders = filterDate
-  ? orders.filter((order) => new Date(order.fecha).toISOString().split('T')[0] === filterDate)
-  : orders;
+  const handleTonerChange = (e) => {
+    setFilterToner(e.target.value);
+  };
 
+  const filteredOrders = orders.filter((order) => {
+    const matchesDate = filterDate ? new Date(order.fecha).toISOString().split('T')[0] === filterDate : true;
+    const matchesToner = filterToner ? order.tonerName === filterToner : true;
+    return matchesDate && matchesToner;
+  });
   return (
     <div className="flex justify-center p-4">
       <div className="w-full">
-        <div className="my-4 flex justify-center">
+        <div className="my-4 flex flex-col sm:flex-row justify-center gap-4">
           <input
             type="date"
             id="filterDate"
@@ -77,6 +83,17 @@ const HistoryOrders = () => {
             onChange={handleDateChange}
             className="w-full sm:w-auto p-2 border rounded-md"
           />
+          <select
+            id="filterToner"
+            value={filterToner}
+            onChange={handleTonerChange}
+            className="w-full sm:w-auto p-2 border rounded-md"
+          >
+            <option value="">Seleccione un Toner</option>
+            {Array.from(new Set(orders.map((order) => order.tonerName))).map((toner) => (
+              <option key={toner} value={toner}>{toner}</option>
+            ))}
+          </select>
         </div>
 
         {filteredOrders.length === 0 ? (
