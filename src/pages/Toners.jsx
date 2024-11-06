@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TonersTable from "../components/TonerTable";
+import UniTable from "../components/UniTable";
 import Modal from "react-modal";
 import AddTonerModal from "../components/ModalAddToner";
 import ButtonClose from "../components/ButtonCloese";
@@ -12,6 +13,8 @@ const Toners = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [uploadExcelModalIsOpen, setUploadExcelModalIsOpen] = useState(false);
   const [toner, setToner] = useState([]);
+  const [uni, setUni ] = useState([])
+  const [showTonersTable, setShowTonersTable] = useState(true);
   const {user} = useAuth()
 
   const openModal = () => {
@@ -34,15 +37,34 @@ const Toners = () => {
     setToner((prevToners) => [...prevToners, newToner]);
 
   };
+  const toggleTable = () => {
+    setShowTonersTable((prev) => !prev);
+  };
 
   return (
     <div className="bg-transparent p-8 rounded-lg w-full  mt-10">
       {(user.role === 'admin' || user.role === 'superadmin') && (
         <>
-      <h2 className="text-center text-2xl font-bold mb-6">
-        TONERS
-      </h2>
-      <TonersTable toners={toner} setToners={setToner} />
+      <button
+            onClick={toggleTable}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+          >
+            {showTonersTable ? "Ver Unidad de Imagen" : "Ver Toners"}
+          </button>
+        {showTonersTable ? (
+            <h2 className="text-center text-2xl font-bold mb-6">
+            TONERS
+          </h2>
+          ) : (
+            <h2 className="text-center text-2xl font-bold mb-6">
+            UNIDAD DE IMAGEN
+          </h2>)}
+      
+          {showTonersTable ? (
+            <TonersTable toners={toner} setToners={setToner} />
+          ) : (
+            <UniTable unis={uni} setUnis={setUni}/> // Muestra UniTable si el estado es false
+          )}
       <div className="flex item-center">
         <div className="text-center mt-3 p-4">
           <button
