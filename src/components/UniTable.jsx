@@ -39,7 +39,7 @@ const UniTable = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${apiUrl}/uni/${id}`, {
+            await axios.delete(`${apiUrl}/api/uni/${id}`, {
                 withCredentials: true
             })
 
