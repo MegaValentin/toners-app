@@ -63,14 +63,25 @@ const ToDoList = () => {
             <h2 className="text-center text-2xl font-bold mb-6">Agregar tarea</h2>
             <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
 
-                <div className="block text-gray-700 font-bold mb-2">
-                    <label htmlFor="titulo" className="block mb-2 text-sm font-medium text-gray-900 ">Tarea:</label>
-                    <input type="text"
+            <div className="mb-4">
+                    <label htmlFor="titulo" className="block mb-2 text-sm font-medium text-gray-900">Categoría de la Tarea:</label>
+                    <select
                         id="titulo"
                         value={titulo}
                         onChange={(e) => setTitulo(e.target.value)}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        required />
+                        required
+                    >
+                      {`["Red", "Impresora", "hardware", "Configuracion e Instalacion","Mail", "Relojes", "Traslado"],`}
+                        <option value="" disabled>Seleccione una categoría</option>
+                        <option value="Red">Red</option>
+                        <option value="Impresora">Impresora</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Configuracion e instalacion">Configuracion e Instalacion</option>
+                        <option value="Mail">Mail</option>
+                        <option value="Relojes">Relojes</option>
+                        <option value="Traslado">Traslados</option>
+                    </select>
                 </div>
                 <div className="mb-4">
                 <label
