@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ReportToners = () => {
+const ReportToners = ({ isTonersTable }) => {
     const [errorMessage, setErrorMessage] = useState()
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     const handleGenerateReport = async () => {
+      const reportType = isTonersTable ? 'toner' : 'unidadImagen';
         try {
-            const response = await axios.get(`${apiUrl}/api/report/toner`, {
-                responseType: 'blob',
-                withCredentials: true,
-            });
+          const response = await axios.get(`${apiUrl}/api/report/${reportType}`, {
+            responseType: 'blob',
+            withCredentials: true,
+        });
 
             const url = window.URL.createObjectURL(new Blob([response.data]))
             const link = document.createElement('a')
             link.href = url;
-            link.setAttribute('download', 'StockToners.xlsx');
+            link.setAttribute('download', `Stock_${isTonersTable ? 'Toners' : 'Unidad_Imagen'}.xlsx`);
             document.body.appendChild(link);
             link.click();
             link.remove();

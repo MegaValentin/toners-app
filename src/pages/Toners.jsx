@@ -101,7 +101,7 @@ const Toners = () => {
               )}
             </div>
 
-            <ReportToners />
+            <ReportToners isTonersTable={showTonersTable}/>
           </div>
           <div className=" ml-1">
             <button
