@@ -11,7 +11,7 @@ const EditUniModal = ({ uni, isOpen, onClose, onSave }) => {
     useEffect(() => {
         if (uni) {
             setMarcaName(uni.marca || '')
-            setUniName(uni.uni || '')
+            setUniName(uni.unidadImagen || '')
             setCantidad(uni.cantidad || '')
         } else {
             setMarcaName('')
@@ -22,11 +22,15 @@ const EditUniModal = ({ uni, isOpen, onClose, onSave }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (!uni?._id) {
+            console.error('Error: uni is undefined or does not have an _id');
+            return;
+        }
         try {
             await axios.put(`${apiUrl}/api/uni/${uni._id}`,
                 {
                     marca: marcaName,
-                    uni: uniName,
+                    unidadImagen: uniName,
                     cantidad: parseInt(cantidad, 10)
                 },
                 { withCredentials: true })

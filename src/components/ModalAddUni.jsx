@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const ModalAddUni = ({onUniAdded, onClose}) => {
+    const [ uniName, setUniName ] = useState('')
+    const [ cantidad, setCantidad ] = useState('')
+    const [ marcaName, setMarcaName ] = useState('')
+    const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-const AddTonerModal = ({ onTonerAdded, onClose }) => {
-  const [tonerName, setTonerName] = useState('');
-  const [cantidad, setCantidad] = useState('');
-  const [marcaName, setMarcaName] = useState('')
-  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const response = await axios.post(`${apiUrl}/api/adduni`,{
+                marca:marcaName,
+                unidadImagen: uniName,
+                cantidad: parseInt(cantidad, 10)
+            }, { withCredentials: true})
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${apiUrl}/api/addtoners`, {
-        marca: marcaName,
-        toner: tonerName,
-        cantidad: parseInt(cantidad, 10),
-      }, {
-        withCredentials: true,
-      });
-      // Llama a la función para actualizar la lista de toners
-      onTonerAdded(response.data);
-      // Cierra el modal
-      onClose();
-      window.location.reload();
-    } catch (error) {
-      console.error('Error adding toner:', error);
+            onUniAdded(response.data)
+
+            onClose()
+            window.location.reload()
+        } catch (error) {
+            console.error('Error adding uni: ', error)
+        }
     }
-  };
-  return (
-
-
-    <div className="bg-white p-8 rounded-lg  w-full max-w-md">
-      <h2 className='text-center text-2xl font-bold mb-6'>AGREGAR TONER</h2>
+    
+    return(
+        <div className="bg-white p-8 rounded-lg  w-full max-w-md">
+      <h2 className='text-center text-2xl font-bold mb-6'>AGREGAR UNIDAD DE IMAGEN</h2>
 
       <form className="space-y-5" onSubmit={handleSubmit}>
         <div className="mb-5">
@@ -47,11 +43,11 @@ const AddTonerModal = ({ onTonerAdded, onClose }) => {
         <div className="mb-5">
 
           <input type="text"
-            id="tonerName"
+            id="uniName"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Nombre del toner"
-            value={tonerName}
-            onChange={(e) => setTonerName(e.target.value)}
+            placeholder="Nombre de la unidad de imagen"
+            value={uniName}
+            onChange={(e) => setUniName(e.target.value)}
             required />
         </div>
         <div className="mb-5">
@@ -70,11 +66,7 @@ const AddTonerModal = ({ onTonerAdded, onClose }) => {
         </button>
       </form>
     </div>
+    )
+}
 
-
-
-
-  );
-};
-
-export default AddTonerModal;
+export default ModalAddUni

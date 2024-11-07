@@ -21,10 +21,6 @@ const UniTable = () => {
 
     }
 
-    useEffect(() => {
-        fetchUni()
-    }, [])
-
     const handleEdit = (uni) => {
         console.log(uni);
         setSelectedUni(uni);
@@ -34,8 +30,14 @@ const UniTable = () => {
     const handleCloseModal = () => {
         setEditModalIsOpen(false);
         setSelectedUni(null);
-        fetchToners();
+        fetchUni();
     };
+
+    useEffect(() => {
+        fetchUni()
+    }, [])
+
+
 
     const handleDelete = async (id) => {
         try {
@@ -136,7 +138,7 @@ const UniTable = () => {
                 </div>
             </div>
             <EditUniModal
-                toner={selectedUni}
+                uni={selectedUni}
                 isOpen={editModalIsOpen}
                 onClose={handleCloseModal}
                 onSave={fetchUni}
