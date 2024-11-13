@@ -77,7 +77,7 @@ const ToDoList = () => {
                         <option value="Red">Red</option>
                         <option value="Impresora">Impresora</option>
                         <option value="Hardware">Hardware</option>
-                        <option value="Configuracion e instalacion">Configuracion e Instalacion</option>
+                        <option value="Configuracion e Instalacion">Configuracion e Instalacion</option>
                         <option value="Mail">Mail</option>
                         <option value="Relojes">Relojes</option>
                         <option value="Traslado">Traslados</option>
