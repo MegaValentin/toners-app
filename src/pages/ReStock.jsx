@@ -20,11 +20,11 @@ const ReStock = () => {
               onClick={toggleForm} 
               className="mt-4 sm:mt-0 p-3 bg-teal-600 hover:bg-teal-900 text-white rounded shadow-lg text-lg font-medium"
             >
-              {useFormUni ?  "Unidad de Imagen" : "Toners"}
+              {useFormUni ? "Toners": "Unidad de Imagen"}
             </button>
 
-      <h1 className="text-center text-2xl font-bold mb-6 uppercase">ReStock de {useFormUni ? "Toners" : "Unidad de Imagen"}</h1>
-        {useFormUni ? <RestockForm/> : <RestockFormUni/> }
+      <h1 className="text-center text-2xl font-bold mb-6 uppercase">ReStock de {useFormUni ? "Unidad de Imagen" : "Toners"}</h1>
+        {useFormUni ?  <RestockFormUni/>: <RestockForm/>  }
       
        
         </>

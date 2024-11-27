@@ -17,6 +17,8 @@ import ToDoList from "./pages/ToDoList.jsx";
 import InProgressTaskList from "./pages/InProgressTaksList.jsx";
 import MyTasks from "./pages/MyTasks.jsx";
 import TaksListCompleted from "./pages/TasksListCompleted.jsx";
+import Hardware from "./pages/Hardware.jsx";
+import ListHardware from "./pages/ListHardware.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
@@ -52,6 +54,8 @@ function App() {
                     <Route path="/progresstasks" element={<InProgressTaskList/>}/>
                     <Route path="/mytasks" element={<MyTasks/>}/>
                     <Route path="/completed" element={<TaksListCompleted/>}/>
+                    <Route path="/hardware" element={<Hardware/>}/>
+                    <Route path="/listhardware" element={<ListHardware/>}/>
 
                   </Route>
                 </Routes>

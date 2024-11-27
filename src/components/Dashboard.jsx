@@ -14,6 +14,7 @@ import IconIncome from "./Icons/IconIncome";
 import IconRecommendedOrder from "./Icons/IconRecommendedOrder";
 import IconAddUser from "./Icons/IconAddUser";
 import IconMyTasks from "./Icons/IconMyTasks"
+import IconHardware from "./Icons/IconHardaware";
 
 const Dashborad = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -50,6 +51,7 @@ const Dashborad = () => {
   const taskLinks = [
     {to:"/todolist",label:"Agregar Tareas",icon: <IconAdd/>,click: handleTask},
     {to:"/tasklist",label:"Pendientes",icon: <IconPendiente/>,click: handleTask},
+    {to:"/mytasks",label:"Mis tareas",icon: <IconMyTasks/>,click: handleTask},
     {to:"/progresstasks",label:"En Proceso",icon: <IconProceso/>, click: handleTask},
     {to:"/completed",label:"Terminadas",icon: <IconFinish/>, click: handleTask},
   ]
@@ -75,7 +77,7 @@ const Dashborad = () => {
     {to:"/restock",label:"Ingreso",icon: <IconIncome/>, click: handleToners},
   ]
   const superAdminLinks = [
-    {to:"/mytasks",label:"Mis tareas",icon: <IconMyTasks/>,click: handleTask},
+    {to:"/hardware",label:"Hardware",icon: <IconHardware/>, click: handleAddMenu },
     {to:"/adduser",label:"Agregar Usuarios",icon: <IconAddUser/>, click: handleAddMenu },
     {to:"/",label:"Salir",icon: <IconGetOut/>, click: handleLogout},
   ]
