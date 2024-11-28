@@ -22,6 +22,19 @@ const ListHardware = () => {
         fetchHardware()
     }, [])
 
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`${apiUrl}/api/hardware/${id}`, {
+                withCredentials: true
+            })
+
+            setHardware(hardware.filter((orderHardware) => orderHardware._id !== id));
+            fetchHardware()
+        } catch (error) {
+            console.error("Error deleting order: ", error)
+        }
+    }
+
     return (
         <div className="bg-transparent  rounded-lg w-full mt-10 ">
             {hardware.length === 0 ? (
@@ -29,13 +42,25 @@ const ListHardware = () => {
                     <p className="font-semibold">No hay ordenes aún.</p>
                 </div>
             ) : <>
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
+                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 ">
                     {hardware.map((orderHardware) => (
                         <li key={orderHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
                             <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                                 <div className="flex-1 min-w-0">
-                                    <strong>{orderHardware.hardware}</strong>
-                                    <p className="text-gray-900 mt-2">{orderHardware.areaName}</p>
+                                    <strong>{orderHardware.areaName}</strong>
+                                    <ul className="list-disc list-inside text-gray-900 mt-2">
+                                        {Array.isArray(orderHardware.hardware)
+                                            ? orderHardware.hardware.map((item, index) => (
+                                                <li key={index}>{item}</li>
+                                            ))
+                                            : typeof orderHardware.hardware === "string"
+                                                ? orderHardware.hardware.split(",").map((item, index) => (
+                                                    <li key={index}>{item.trim()}</li>
+                                                ))
+                                                : (
+                                                    <li>{orderHardware.hardware || "No hay hardware disponible"}</li>
+                                                )}
+                                    </ul>
                                     <p className="text-grat-900 mt-2">{orderHardware.description}</p>
                                     <p className="text-gray-600 mt-4"> Creada: {orderHardware.fecha}</p>
 
@@ -45,17 +70,18 @@ const ListHardware = () => {
                                     <button
                                         className="text-green-700 hover:text-green-500"
                                     >
-                                        <IconChek/>
+                                        <IconChek />
                                     </button>
                                     <button
                                         className="text-blue-700 hover:text-blue-500"
                                     >
-                                        <IconDownload/>
+                                        <IconDownload />
                                     </button>
                                     <button
+                                        onClick={() => handleDelete(orderHardware._id)}
                                         className="text-red-700 hover:text-red-500"
                                     >
-                                        <IconDelete/>
+                                        <IconDelete />
                                     </button>
                                 </div>
                             </div>
