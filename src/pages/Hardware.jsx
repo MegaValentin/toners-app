@@ -117,7 +117,7 @@ const Hardware = () => {
             <button
               type="button"
               onClick={handleAddHardware}
-              className="text-blue-500 hover:text-blue-700  px-5 py-3"
+              className="text-blue-500 hover:text-blue-700 text-sm"
             >
               <IconAdd/>
             </button>
