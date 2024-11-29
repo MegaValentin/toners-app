@@ -152,10 +152,10 @@ const ListHardware = () => {
                 </ul>
 
 
-                <h4 className="text-center text-2xl font-bold mb-6">Hardware Solicitado Entregado</h4>
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 ">
+                    <h4 className="text-center text-2xl font-bold mb-6">Hardware Solicitado Entregado</h4>
                     {filteredConfirmHardware.map((confirmHardware) => (
-                        <li key={confirmHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
+                    <li key={confirmHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
                             <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                                 <div className="flex-1 min-w-0">
                                     <strong>{confirmHardware.areaName}</strong>
@@ -177,7 +177,18 @@ const ListHardware = () => {
 
 
                                 </div>
-
+                                <div className="inline-flex items-center text-base font-semibold gap-4">
+                                    {confirmHardware.confirm && (
+                                        <>
+                                            <button
+                                                onClick={() => openModal("delete", confirmHardware._id)}
+                                                className="text-red-700 hover:text-red-500"
+                                            >
+                                                <IconDelete />
+                                            </button>
+                                        </>
+                                    )}
+                                </div>                    
                             </div>
                         </li>
                     ))}
@@ -185,7 +196,7 @@ const ListHardware = () => {
                 {showModal && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="bg-white rounded-lg p-6 space-y-4">
-                            <h2 className="text-lg font-semibold">{currentAction.action === "delete" ? "¿Estas seguro de elimar esta orden?" : "¿Confirmar orden?"}</h2>
+                            <h2 className="text-lg font-semibold">{currentAction.action === "delete" ? "¿Estas seguro de elimar esta orden?" : "Pedido de orden entregado"}</h2>
                             
                             <div className="flex justify-end gap-4">
                                 <button
@@ -202,7 +213,7 @@ const ListHardware = () => {
                                     }`}
                                     onClick={confirmAction}
                                 >
-                                    {currentAction.action === "delete" ? "Eliminar" : "Confirmar"}
+                                    {currentAction.action === "delete" ? "Eliminar" : "SI"}
                                 </button>
                             </div>
                         </div>
