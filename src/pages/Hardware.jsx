@@ -181,10 +181,10 @@ const Hardware = () => {
         </p>
       )}
 
-      <div className="pl-4 w-3/4">
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-6">
         <Link
           to={"/listhardware"}
-          className="w-1/6 flex justify-center text-black text-sm px-5 py-2.5 lg:text-base gap-x-2 hover:bg-gray-300 rounded-lg"
+          className="text-gray-500 hover:text-gray-700 flex items-center space-x-1 p-2"
         >
           <IconCheckList /> Lista de pedidos
         </Link>

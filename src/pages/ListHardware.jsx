@@ -33,8 +33,9 @@ const ListHardware = () => {
             })
 
             setHardware(hardware.filter((orderHardware) => orderHardware._id !== id));
-            fetchHardware()
+
         } catch (error) {
+
             console.error("Error deleting order: ", error)
         }
     }
@@ -77,6 +78,7 @@ const ListHardware = () => {
         }
         setShowModal(false);
     };
+
 
     return (
         <div className="bg-transparent  rounded-lg w-full mt-10 ">
@@ -126,12 +128,13 @@ const ListHardware = () => {
                                         <>
 
                                             <button
-                                               onClick={() => openModal("confirm", orderHardware._id)}
+                                                onClick={() => openModal("confirm", orderHardware._id)}
                                                 className="text-green-700 hover:text-green-500"
                                             >
                                                 <IconChek />
                                             </button>
                                             <button
+
                                                 className="text-blue-700 hover:text-blue-500"
                                             >
                                                 <IconDownload />
@@ -155,7 +158,7 @@ const ListHardware = () => {
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 ">
                     <h4 className="text-center text-2xl font-bold mb-6">Hardware Solicitado Entregado</h4>
                     {filteredConfirmHardware.map((confirmHardware) => (
-                    <li key={confirmHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
+                        <li key={confirmHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
                             <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                                 <div className="flex-1 min-w-0">
                                     <strong>{confirmHardware.areaName}</strong>
@@ -188,7 +191,7 @@ const ListHardware = () => {
                                             </button>
                                         </>
                                     )}
-                                </div>                    
+                                </div>
                             </div>
                         </li>
                     ))}
@@ -197,7 +200,7 @@ const ListHardware = () => {
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                         <div className="bg-white rounded-lg p-6 space-y-4">
                             <h2 className="text-lg font-semibold">{currentAction.action === "delete" ? "¿Estas seguro de elimar esta orden?" : "Pedido de orden entregado"}</h2>
-                            
+
                             <div className="flex justify-end gap-4">
                                 <button
                                     className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
@@ -206,11 +209,10 @@ const ListHardware = () => {
                                     Cancelar
                                 </button>
                                 <button
-                                    className={`px-4 py-2 rounded hover:opacity-90 ${
-                                        currentAction.action === "delete"
-                                            ? "bg-red-600 text-white hover:bg-red-700"
-                                            : "bg-green-600 text-white hover:bg-green-700"
-                                    }`}
+                                    className={`px-4 py-2 rounded hover:opacity-90 ${currentAction.action === "delete"
+                                        ? "bg-red-600 text-white hover:bg-red-700"
+                                        : "bg-green-600 text-white hover:bg-green-700"
+                                        }`}
                                     onClick={confirmAction}
                                 >
                                     {currentAction.action === "delete" ? "Eliminar" : "SI"}
