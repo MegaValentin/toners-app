@@ -126,33 +126,7 @@ const Dashborad = () => {
       <div className={`lg:flex flex-col ${menuOpen ? "block" : "hidden"}`}>
         {user.role === "superadmin" && (
           <>
-            <div className="relative mb-4">
-              <button
-                className="flex justify-between items-center text-white py-2 px-4 w-full hover:bg-gray-700"
-                onClick={toggleDropdownTareas}
-              >
-                Tareas
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className={`transition-transform duration-200 ${
-                    dropdownOpenTareas ? "rotate-180" : "rotate-0"
-                  }`}
-                >
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </button>
-              {dropdownOpenTareas && (
-                <div className="pl-4 text-white bg-gray-700">{renderLinks(taskLinks)}</div>
-              )}
-            </div>
+            
 
             <div className="relative mb-4">
               <button
@@ -181,8 +155,37 @@ const Dashborad = () => {
                 <div className="pl-4 text-white bg-gray-700">{renderLinks(tonersLinks)}</div>
               )}
             </div>
+            <div className="relative mb-4">
+              <button
+                className="flex justify-between items-center text-white py-2 px-4 w-full hover:bg-gray-700"
+                onClick={toggleDropdownTareas}
+              >
+                Tareas
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${
+                    dropdownOpenTareas ? "rotate-180" : "rotate-0"
+                  }`}
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              {dropdownOpenTareas && (
+                <div className="pl-4 text-white bg-gray-700">{renderLinks(taskLinks)}</div>
+              )}
+            </div>
 
             {renderLinks(superAdminLinks)}
+
+            
           </>
         )}
 
