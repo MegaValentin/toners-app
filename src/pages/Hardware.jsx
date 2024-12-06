@@ -8,7 +8,7 @@ import IconAdd from "../components/Icons/IconAdd";
 
 const Hardware = () => {
   const [hardware, setHardware] = useState('');
-  const [hardwareList, setHardwareList] = useState([]); 
+  const [hardwareList, setHardwareList] = useState([]);
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
@@ -31,12 +31,12 @@ const Hardware = () => {
 
   const handleAddHardware = () => {
     if (hardware.trim() === '') return;
-    setHardwareList([...hardwareList, hardware.trim()]); 
-    setHardware(''); 
+    setHardwareList([...hardwareList, hardware.trim()]);
+    setHardware('');
   };
 
   const handleRemoveHardware = (index) => {
-    setHardwareList(hardwareList.filter((_, i) => i !== index)); 
+    setHardwareList(hardwareList.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -46,21 +46,31 @@ const Hardware = () => {
       const response = await axios.post(
         `${apiUrl}/api/addhardware`,
         {
-          hardware: hardwareList, 
+          hardware: hardwareList,
           area: selectedArea,
           description,
         },
         {
           withCredentials: true,
+          responseType: 'blob'
         }
       );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Orden_Hardware.pdf'); 
+      document.body.appendChild(link);
+      link.click(); 
+      document.body.removeChild(link);
+      
       setMessage('Orden creada exitosamente');
 
       setTimeout(() => {
         setMessage('');
       }, 1000);
 
-      
+
       setHardwareList([]);
       setDescription('');
       setSelectedArea('');
@@ -119,7 +129,7 @@ const Hardware = () => {
               onClick={handleAddHardware}
               className="text-blue-500 hover:text-blue-700 text-sm"
             >
-              <IconAdd/>
+              <IconAdd />
             </button>
           </div>
         </div>
@@ -135,7 +145,7 @@ const Hardware = () => {
                     onClick={() => handleRemoveHardware(index)}
                     className="text-red-500 hover:text-red-700 text-sm mb-3"
                   >
-                    <IconDelete/>
+                    <IconDelete />
                   </button>
                 </li>
               ))}
@@ -173,9 +183,8 @@ const Hardware = () => {
 
       {message && (
         <p
-          className={`mt-4 text-center font-semibold ${
-            message.includes('error') ? 'text-red-500' : 'text-green-500'
-          }`}
+          className={`mt-4 text-center font-semibold ${message.includes('error') ? 'text-red-500' : 'text-green-500'
+            }`}
         >
           {message}
         </p>
