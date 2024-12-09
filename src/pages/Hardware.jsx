@@ -85,7 +85,7 @@ const Hardware = () => {
 
   return (
     <div className="bg-transparent p-8 rounded-lg w-full mt-10">
-      <h2 className="text-center text-2xl font-bold mb-6">Hardware</h2>
+      <h2 className="text-center text-2xl font-bold mb-6">Orden de Compras</h2>
       <form onSubmit={handleSubmit} className="max-w-sm mx-auto">
         <div className="mb-4">
           <label
@@ -114,7 +114,7 @@ const Hardware = () => {
 
         <div className="mb-4">
           <label htmlFor="Hardware" className="block mb-2 text-sm font-medium text-gray-900">
-            Hardware Solicitado
+            Pedido de Compra
           </label>
           <div className="flex gap-2">
             <input

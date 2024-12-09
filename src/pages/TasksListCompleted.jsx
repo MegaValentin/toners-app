@@ -4,7 +4,9 @@ import axios from 'axios';
 const TaksListCompleted = () => {
     const [tasks, setTasks] = useState([])
     const [areas, setAreas] = useState([]);
+    const [ users, setUsers ] = useState([])
     const [selectedArea, setSelectedArea] = useState('');
+    const [ selectedUser, setSelectedUser ] = useState('')
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => {
@@ -13,6 +15,8 @@ const TaksListCompleted = () => {
                 const response = await axios.get(`${apiUrl}/api/tasks`, { withCredentials: true });
                 setTasks(response.data);
                 setAreas([...new Set(response.data.map(task => task.areaName))]);
+                setUsers([...new Set(response.data.map(task => task.usuarioAsignado))])
+
             } catch (error) {
                 console.error("Error fetching tasks:", error);
             }
@@ -41,7 +45,8 @@ const TaksListCompleted = () => {
 
     const inCompletedTasks = tasks
         .filter(task => task.estado === "finalizado")
-        .filter(task => (selectedArea ? task.areaName === selectedArea : true));
+        .filter(task => (selectedArea ? task.areaName === selectedArea : true))
+        .filter(task => (selectedUser ? task.usuarioAsignado === selectedUser : true));
 
     return (
         <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
@@ -55,6 +60,16 @@ const TaksListCompleted = () => {
                     <option value="">Todas las Áreas</option>
                     {areas.map(area => (
                         <option key={area} value={area}>{area}</option>
+                    ))}
+                </select>
+                <select
+                    value={selectedUser}
+                    onChange={e => setSelectedUser(e.target.value)}
+                    className="p-2 border border-gray-300 rounded"
+                >
+                    <option value="">Usuario</option>
+                    {users.map(user => (
+                        <option key={user} value={user}>{user}</option>
                     ))}
                 </select>
             </div>
