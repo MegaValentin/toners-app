@@ -62,6 +62,26 @@ const ListHardware = () => {
         }
     }
 
+    const handleDownloadDoc = async (id) => {
+        try {
+            const response = await axios.get(`${apiUrl}/api/hardware/${id}/doc`,{
+                responseType: 'blob',
+                withCredentials:true
+            })
+
+            const url = window.URL.createObjectURL(new Blob([response.data]))
+            const link = document.createElement("a")
+            link.href = url
+            link.setAttribute("download", `Orden_${id}.pdf`)
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+
+        } catch (error) {
+            console.error("Error downloading PDF: ", error);
+        }
+    }
+
     const filteredHardware = hardware.filter(orderHardware => !orderHardware.confirm)
     const filteredConfirmHardware = hardware.filter(orderHardware => orderHardware.confirm)
 
@@ -134,7 +154,7 @@ const ListHardware = () => {
                                                 <IconChek />
                                             </button>
                                             <button
-
+                                                onClick={() => handleDownloadDoc(orderHardware._id)}
                                                 className="text-blue-700 hover:text-blue-500"
                                             >
                                                 <IconDownload />
