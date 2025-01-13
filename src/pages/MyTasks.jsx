@@ -183,7 +183,7 @@ const MyTasks = () => {
                     <p className="font-semibold">No tenes tareas finalizadas aún.</p>
                 </div>
             ) : (
-                <ul className="space-y-4">
+                <ul className="space-y-4 divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
                     {completedTasks.map((task) => (
                         <li key={task._id} className="bg-gray-200 p-4 rounded-lg shadow-md">
                             <strong className="text-lg font-semibold">{task.titulo}</strong>: {task.descripcion}

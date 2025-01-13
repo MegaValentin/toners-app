@@ -50,7 +50,7 @@ const ListHardware = () => {
             })
 
             setHardware(response.data)
-            setConfirmationMessage("Hardware Entregado")
+            setConfirmationMessage("Orden Entregado")
             setTimeout(() => setConfirmationMessage(""), 1500)
 
             setErrorMessage("")
@@ -108,7 +108,7 @@ const ListHardware = () => {
                 </div>
             ) : <>
 
-                <h4 className="text-center text-2xl font-bold mb-6">Hardware Solicitado</h4>
+                <h4 className="text-center text-2xl font-bold mb-6">Ordenes Solicitadas</h4>
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 ">
                     {errorMessage && (
                         <div className="mb-4 text-red-500 text-center">
@@ -176,7 +176,7 @@ const ListHardware = () => {
 
 
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 ">
-                    <h4 className="text-center text-2xl font-bold mb-6">Hardware Solicitado Entregado</h4>
+                    <h4 className="text-center text-2xl font-bold mb-6">Ordenes Entregadas</h4>
                     {filteredConfirmHardware.map((confirmHardware) => (
                         <li key={confirmHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
                             <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">

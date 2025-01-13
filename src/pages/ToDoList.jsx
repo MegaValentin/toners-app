@@ -81,6 +81,7 @@ const ToDoList = () => {
                         <option value="Mail">Mail</option>
                         <option value="Relojes">Relojes</option>
                         <option value="Traslado">Traslados</option>
+                        <option value="RAFAM">RAFAM</option>
                     </select>
                 </div>
                 <div className="mb-4">
