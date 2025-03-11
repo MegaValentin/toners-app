@@ -23,6 +23,19 @@ const PedidoRecomendado = () => {
     fetchToners();
   }, []);
 
+  const brandOrder = ["HP", "Ricoh", "SAMSUNG", "BROTHER", "Pantum", "Kyosera"];
+
+  const sortedToners = [...toners].sort((a, b) => {
+    const cleanMarcaA = a.marca.trim().toUpperCase();
+    const cleanMarcaB = b.marca.trim().toUpperCase();
+  
+    const indexA = brandOrder.indexOf(cleanMarcaA);
+    const indexB = brandOrder.indexOf(cleanMarcaB);
+  
+    return (indexA === -1 ? brandOrder.length : indexA) - (indexB === -1 ? brandOrder.length : indexB);
+  });
+  
+
   return (
     <div className="flex justify-center">
       <div className="w-full">
@@ -38,7 +51,7 @@ const PedidoRecomendado = () => {
               </tr>
             </thead>
             <tbody className="text-xs uppercase bg-white">
-              {toners.map((toner) => (
+              {sortedToners.map((toner) => (
                 <tr key={toner._id} className="border-b">
                   <td className="px-6 py-4 font-medium whitespace-nowrap ">{toner.marca}</td>
                   <td className="px-4 py-2 text-gray-900">{toner.toner}</td>

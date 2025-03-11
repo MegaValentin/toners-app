@@ -12,6 +12,7 @@ import { useAuth } from "../context/AuthContext"
 
 const Toners = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalUniIsOpen, setModalUniIsOpen ] = useState(false)
   const [uploadExcelModalIsOpen, setUploadExcelModalIsOpen] = useState(false);
   const [toner, setToner] = useState([]);
   const [uni, setUni] = useState([])
@@ -35,11 +36,11 @@ const Toners = () => {
   };
 
   const openModalUni = () => {
-    setModalIsOpen(true)
+    setModalUniIsOpen(true)
   }
 
   const closeModalUni = () => {
-    setModalIsOpen(false)
+    setModalUniIsOpen(false)
   }
 
   const handleTonerAdded = (newToner) => {
@@ -126,7 +127,7 @@ const Toners = () => {
 
           <Modal
 
-            isOpen={modalIsOpen}
+            isOpen={modalUniIsOpen}
             onRequestClose={closeModalUni}
             contentLabel="Agregar Agregar Unidad de Imagen"
             className="modal"
