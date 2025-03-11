@@ -8,6 +8,8 @@ const TonersTable = () => {
   const [toners, setToners] = useState([]);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [selectedToner, setSelectedToner] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [currentAction, setCurrentAction] = useState(null);
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   
   const fetchToners = async () => {
@@ -53,6 +55,16 @@ const TonersTable = () => {
     }
   };
 
+  const openModal = (id) => {
+    setCurrentAction({id})
+    setShowModal(true)
+  }
+
+  const confirmAction = () => {
+    handleDelete(currentAction.id)
+    setShowModal(false);
+  }
+
   return (
     
     <div className="flex justify-center ">
@@ -94,7 +106,7 @@ const TonersTable = () => {
                     <IconEdit/>
                   </button>
                   <button
-                    onClick={() => handleDelete(toner._id)}
+                    onClick={() => openModal(toner._id)}
                     className="text-red-500 hover:text-red-700"
                   >
                     <IconDelete/>
@@ -112,6 +124,29 @@ const TonersTable = () => {
         onClose={handleCloseModal}
         onSave={fetchToners}
       />
+       {showModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <div className="bg-white rounded-lg p-6 space-y-4">
+                            <h2 className="text-lg font-semibold">¿Estas seguro de elimar esta orden?</h2>
+
+                            <div className="flex justify-end gap-4">
+                                <button
+                                    className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    className={`px-4 py-2 rounded hover:opacity-90 bg-red-600 text-white hover:bg-red-700`}
+                                    onClick={confirmAction}
+                                >
+                                    {currentAction.action === "delete" ? "Eliminar" : "SI"}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
 
     </div>
   );
