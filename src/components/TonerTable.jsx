@@ -71,7 +71,7 @@ const TonersTable = () => {
       <div className="w-full">
 
       <div className="table-container overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-400 table-fixed-header">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-400 ">
           <thead className="text-xs  uppercase bg-sky-900 ">
             <tr className="text-white">
             <th scope="col" className="px-6 py-3">
@@ -125,7 +125,7 @@ const TonersTable = () => {
         onSave={fetchToners}
       />
        {showModal && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex items-center justify-center">
                         <div className="bg-white rounded-lg p-6 space-y-4">
                             <h2 className="text-lg font-semibold">¿Estas seguro de elimar esta orden?</h2>
 

@@ -126,9 +126,9 @@ const HistoryOrders = () => {
           No hay órdenes agregadas para esta fecha.
         </div>
       ) : (
-        <div className="table-container overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-xs lg:text-sm text-left rtl:text-right text-gray-400 table-auto">
-            <thead className="text-xs uppercase bg-sky-900">
+        <div className="border rounded overflow-hidden">
+          <table className="w-full text-xs lg:text-sm text-left text-gray-400 table-auto">
+            <thead className="text-xs uppercase bg-sky-900 sticky top-0 z-10">
               <tr className="text-white">
                 <th className="px-2 sm:px-4 py-3">Área</th>
                 <th className="px-2 sm:px-4 py-3">Toner</th>
@@ -138,6 +138,9 @@ const HistoryOrders = () => {
                 <th className="px-2 sm:px-4 py-3"></th>
               </tr>
             </thead>
+            </table>
+            <div className='max-h-[400px] overflow-y-auto'>
+              <table className='w-full text-xs lg:text-sm text-left text-black table-auto'>
             <tbody>
               {filteredOrders.map((order) => (
                 <tr key={order._id} className="border-b bg-white text-black hover:bg-gray-100">
@@ -172,7 +175,9 @@ const HistoryOrders = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+              </table>
+            </div>
+          
         </div>
       )}
 

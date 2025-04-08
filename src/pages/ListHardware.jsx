@@ -101,7 +101,7 @@ const ListHardware = () => {
 
 
     return (
-        <div className="bg-transparent  rounded-lg w-full mt-10 ">
+        <div className="bg-transparent rounded-lg w-full  ">
             {hardware.length === 0 ? (
                 <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
                     <p className="font-semibold">No hay ordenes aún.</p>
@@ -109,23 +109,23 @@ const ListHardware = () => {
             ) : <>
 
                 <h4 className="text-center text-2xl font-bold mb-6">Ordenes Solicitadas</h4>
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 ">
+                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar ">
                     {errorMessage && (
-                        <div className="mb-4 text-red-500 text-center">
+                        <div className="mb-2 text-red-500 text-center">
                             {errorMessage}
                         </div>
                     )}
                     {confirmationMessage && (
-                        <div className="mb-4 text-green-500 text-center">
+                        <div className="mb-2 text-green-500 text-center">
                             {confirmationMessage}
                         </div>
                     )}
                     {filteredHardware.map((orderHardware) => (
-                        <li key={orderHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
+                        <li key={orderHardware._id} className="pb-3 sm:pb-4 mt-1 mr-4">
                             <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
                                 <div className="flex-1 min-w-0">
                                     <strong>{orderHardware.areaName}</strong>
-                                    <ul className="list-disc list-inside text-gray-900 mt-2">
+                                    <ul className="list-disc list-inside text-gray-900 mt-1">
                                         {Array.isArray(orderHardware.hardware)
                                             ? orderHardware.hardware.map((item, index) => (
                                                 <li key={index}>{item}</li>
@@ -175,8 +175,8 @@ const ListHardware = () => {
                 </ul>
 
 
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 ">
-                    <h4 className="text-center text-2xl font-bold mb-6">Ordenes Entregadas</h4>
+                    <h4 className="text-center text-2xl font-bold mb-3">Ordenes Entregadas</h4>
+                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full  max-h-96 overflow-y-auto custom-scrollbar">
                     {filteredConfirmHardware.map((confirmHardware) => (
                         <li key={confirmHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
                             <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">

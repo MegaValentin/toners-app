@@ -72,7 +72,7 @@ const Orders = () => {
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             contentLabel="Historial de Órdenes"
-            className="modal-content w-11/12 sm:w-3/4 lg:w-1/2 xl:w-1/3 max-w-3xl p-4 sm:p-9 bg-white rounded-md shadow-lg overflow-auto"
+            className="modal-content p-4 sm:p-9 bg-white rounded-md shadow-lg overflow-auto"
             overlayClassName="overlay fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
           >
             <div className="flex justify-end">
