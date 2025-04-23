@@ -24,8 +24,16 @@ const OrderForm = () => {
             withCredentials: true, 
           }
         );
+
+        const sortedAreas = areasResponse.data
+        .map(area => ({
+          ...area,
+          area: area.area.charAt(0).toUpperCase() + area.area.slice(1).toLowerCase()
+        }))
+        .sort((a, b) => a.area.localeCompare(b.area));
+
         setToners(tonersResponse.data);
-        setAreas(areasResponse.data);
+        setAreas(sortedAreas);
       } catch (error) {
         console.error("Error fetching toners and areas:", error);
       }

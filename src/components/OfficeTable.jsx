@@ -13,7 +13,14 @@ const OfficeTable = () => {
       const response = await axios.get(`${apiUrl}/api/offices`, {
         withCredentials: true, 
       });
-      setAreas(response.data);
+      const sortedAreas = response.data
+        .map(area => ({
+          ...area,
+          area: area.area.charAt(0).toUpperCase() + area.area.slice(1).toLowerCase()
+        }))
+        .sort((a, b) => a.area.localeCompare(b.area));
+
+      setAreas(sortedAreas);
     } catch (error) {
       console.error("Error fetching toners:", error);
     }
