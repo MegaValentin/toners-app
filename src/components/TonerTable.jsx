@@ -71,51 +71,64 @@ const TonersTable = () => {
       <div className="w-full">
 
       <div className="table-container overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-400 ">
-          <thead className="text-xs  uppercase bg-sky-900 ">
-            <tr className="text-white">
-            <th scope="col" className="px-6 py-3">
-                Marca
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Toner
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <div className="flex items-center">cantidad</div>
-              </th>
-              <th scope="col" className="px-6 py-3">
-                <div className="flex items-center"></div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {toners.map((toner) => (
-              <tr key={toner._id} className="border-b bg-white  text-black">
-                <td className="px-6 py-4 font-medium whitespace-nowrap ">
-                  {toner.marca}
-                </td>
-                <td className="px-6 py-4 font-medium whitespace-nowrap ">
-                  {toner.toner}
-                </td>
-                <td className="px-4 py-2 text-gray-900">{toner.cantidad}</td>
-                <td className="px-4 py-2 text-gray-900">
-                  <button
-                    onClick={() => handleEdit(toner)}
-                    className="text-yellow-500 hover:text-yellow-700 mr-2"
-                  >
-                    <IconEdit/>
-                  </button>
-                  <button
-                    onClick={() => openModal(toner._id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <IconDelete/>
-                  </button>
-                </td>
+      <table className="w-full text-sm text-left rtl:text-right table-fixed-header">
+            <thead className="bg-sky-900 text-white">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  Marca
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  Tóner
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">
+                  Cantidad
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-semibold uppercase tracking-wider">
+                  Acciones
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+              {toners.map((toner) => (
+                <tr
+                  key={toner._id}
+                  className="hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                >
+                  <td className="px-6 py-4 text-gray-900 dark:text-gray-100 font-medium">
+                    {toner.marca}
+                  </td>
+                  <td className="px-6 py-4 text-gray-700 dark:text-gray-300">
+                    {toner.toner}
+                  </td>
+                  <td
+                    className={`px-6 py-4 font-semibold ${
+                      toner.cantidad === 0
+                        ? "text-red-600"
+                        : toner.cantidad < 3
+                        ? "text-yellow-500"
+                        : "text-green-600"
+                    }`}
+                  >
+                    {toner.cantidad}
+                  </td>
+                  <td className="px-6 py-4 flex justify-center gap-3">
+                    <button
+                      onClick={() => handleEdit(toner)}
+                      className="flex items-center justify-center p-2 bg-yellow-100 hover:bg-yellow-200 rounded-lg transition"
+                    >
+                      <IconEdit />
+                    </button>
+                    <button
+                      onClick={() => openModal(toner._id)}
+                      className="flex items-center justify-center p-2 bg-red-100 hover:bg-red-200 rounded-lg transition"
+                    >
+                      <IconDelete />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
       </div>
       </div>
       <EditTonerModal
@@ -125,27 +138,29 @@ const TonersTable = () => {
         onSave={fetchToners}
       />
        {showModal && (
-                    <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex items-center justify-center">
-                        <div className="bg-white rounded-lg p-6 space-y-4">
-                            <h2 className="text-lg font-semibold">¿Estas seguro de elimar esta orden?</h2>
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-xl max-w-sm w-full space-y-4">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+              ¿Estás seguro de eliminar este tóner?
+            </h2>
 
-                            <div className="flex justify-end gap-4">
-                                <button
-                                    className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
-                                    onClick={() => setShowModal(false)}
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    className={`px-4 py-2 rounded hover:opacity-90 bg-red-600 text-white hover:bg-red-700`}
-                                    onClick={confirmAction}
-                                >
-                                    {currentAction.action === "delete" ? "Eliminar" : "SI"}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+            <div className="flex justify-end gap-4">
+              <button
+                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                onClick={() => setShowModal(false)}
+              >
+                Cancelar
+              </button>
+              <button
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                onClick={confirmAction}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
 
     </div>
