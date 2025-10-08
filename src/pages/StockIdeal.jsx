@@ -1,5 +1,5 @@
 import React from 'react';
-import UploadExcel from '../components/UploadExcel';
+import PedidoRecomendado from '../components/PedidoRecomendado';
 import { useAuth } from "../context/AuthContext"
 import UnauthorizedAcess from '../components/UnauthorizedAccess';
 const StockIdeal = () => {
@@ -10,7 +10,7 @@ const StockIdeal = () => {
       {(user.role === 'admin' || user.role === 'superadmin') && (
         <>
       <h1 className="text-3xl font-bold mb-4">PEDIDO RECOMENDADO</h1>
-      <UploadExcel />
+      <PedidoRecomendado/>
         </>
       )}
       {user.role === 'empleado' && (

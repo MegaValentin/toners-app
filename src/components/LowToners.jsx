@@ -12,7 +12,7 @@ const LowToners = () => {
   useEffect(() => {
     const fetchLowToners = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/api/low-toner`, {
+        const response = await axios.get(`${apiUrl}/api/lowstock`, {
           withCredentials: true, // Ensure credentials (cookies) are sent
         });
         setToners(response.data);
@@ -25,41 +25,65 @@ const LowToners = () => {
   }, []);
   return (
     
-    <div className="flex justify-center">
+    <div className="flex flex-col items-center w-full px-4 py-6">
+      <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+        🔻 Toners con poco stock
+      </h1>
 
       {toners.length === 0 ? (
-        <OkMessage />
+        <OkMessage message="No hay tóners con poco stock 🎉" />
       ) : (
-        <>
-          <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
-            { toners.map((toner) => (
-             <li key={toner._id} className="pb-3 sm:pb-4 mt-3 mr-4">
-               <div className=" flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
-               <div className="flex-1 min-w-0">
-                   <h2 className="text-sm font-medium text-gray-900 truncate">
-                     {toner.toner}
-                   </h2>
-     
-               </div>
-               <div className="inline-flex items-center text-base font-semibold">
-     
-                   <p className="text-sm font-medium text-red-500 truncate">
-                     Cantidad: {toner.current}
-                   </p>
-               </div>
-     
-     
-               </div>
-     
-             </li>
-                 
-             ))}
-          </ul>
-        </>
+        <div className="w-full max-w-3xl space-y-4 overflow-y-auto max-h-[550px] custom-scrollbar">
+          {toners.map((toner) => (
+            <div
+              key={toner._id}
+              className="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-4 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition"
+            >
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    {toner.marca} - {toner.toner}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    Ideal: <span className="font-medium">{toner.cantidadIdeal}</span> | Actual:{" "}
+                    <span className="font-medium">{toner.cantidadActual}</span> | Faltan:{" "}
+                    <span className="font-medium text-red-500">{toner.faltante}</span>
+                  </p>
+                </div>
 
-        )}
-        
+                <div className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                  <span
+                    className={
+                      parseFloat(toner.porcentaje) < 20
+                        ? "text-red-600"
+                        : parseFloat(toner.porcentaje) < 35
+                        ? "text-yellow-500"
+                        : "text-green-500"
+                    }
+                  >
+                    {toner.porcentaje}
+                  </span>
+                </div>
+              </div>
+
+              {/* Barra de progreso */}
+              <div className="mt-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                <div
+                  className={`h-3 rounded-full ${
+                    parseFloat(toner.porcentaje) < 20
+                      ? "bg-red-500"
+                      : parseFloat(toner.porcentaje) < 35
+                      ? "bg-yellow-400"
+                      : "bg-green-500"
+                  }`}
+                  style={{ width: toner.porcentaje }}
+                ></div>
+              </div>
+            </div>
+          ))}
         </div>
+      )}
+    </div>
    
   );
 };

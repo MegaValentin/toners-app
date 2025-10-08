@@ -7,6 +7,7 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
     const [tonerName, setTonerName] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [marcaName, setMarcaName] = useState('')
+    const [ cantidadIdeal, setCantidadIdeal ] = useState('')
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
     
     useEffect(() => {
@@ -14,10 +15,12 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
             setMarcaName(toner.marca || '')
             setTonerName(toner.toner || '')
             setCantidad(toner.cantidad || '')
+            setCantidadIdeal(toner.cantidadIdeal || '')
         } else {
             setMarcaName('')
             setTonerName('')
             setCantidad('')
+            setCantidadIdeal('')
         }
     }, [toner]);
 
@@ -29,6 +32,7 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
                 marca: marcaName,
                 toner: tonerName,
                 cantidad: parseInt(cantidad, 10),
+                cantidadIdeal: parseInt(cantidadIdeal, 10)
             }, {
                 withCredentials: true, 
               });
@@ -79,6 +83,17 @@ const EditTonerModal = ({ toner, isOpen, onClose, onSave }) => {
                             onChange={(e) => setCantidad(e.target.value)}
                             required
                         />
+                    </div>
+                    <div className="mb-5">
+                        <input
+                            type="number"
+                            id="cantidadIdeal"
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                            placeholder="Cantidad Ideal"
+                            value={cantidadIdeal}
+                            onChange={(e) => setCantidadIdeal(e.target.value)}
+                            required
+                    />
                     </div>
                     <button
                         type="submit"

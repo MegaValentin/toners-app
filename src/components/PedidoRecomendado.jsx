@@ -9,7 +9,7 @@ const PedidoRecomendado = () => {
   const fetchToners = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/api/pedidorecomendado`, {
+        `${apiUrl}/api/recommended`, {
           withCredentials: true, 
         }
       );
@@ -55,9 +55,10 @@ const PedidoRecomendado = () => {
                 <tr key={toner._id} className="border-b">
                   <td className="px-6 py-4 font-medium whitespace-nowrap ">{toner.marca}</td>
                   <td className="px-4 py-2 text-gray-900">{toner.toner}</td>
-                  <td className="px-4 py-2 text-gray-900">{toner.ideal}</td>
-                  <td className="px-4 py-2 text-gray-900">{toner.current}</td>
-                  <td className="px-4 py-2 text-gray-900">{toner.needed}</td>
+                  <td className="px-4 py-2 text-gray-900">{toner.cantidadIdeal}</td>
+                  <td className="px-4 py-2 text-gray-900">{toner.cantidadActual}</td>
+                  <td className="px-4 py-2 text-gray-900">{toner.pedidoRecomendado}</td>
+                  
                 </tr>
               ))}
             </tbody>
