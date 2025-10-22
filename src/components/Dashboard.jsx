@@ -15,6 +15,7 @@ import IconRecommendedOrder from "./Icons/IconRecommendedOrder";
 import IconAddUser from "./Icons/IconAddUser";
 import IconMyTasks from "./Icons/IconMyTasks"
 import IconHardware from "./Icons/IconHardaware";
+import IconQuestion from "./Icons/IconQuestion";
 
 const Dashborad = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,6 +62,7 @@ const Dashborad = () => {
     {to:"/toners",label:"Stock",icon: <IconStock/>, click: handleToners},
     {to:"/restock",label:"Ingreso",icon: <IconIncome/>, click: handleToners},
     {to:"/stockideal",label:"Pedido Recomendado",icon: <IconRecommendedOrder/>, click: handleToners},
+    {to:"/print",label:"Que toner usa",icon: <IconQuestion/>, click: handleToners},
   ]
 
   const adminLinks = [

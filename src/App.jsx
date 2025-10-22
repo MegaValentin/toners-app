@@ -19,12 +19,11 @@ import MyTasks from "./pages/MyTasks.jsx";
 import TaksListCompleted from "./pages/TasksListCompleted.jsx";
 import Hardware from "./pages/Hardware.jsx";
 import ListHardware from "./pages/ListHardware.jsx";
+import PrintPage from "./pages/PrintPage.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
-
-//console.log(Home, Toners, Orders, Areas, ReStock, StockIdeal, LoginPage, ProtectedRoutes, ErrorBoundary);
 
 function App() {
   
@@ -56,6 +55,8 @@ function App() {
                     <Route path="/completed" element={<TaksListCompleted/>}/>
                     <Route path="/hardware" element={<Hardware/>}/>
                     <Route path="/listhardware" element={<ListHardware/>}/>
+                    <Route path="/print" element={<PrintPage/>}/>
+                    
 
                   </Route>
                 </Routes>
