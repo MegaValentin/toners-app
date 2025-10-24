@@ -40,8 +40,8 @@ const ModalAddPrint = ({onPrintAdded, onClose }) => {
             })
 
             onPrintAdded(response.data)
-            onclose()
-            window.location.reload()
+            onClose()
+            
         } catch (error) {
             console.error("Error adding print: ", error)
         }
