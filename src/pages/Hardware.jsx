@@ -8,6 +8,7 @@ import IconAdd from "../components/Icons/IconAdd";
 
 const Hardware = () => {
   const [hardware, setHardware] = useState('');
+  const [cantidad, setCantidad] = useState(1);
   const [hardwareList, setHardwareList] = useState([]);
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
@@ -30,9 +31,15 @@ const Hardware = () => {
   }, []);
 
   const handleAddHardware = () => {
-    if (hardware.trim() === '') return;
-    setHardwareList([...hardwareList, hardware.trim()]);
+    if (!hardware.trim() || cantidad < 1) return;
+
+    setHardwareList([
+      ...hardwareList,
+      { nombre: hardware.trim(), cantidad }
+    ]);
+
     setHardware('');
+    setCantidad(1);
   };
 
   const handleRemoveHardware = (index) => {
@@ -59,11 +66,11 @@ const Hardware = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'Orden_Hardware.pdf'); 
+      link.setAttribute('download', 'Orden_Hardware.pdf');
       document.body.appendChild(link);
-      link.click(); 
+      link.click();
       document.body.removeChild(link);
-      
+
       setMessage('Orden creada exitosamente');
 
       setTimeout(() => {
@@ -119,10 +126,16 @@ const Hardware = () => {
           <div className="flex gap-2">
             <input
               value={hardware}
-              placeholder="Ejemplo: Monitor"
+              placeholder="Ej: Monitor"
               onChange={(e) => setHardware(e.target.value)}
               type="text"
-              className="flex-1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+            />
+
+            <input
+              value={cantidad}
+              type="number"
+              min="1"
+              onChange={(e) => setCantidad(Number(e.target.value))}
             />
             <button
               type="button"
@@ -136,15 +149,11 @@ const Hardware = () => {
 
         {hardwareList.length > 0 && (
           <div className="mb-4">
-            <ul className="list-disc ml-5">
+            <ul>
               {hardwareList.map((item, index) => (
-                <li key={index} className="flex justify-between items-center">
-                  {item}
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveHardware(index)}
-                    className="text-red-500 hover:text-red-700 text-sm mb-3"
-                  >
+                <li key={index} className="flex justify-between">
+                  {item.nombre} — Cantidad: {item.cantidad}
+                  <button onClick={() => handleRemoveHardware(index)}>
                     <IconDelete />
                   </button>
                 </li>
