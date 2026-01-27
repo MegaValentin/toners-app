@@ -10,8 +10,8 @@ const PedidoRecomendado = () => {
     try {
       const response = await axios.get(
         `${apiUrl}/api/recommended`, {
-          withCredentials: true, 
-        }
+        withCredentials: true,
+      }
       );
       setToners(response.data);
     } catch (error) {
@@ -28,13 +28,32 @@ const PedidoRecomendado = () => {
   const sortedToners = [...toners].sort((a, b) => {
     const cleanMarcaA = a.marca.trim().toUpperCase();
     const cleanMarcaB = b.marca.trim().toUpperCase();
-  
+
     const indexA = brandOrder.indexOf(cleanMarcaA);
     const indexB = brandOrder.indexOf(cleanMarcaB);
-  
+
     return (indexA === -1 ? brandOrder.length : indexA) - (indexB === -1 ? brandOrder.length : indexB);
   });
-  
+
+  const tonersRecomendedDoc = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/recommendes/doc`, {
+        responseType: 'blob',
+        withCredentials: true,
+      })
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Pedido_Toner.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.remove()
+    } catch (error) {
+      console.error("Error generating current stock report:", error);
+      setErrorMessage("Error generating current stock report: " + (error.response?.data?.message || error.message));
+    }
+  }
 
   return (
     <div className="flex justify-center">
@@ -47,7 +66,7 @@ const PedidoRecomendado = () => {
                 <th scope="col" className="px-6 py-3">Toner</th>
                 <th scope="col" className="px-6 py-3">Stock Ideal</th>
                 <th scope="col" className="px-6 py-3">Stock Actual</th>
-                 <th scope="col" className="px-6 py-3">Pedido Recomendado</th>
+                <th scope="col" className="px-6 py-3">Pedido Recomendado</th>
               </tr>
             </thead>
             <tbody className="text-xs uppercase bg-white">
@@ -58,15 +77,26 @@ const PedidoRecomendado = () => {
                   <td className="px-4 py-2 text-gray-900">{toner.cantidadIdeal}</td>
                   <td className="px-4 py-2 text-gray-900">{toner.cantidadActual}</td>
                   <td className="px-4 py-2 text-gray-900">{toner.pedidoRecomendado}</td>
-                  
+
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      <div className="p-4">
+          
+          <div className="mb-3 mt-3">
+            <button
+              onClick={tonersRecomendedDoc}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Generar Pedido Recomendado
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    
+
   );
 };
 
