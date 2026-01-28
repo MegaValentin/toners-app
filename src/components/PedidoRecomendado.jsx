@@ -4,6 +4,7 @@ import axios from "axios";
 
 const PedidoRecomendado = () => {
   const [toners, setToners] = useState([]);
+  const [ errorMessage, setErrorMessage ] = useState("")
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const fetchToners = async () => {
@@ -35,6 +36,29 @@ const PedidoRecomendado = () => {
     return (indexA === -1 ? brandOrder.length : indexA) - (indexB === -1 ? brandOrder.length : indexB);
   });
 
+  const tonersRecomendedDocWord = async () => {
+    try {
+      const word = await axios.get(`${apiUrl}/api/recommendes/word`, {
+        responseType: 'blob',
+        withCredentials: true
+      })
+
+      const url = window.URL.createObjectURL(
+        new Blob([word.data], {
+          type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        })
+      );
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'Pedido_Toner.docx')
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    } catch (error) {
+      console.error("Error generating current stock report:", error);
+      setErrorMessage("Error generating current stock report: " + (error.response?.data?.message || error.message));
+    }
+  }
   const tonersRecomendedDoc = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/recommendes/doc`, {
@@ -93,7 +117,19 @@ const PedidoRecomendado = () => {
               Generar Pedido Recomendado
             </button>
           </div>
+          <div className="mb-3 mt-3">
+            <button
+              onClick={tonersRecomendedDocWord}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Descargar Word 
+            </button>
+          </div>
         </div>
+        
+          
+          
+        
       </div>
     </div>
 
