@@ -16,10 +16,16 @@ class ErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      return <h1>Algo salio mal</h1>;
+      return (
+        <div className="min-h-screen flex items-center justify-center text-slate-400">
+
+          <h1 className="text-7xl font-black text-red-500">500</h1>
+          <p className="text-slate-400">Error interno de la aplicación</p>
+        </div>
+      )
     }
 
-    return this.props.children; 
+    return this.props.children;
   }
 }
 

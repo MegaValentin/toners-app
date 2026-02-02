@@ -64,9 +64,9 @@ const ListHardware = () => {
 
     const handleDownloadDoc = async (id) => {
         try {
-            const response = await axios.get(`${apiUrl}/api/hardware/${id}/doc`,{
+            const response = await axios.get(`${apiUrl}/api/hardware/${id}/doc`, {
                 responseType: 'blob',
-                withCredentials:true
+                withCredentials: true
             })
 
             const url = window.URL.createObjectURL(new Blob([response.data]))
@@ -101,151 +101,192 @@ const ListHardware = () => {
 
 
     return (
-        <div className="bg-transparent rounded-lg w-full  ">
-            {hardware.length === 0 ? (
-                <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md shadow-md" role="alert">
-                    <p className="font-semibold">No hay ordenes aún.</p>
+        <div className="w-full space-y-8">
+
+            {/* HEADER */}
+            <h2 className="text-3xl font-bold text-center tracking-tight">
+                Gestión de Órdenes de Hardware
+            </h2>
+
+            {/* EMPTY */}
+            {hardware.length === 0 && (
+                <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 p-6 rounded-xl text-center shadow-sm">
+                    No hay órdenes registradas
                 </div>
-            ) : <>
+            )}
 
-                <h4 className="text-center text-2xl font-bold mb-6">Ordenes Solicitadas</h4>
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar ">
-                    {errorMessage && (
-                        <div className="mb-2 text-red-500 text-center">
-                            {errorMessage}
-                        </div>
-                    )}
-                    {confirmationMessage && (
-                        <div className="mb-2 text-green-500 text-center">
-                            {confirmationMessage}
-                        </div>
-                    )}
-                    {filteredHardware.map((orderHardware) => (
-                        <li key={orderHardware._id} className="pb-3 sm:pb-4 mt-1 mr-4">
-                            <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
-                                <div className="flex-1 min-w-0">
-                                    <strong>{orderHardware.areaName}</strong>
-                                    <ul className="list-disc list-inside text-gray-900 mt-1">
-                                        {Array.isArray(orderHardware.hardware)
-                                            ? orderHardware.hardware.map((item, index) => (
-                                                <li key={index}>{item}</li>
-                                            ))
-                                            : typeof orderHardware.hardware === "string"
-                                                ? orderHardware.hardware.split(",").map((item, index) => (
-                                                    <li key={index}>{item.trim()}</li>
-                                                ))
-                                                : (
-                                                    <li>{orderHardware.hardware || "No hay hardware disponible"}</li>
-                                                )}
-                                    </ul>
-                                    <p className="text-grat-900 mt-2">{orderHardware.description}</p>
-                                    <p className="text-gray-600 mt-4"> Creada: {orderHardware.fecha}</p>
+            {/* ========== SOLICITADAS ========== */}
+            {filteredHardware.length > 0 && (
+                <>
+                    <h3 className="text-xl font-semibold flex items-center gap-3">
+                        Órdenes Solicitadas
+                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                            {filteredHardware.length}
+                        </span>
+                    </h3>
 
+                    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                        {filteredHardware.map(orderHardware => (
+                            <div key={orderHardware._id}
+                                className="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-5 flex flex-col justify-between">
+
+                                <div>
+
+                                    <div className="flex justify-between items-start mb-3">
+                                        <strong className="text-lg">{orderHardware.areaName}</strong>
+                                        <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
+                                            Pendiente
+                                        </span>
+                                    </div>
+
+                                    {/* HARDWARE */}
+                                    <div className="flex flex-wrap gap-2 mb-3">
+                                        {orderHardware.hardware?.map((item, i) => (
+                                            <span key={i}
+                                                className="bg-gray-100 text-gray-800 text-sm px-3 py-1 rounded-lg">
+                                                {item.nombre} × {item.cantidad}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <p className="text-gray-600 text-sm mb-2">
+                                        {orderHardware.description}
+                                    </p>
+
+                                    <p className="text-xs text-gray-400">
+                                        Creada: {new Date(orderHardware.fecha).toLocaleDateString()}
+                                    </p>
 
                                 </div>
-                                <div className="inline-flex items-center text-base font-semibold gap-4">
-                                    {!orderHardware.confirm && (
-                                        <>
 
-                                            <button
-                                                onClick={() => openModal("confirm", orderHardware._id)}
-                                                className="text-green-700 hover:text-green-500"
-                                            >
-                                                <IconChek />
-                                            </button>
-                                            <button
-                                                onClick={() => handleDownloadDoc(orderHardware._id)}
-                                                className="text-blue-700 hover:text-blue-500"
-                                            >
-                                                <IconDownload />
-                                            </button>
-                                            <button
-                                                onClick={() => openModal("delete", orderHardware._id)}
-                                                className="text-red-700 hover:text-red-500"
-                                            >
-                                                <IconDelete />
-                                            </button>
-                                        </>
-                                    )}
+                                {/* ACTIONS */}
+                                <div className="flex justify-end gap-3 mt-4">
+
+                                    <button
+                                        onClick={() => openModal("confirm", orderHardware._id)}
+                                        className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-lg">
+                                        <IconChek />
+                                    </button>
+
+                                    <button
+                                        onClick={() => handleDownloadDoc(orderHardware._id)}
+                                        className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg">
+                                        <IconDownload />
+                                    </button>
+
+                                    <button
+                                        onClick={() => openModal("delete", orderHardware._id)}
+                                        className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-lg">
+                                        <IconDelete />
+                                    </button>
+
                                 </div>
+
                             </div>
-                        </li>
-                    ))}
+                        ))}
+                    </div>
+                </>
+            )}
 
-                </ul>
+            {/* ========== ENTREGADAS ========== */}
+            {filteredConfirmHardware.length > 0 && (
+                <>
+                    <h3 className="text-xl font-semibold flex items-center gap-3">
+                        Órdenes Entregadas
+                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
+                            {filteredConfirmHardware.length}
+                        </span>
+                    </h3>
 
+                    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                        {filteredConfirmHardware.map(confirmHardware => (
+                            <div key={confirmHardware._id}
+                                className="bg-gray-50 border rounded-2xl p-5">
 
-                    <h4 className="text-center text-2xl font-bold mb-3">Ordenes Entregadas</h4>
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700 relative h-full  max-h-96 overflow-y-auto custom-scrollbar">
-                    {filteredConfirmHardware.map((confirmHardware) => (
-                        <li key={confirmHardware._id} className="pb-3 sm:pb-4 mt-3 mr-4">
-                            <div className="bg-gray-200 p-5 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-96">
-                                <div className="flex-1 min-w-0">
+                                <div className="flex justify-between mb-3">
                                     <strong>{confirmHardware.areaName}</strong>
-                                    <ul className="list-disc list-inside text-gray-900 mt-2">
-                                        {Array.isArray(confirmHardware.hardware)
-                                            ? confirmHardware.hardware.map((item, index) => (
-                                                <li key={index}>{item}</li>
-                                            ))
-                                            : typeof confirmHardware.hardware === "string"
-                                                ? confirmHardware.hardware.split(",").map((item, index) => (
-                                                    <li key={index}>{item.trim()}</li>
-                                                ))
-                                                : (
-                                                    <li>{confirmHardware.hardware || "No hay hardware disponible"}</li>
-                                                )}
-                                    </ul>
-                                    <p className="text-grat-900 mt-2">{confirmHardware.description}</p>
-
-
-
+                                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                                        Entregado
+                                    </span>
                                 </div>
-                                <div className="inline-flex items-center text-base font-semibold gap-4">
-                                    {confirmHardware.confirm && (
-                                        <>
-                                            <button
-                                                onClick={() => openModal("delete", confirmHardware._id)}
-                                                className="text-red-700 hover:text-red-500"
-                                            >
-                                                <IconDelete />
-                                            </button>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-                {showModal && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                        <div className="bg-white rounded-lg p-6 space-y-4">
-                            <h2 className="text-lg font-semibold">{currentAction.action === "delete" ? "¿Estas seguro de elimar esta orden?" : "Pedido de orden entregado"}</h2>
 
-                            <div className="flex justify-end gap-4">
-                                <button
-                                    className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
-                                    onClick={() => setShowModal(false)}
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    className={`px-4 py-2 rounded hover:opacity-90 ${currentAction.action === "delete"
-                                        ? "bg-red-600 text-white hover:bg-red-700"
-                                        : "bg-green-600 text-white hover:bg-green-700"
-                                        }`}
-                                    onClick={confirmAction}
-                                >
-                                    {currentAction.action === "delete" ? "Eliminar" : "SI"}
-                                </button>
+                                <div className="flex flex-wrap gap-2 mb-3">
+                                    {confirmHardware.hardware?.map((item, i) => (
+                                        <span key={i}
+                                            className="bg-gray-200 text-gray-800 text-sm px-3 py-1 rounded-lg">
+                                            {item.nombre} × {item.cantidad}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <p className="text-sm text-gray-600">
+                                    {confirmHardware.description}
+                                </p>
+
+                                <div className="flex justify-end mt-4">
+                                    <button
+                                        onClick={() => openModal("delete", confirmHardware._id)}
+                                        className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-lg">
+                                        <IconDelete />
+                                    </button>
+                                </div>
+
                             </div>
+                        ))}
+                    </div>
+                </>
+            )}
+
+            {/* MENSAJES */}
+            {errorMessage && (
+                <div className="text-red-600 text-center font-medium">
+                    {errorMessage}
+                </div>
+            )}
+
+            {confirmationMessage && (
+                <div className="text-green-600 text-center font-medium">
+                    {confirmationMessage}
+                </div>
+            )}
+
+            {/* MODAL */}
+            {showModal && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+
+                    <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl space-y-5">
+
+                        <h2 className="text-lg font-semibold text-center">
+                            {currentAction.action === "delete"
+                                ? "¿Eliminar orden?"
+                                : "Confirmar entrega"}
+                        </h2>
+
+                        <div className="flex justify-end gap-4">
+
+                            <button
+                                className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+                                onClick={() => setShowModal(false)}>
+                                Cancelar
+                            </button>
+
+                            <button
+                                className={`px-4 py-2 rounded-lg text-white ${currentAction.action === "delete"
+                                        ? "bg-red-600 hover:bg-red-700"
+                                        : "bg-green-600 hover:bg-green-700"
+                                    }`}
+                                onClick={confirmAction}>
+                                Confirmar
+                            </button>
+
                         </div>
                     </div>
-                )}
+                </div>
+            )}
 
-
-            </>}
         </div>
     )
+
 }
 
 export default ListHardware
