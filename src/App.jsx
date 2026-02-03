@@ -20,6 +20,7 @@ import TaksListCompleted from "./pages/TasksListCompleted.jsx";
 import Hardware from "./pages/Hardware.jsx";
 import ListHardware from "./pages/ListHardware.jsx";
 import PrintPage from "./pages/PrintPage.jsx";
+import PcPage from "./pages/PcPage.jsx";
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
@@ -56,6 +57,7 @@ function App() {
                     <Route path="/hardware" element={<Hardware/>}/>
                     <Route path="/listhardware" element={<ListHardware/>}/>
                     <Route path="/print" element={<PrintPage/>}/>
+                    <Route path="/formpc" element={<PcPage/>}/>
                     
 
                   </Route>
