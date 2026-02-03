@@ -16,12 +16,14 @@ import IconAddUser from "./Icons/IconAddUser";
 import IconMyTasks from "./Icons/IconMyTasks"
 import IconHardware from "./Icons/IconHardaware";
 import IconQuestion from "./Icons/IconQuestion";
+import IconPC from "./Icons/IconPC";
 
 const Dashborad = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, logout, user } = useAuth()
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownOpenTareas, setDropdownOpenTareas] = useState(false);
+  const [dropdownOpenPc, setDropdownOpenPc] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -30,7 +32,16 @@ const Dashborad = () => {
   const toggleDropdownTareas = () => {
     setDropdownOpenTareas(!dropdownOpenTareas);
   }
+
+  const toggleDropdownPc = () => {
+    setDropdownOpenPc(!dropdownOpenPc);
+  }
   
+  const handlePc = () => {
+    setMenuOpen(false); 
+    setDropdownOpenPc(false); 
+  }
+
   const handleTask = () => {
     setMenuOpen(false); 
     setDropdownOpenTareas(false); 
@@ -63,6 +74,10 @@ const Dashborad = () => {
     {to:"/restock",label:"Ingreso",icon: <IconIncome/>, click: handleToners},
     {to:"/stockideal",label:"Pedido Recomendado",icon: <IconRecommendedOrder/>, click: handleToners},
     {to:"/print",label:"Que toner usa",icon: <IconQuestion/>, click: handleToners},
+  ]
+  const pcLinks = [
+    {to:"/formpc",label:"Agregar Pc",icon: <IconPC/>,click: handlePc},
+    {to:"/listpc",label:"Lista Pc",icon: <IconMyTasks/>,click: handlePc},
   ]
 
   const adminLinks = [
@@ -185,9 +200,37 @@ const Dashborad = () => {
               )}
             </div>
 
-            {renderLinks(superAdminLinks)}
+            <div className="relative mb-4">
+              <button
+                className="flex justify-between items-center text-white py-2 px-4 w-full hover:bg-gray-700"
+                onClick={toggleDropdownPc}
+              >
+                Reparacion de PC
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${
+                    dropdownOpenPc ? "rotate-180" : "rotate-0"
+                  }`}
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              {dropdownOpenPc && (
+                <div className="pl-4 text-white bg-gray-700">{renderLinks(pcLinks)}</div>
+              )}
+            </div>
 
-            
+            {renderLinks(superAdminLinks)}
+           
+
           </>
         )}
 

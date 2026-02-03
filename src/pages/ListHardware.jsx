@@ -3,6 +3,7 @@ import axios from "axios"
 import IconDownload from "../components/Icons/IconDownload"
 import IconDelete from "../components/Icons/IconDelete"
 import IconChek from "../components/Icons/IconCheck"
+import IconEdit from "../components/Icons/IconEdit"
 
 const ListHardware = () => {
     const [hardware, setHardware] = useState([])
@@ -10,6 +11,9 @@ const ListHardware = () => {
     const [confirmationMessage, setConfirmationMessage] = useState("")
     const [showModal, setShowModal] = useState(false);
     const [currentAction, setCurrentAction] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editData, setEditData] = useState(null);
+
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => {
@@ -25,6 +29,19 @@ const ListHardware = () => {
         }
         fetchHardware()
     }, [])
+
+    useEffect(() => {
+        const handleEsc = (e) => {
+            if (e.key === "Escape") {
+                if (showModal) setShowModal(false);
+                if (showEditModal) setShowEditModal(false);
+            }
+        };
+
+        window.addEventListener("keydown", handleEsc);
+        return () => window.removeEventListener("keydown", handleEsc);
+    }, [showModal, showEditModal]);
+
 
     const handleDelete = async (id) => {
         try {
@@ -99,23 +116,57 @@ const ListHardware = () => {
         setShowModal(false);
     };
 
+    const openEditModal = (order) => {
+        setEditData({
+            _id: order._id,
+            description: order.description,
+            hardware: order.hardware.map(h => ({ ...h }))
+        });
+        setShowEditModal(true);
+    };
+
+    const handleEditDescription = (e) => {
+        setEditData({ ...editData, description: e.target.value });
+    };
+
+    const handleEditHardware = (index, field, value) => {
+        const updated = [...editData.hardware];
+        updated[index][field] = field === "cantidad" ? Number(value) : value;
+        setEditData({ ...editData, hardware: updated });
+    };
+
+    const handleSaveEdit = async () => {
+        try {
+            await axios.put(`${apiUrl}/api/hardware/${editData._id}`,
+                {
+                    hardware: editData.hardware,
+                    description: editData.description,
+                    area: hardware.find(h => h._id === editData._id).area
+                },
+                { withCredentials: true })
+
+            const response = await axios.get(`${apiUrl}/api/hardwares`, {
+                withCredentials: true
+            })
+
+            setHardware(response.data)
+            setShowEditModal(false)
+            setConfirmationMessage("Orden actualizada")
+            setTimeout(() => setConfirmationMessage(""), 1500)
+        } catch (error) {
+            console.error(error)
+            setErrorMessage("Error al editar")
+        }
+    }
 
     return (
         <div className="w-full space-y-8">
-
-            {/* HEADER */}
-            <h2 className="text-3xl font-bold text-center tracking-tight">
-                Gestión de Órdenes de Hardware
-            </h2>
-
-            {/* EMPTY */}
             {hardware.length === 0 && (
                 <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 p-6 rounded-xl text-center shadow-sm">
                     No hay órdenes registradas
                 </div>
             )}
 
-            {/* ========== SOLICITADAS ========== */}
             {filteredHardware.length > 0 && (
                 <>
                     <h3 className="text-xl font-semibold flex items-center gap-3">
@@ -159,7 +210,6 @@ const ListHardware = () => {
 
                                 </div>
 
-                                {/* ACTIONS */}
                                 <div className="flex justify-end gap-3 mt-4">
 
                                     <button
@@ -172,6 +222,12 @@ const ListHardware = () => {
                                         onClick={() => handleDownloadDoc(orderHardware._id)}
                                         className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg">
                                         <IconDownload />
+                                    </button>
+
+                                    <button
+                                        onClick={() => openEditModal(orderHardware)}
+                                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm">
+                                        <IconEdit />
                                     </button>
 
                                     <button
@@ -188,7 +244,6 @@ const ListHardware = () => {
                 </>
             )}
 
-            {/* ========== ENTREGADAS ========== */}
             {filteredConfirmHardware.length > 0 && (
                 <>
                     <h3 className="text-xl font-semibold flex items-center gap-3">
@@ -237,7 +292,6 @@ const ListHardware = () => {
                 </>
             )}
 
-            {/* MENSAJES */}
             {errorMessage && (
                 <div className="text-red-600 text-center font-medium">
                     {errorMessage}
@@ -250,7 +304,7 @@ const ListHardware = () => {
                 </div>
             )}
 
-            {/* MODAL */}
+
             {showModal && (
                 <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
 
@@ -272,8 +326,8 @@ const ListHardware = () => {
 
                             <button
                                 className={`px-4 py-2 rounded-lg text-white ${currentAction.action === "delete"
-                                        ? "bg-red-600 hover:bg-red-700"
-                                        : "bg-green-600 hover:bg-green-700"
+                                    ? "bg-red-600 hover:bg-red-700"
+                                    : "bg-green-600 hover:bg-green-700"
                                     }`}
                                 onClick={confirmAction}>
                                 Confirmar
@@ -283,6 +337,78 @@ const ListHardware = () => {
                     </div>
                 </div>
             )}
+
+            {showEditModal && editData && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-6">
+
+                    <div className=" bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-4 sm:p-6 space-y-4 ">
+
+                        <h2 className="text-lg sm:text-xl font-semibold">
+                            Editar Orden
+                        </h2>
+
+                        <div>
+                            <label className="text-sm font-medium">
+                                Descripción
+                            </label>
+
+                            <textarea
+                                value={editData.description}
+                                onChange={handleEditDescription}
+                                className="w-full border rounded-lg p-2 mt-1 text-sm sm:text-base resize-none min-h-[90px]"
+                            />
+                        </div>
+
+                        <div className="space-y-3">
+                            {editData.hardware.map((item, i) => (
+                                <div
+                                    key={i}
+                                    className="flex flex-col sm:flex-row gap-2"
+                                >
+
+                                    <input
+                                        value={item.nombre}
+                                        onChange={(e) =>
+                                            handleEditHardware(i, "nombre", e.target.value)
+                                        }
+                                        className="flex-1 border rounded-lg p-2 text-sm sm:text-base"
+                                        placeholder="Hardware"
+                                    />
+
+                                    <input
+                                        type="number"
+                                        value={item.cantidad}
+                                        onChange={(e) =>
+                                            handleEditHardware(i, "cantidad", e.target.value)
+                                        }
+                                        className=" w-full sm:w-28 border rounded-lg p-2 text-sm sm:text-base"
+                                        placeholder="Cant."
+                                    />
+
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="  flex flex-col sm:flex-row justify-end gap-3 pt-3">
+
+                            <button
+                                onClick={() => setShowEditModal(false)}
+                                className=" px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg w-full sm:w-auto">
+                                Cancelar
+                            </button>
+
+                            <button
+                                onClick={handleSaveEdit}
+                                className=" px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg w-full sm:w-auto">
+                                Guardar
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+            )}
+
 
         </div>
     )
