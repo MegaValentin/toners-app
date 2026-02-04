@@ -13,6 +13,7 @@ const ListHardware = () => {
     const [currentAction, setCurrentAction] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editData, setEditData] = useState(null);
+    const [viewOrder, setViewOrder] = useState(null);
 
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -99,9 +100,6 @@ const ListHardware = () => {
         }
     }
 
-    const filteredHardware = hardware.filter(orderHardware => !orderHardware.confirm)
-    const filteredConfirmHardware = hardware.filter(orderHardware => orderHardware.confirm)
-
     const openModal = (action, id) => {
         setCurrentAction({ action, id });
         setShowModal(true);
@@ -159,171 +157,117 @@ const ListHardware = () => {
         }
     }
 
+    const orderedHardware = [...hardware].sort(
+        (a, b) => new Date(b.fecha) - new Date(a.fecha)
+    );
+
     return (
-        <div className="w-full space-y-8">
-            {hardware.length === 0 && (
-                <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 p-6 rounded-xl text-center shadow-sm">
-                    No hay órdenes registradas
-                </div>
-            )}
+        <div className="w-full space-y-6">
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden">
 
-            {filteredHardware.length > 0 && (
-                <>
-                    <h3 className="text-xl font-semibold flex items-center gap-3">
-                        Órdenes Solicitadas
-                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                            {filteredHardware.length}
-                        </span>
-                    </h3>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
 
-                    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                        {filteredHardware.map(orderHardware => (
-                            <div key={orderHardware._id}
-                                className="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-5 flex flex-col justify-between">
-
-                                <div>
-
-                                    <div className="flex justify-between items-start mb-3">
-                                        <strong className="text-lg">{orderHardware.areaName}</strong>
-                                        <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full">
-                                            Pendiente
-                                        </span>
-                                    </div>
-
-                                    {/* HARDWARE */}
-                                    <div className="flex flex-wrap gap-2 mb-3">
-                                        {orderHardware.hardware?.map((item, i) => (
-                                            <span key={i}
-                                                className="bg-gray-100 text-gray-800 text-sm px-3 py-1 rounded-lg">
-                                                {item.nombre} × {item.cantidad}
+                        <thead className="bg-gray-100 text-gray-700">
+                            <tr>
+                                <th className="p-3 text-left">Fecha</th>
+                                <th className="p-3 text-left">Área</th>
+                                <th className="p-3 text-left">Pedido</th>
+                                <th className="p-3 text-left">Estado</th>
+                                <th className="p-3 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {orderedHardware.map(order => {
+                                const preview = order.hardware.slice(0, 2)
+                                const rest = order.hardware.length - 2
+                                return (
+                                    <tr key={order._id} className="border-t hover:bg-gray-50">
+                                        <td className="p-3 whitespace-nowrap">
+                                            {new Date(order.fecha).toLocaleDateString()}
+                                        </td>
+                                        <td className="p-3 font-medium">
+                                            {order.areaName}
+                                        </td>
+                                        <td className="p-3">
+                                            <div className="flex flex-wrap gap-1">
+                                                {preview.map((h, i) => (
+                                                    <span key={i} className="bg-gray-200 px-2 py-1 rounded text-xs">
+                                                        {h.nombre} × {h.cantidad}
+                                                    </span>
+                                                ))}
+                                                {rest > 0 && (
+                                                    <span className="text-xs text-gray-500">
+                                                        +{rest} más
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </td>
+                                        <td className="p-3">
+                                            <span className={`px-2 py-1 rounded-full text-xs font-medium
+                                            ${order.confirm
+                                                    ? "bg-green-100 text-green-700"
+                                                    : "bg-orange-100 text-orange-700"}`}>
+                                                {order.confirm ? "Entregado" : "Pendiente"}
                                             </span>
-                                        ))}
-                                    </div>
-
-                                    <p className="text-gray-600 text-sm mb-2">
-                                        {orderHardware.description}
-                                    </p>
-
-                                    <p className="text-xs text-gray-400">
-                                        Creada: {new Date(orderHardware.fecha).toLocaleDateString()}
-                                    </p>
-
-                                </div>
-
-                                <div className="flex justify-end gap-3 mt-4">
-
-                                    <button
-                                        onClick={() => openModal("confirm", orderHardware._id)}
-                                        className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-lg">
-                                        <IconChek />
-                                    </button>
-
-                                    <button
-                                        onClick={() => handleDownloadDoc(orderHardware._id)}
-                                        className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg">
-                                        <IconDownload />
-                                    </button>
-
-                                    <button
-                                        onClick={() => openEditModal(orderHardware)}
-                                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded-lg text-sm">
-                                        <IconEdit />
-                                    </button>
-
-                                    <button
-                                        onClick={() => openModal("delete", orderHardware._id)}
-                                        className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-lg">
-                                        <IconDelete />
-                                    </button>
-
-                                </div>
-
-                            </div>
-                        ))}
-                    </div>
-                </>
-            )}
-
-            {filteredConfirmHardware.length > 0 && (
-                <>
-                    <h3 className="text-xl font-semibold flex items-center gap-3">
-                        Órdenes Entregadas
-                        <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-                            {filteredConfirmHardware.length}
-                        </span>
-                    </h3>
-
-                    <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                        {filteredConfirmHardware.map(confirmHardware => (
-                            <div key={confirmHardware._id}
-                                className="bg-gray-50 border rounded-2xl p-5">
-
-                                <div className="flex justify-between mb-3">
-                                    <strong>{confirmHardware.areaName}</strong>
-                                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                                        Entregado
-                                    </span>
-                                </div>
-
-                                <div className="flex flex-wrap gap-2 mb-3">
-                                    {confirmHardware.hardware?.map((item, i) => (
-                                        <span key={i}
-                                            className="bg-gray-200 text-gray-800 text-sm px-3 py-1 rounded-lg">
-                                            {item.nombre} × {item.cantidad}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <p className="text-sm text-gray-600">
-                                    {confirmHardware.description}
-                                </p>
-
-                                <div className="flex justify-end mt-4">
-                                    <button
-                                        onClick={() => openModal("delete", confirmHardware._id)}
-                                        className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-lg">
-                                        <IconDelete />
-                                    </button>
-                                </div>
-
-                            </div>
-                        ))}
-                    </div>
-                </>
-            )}
-
-            {errorMessage && (
-                <div className="text-red-600 text-center font-medium">
-                    {errorMessage}
+                                        </td>
+                                        <td className="p-3">
+                                            <div className="flex justify-end gap-2">
+                                                <button
+                                                    onClick={() => setViewOrder(order)}
+                                                    className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs">
+                                                    Ver
+                                                </button>
+                                                {!order.confirm && (
+                                                    <button
+                                                        onClick={() => openModal("confirm", order._id)}
+                                                        className="bg-green-600 hover:bg-green-700 text-white p-2 rounded">
+                                                        <IconChek />
+                                                    </button>
+                                                )}
+                                                <button
+                                                    onClick={() => handleDownloadDoc(order._id)}
+                                                    className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
+                                                    <IconDownload />
+                                                </button>
+                                                <button
+                                                    onClick={() => openEditModal(order)}
+                                                    className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded">
+                                                    <IconEdit />
+                                                </button>
+                                                <button
+                                                    onClick={() => openModal("delete", order._id)}
+                                                    className="bg-red-600 hover:bg-red-700 text-white p-2 rounded">
+                                                    <IconDelete />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
                 </div>
-            )}
-
+            </div>
             {confirmationMessage && (
                 <div className="text-green-600 text-center font-medium">
                     {confirmationMessage}
                 </div>
             )}
-
-
             {showModal && (
                 <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-
                     <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl space-y-5">
-
                         <h2 className="text-lg font-semibold text-center">
                             {currentAction.action === "delete"
                                 ? "¿Eliminar orden?"
                                 : "Confirmar entrega"}
                         </h2>
-
                         <div className="flex justify-end gap-4">
-
                             <button
                                 className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
                                 onClick={() => setShowModal(false)}>
                                 Cancelar
                             </button>
-
                             <button
                                 className={`px-4 py-2 rounded-lg text-white ${currentAction.action === "delete"
                                     ? "bg-red-600 hover:bg-red-700"
@@ -332,40 +276,59 @@ const ListHardware = () => {
                                 onClick={confirmAction}>
                                 Confirmar
                             </button>
-
                         </div>
                     </div>
                 </div>
             )}
-
+            {viewOrder && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-2xl max-w-xl w-full p-6 space-y-4">
+                        <h2 className="text-xl font-semibold">
+                            Detalle de Orden
+                        </h2>
+                        <p><b>Área:</b> {viewOrder.areaName}</p>
+                        <p><b>Fecha:</b> {new Date(viewOrder.fecha).toLocaleString()}</p>
+                        <p><b>Descripción:</b> {viewOrder.description}</p>
+                        <div className="space-y-2">
+                            {viewOrder.hardware.map((h, i) => (
+                                <div key={i} className="flex justify-between border rounded-lg p-2">
+                                    <span>{h.nombre}</span>
+                                    <span className="font-medium">{h.cantidad}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex justify-end">
+                            <button
+                                onClick={() => setViewOrder(null)}
+                                className="bg-gray-700 text-white px-4 py-2 rounded-lg">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {showEditModal && editData && (
                 <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-6">
-
                     <div className=" bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto p-4 sm:p-6 space-y-4 ">
-
                         <h2 className="text-lg sm:text-xl font-semibold">
                             Editar Orden
                         </h2>
-
                         <div>
                             <label className="text-sm font-medium">
                                 Descripción
                             </label>
-
                             <textarea
                                 value={editData.description}
                                 onChange={handleEditDescription}
                                 className="w-full border rounded-lg p-2 mt-1 text-sm sm:text-base resize-none min-h-[90px]"
                             />
                         </div>
-
                         <div className="space-y-3">
                             {editData.hardware.map((item, i) => (
                                 <div
                                     key={i}
                                     className="flex flex-col sm:flex-row gap-2"
                                 >
-
                                     <input
                                         value={item.nombre}
                                         onChange={(e) =>
@@ -374,7 +337,6 @@ const ListHardware = () => {
                                         className="flex-1 border rounded-lg p-2 text-sm sm:text-base"
                                         placeholder="Hardware"
                                     />
-
                                     <input
                                         type="number"
                                         value={item.cantidad}
@@ -384,35 +346,25 @@ const ListHardware = () => {
                                         className=" w-full sm:w-28 border rounded-lg p-2 text-sm sm:text-base"
                                         placeholder="Cant."
                                     />
-
                                 </div>
                             ))}
                         </div>
-
                         <div className="  flex flex-col sm:flex-row justify-end gap-3 pt-3">
-
                             <button
                                 onClick={() => setShowEditModal(false)}
                                 className=" px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg w-full sm:w-auto">
                                 Cancelar
                             </button>
-
                             <button
                                 onClick={handleSaveEdit}
                                 className=" px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg w-full sm:w-auto">
                                 Guardar
                             </button>
-
                         </div>
-
                     </div>
                 </div>
             )}
-
-
         </div>
     )
-
 }
-
 export default ListHardware
