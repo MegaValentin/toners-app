@@ -42,9 +42,11 @@ const ListPc = () => {
     if (!selectedPc || !userSelect) return;
 
     try {
+      const user = users.find(u => u._id === userSelect);
+
       await axios.put(
         `${apiUrl}/api/pc/${selectedPc}/assign`,
-        { usuarioId: userSelect },
+        { username: user.username },
         { withCredentials: true }
       );
 
@@ -90,7 +92,7 @@ const ListPc = () => {
                 </td>
 
                 <td className="p-3">
-                  {pc.usuarioAsignado?.nombre || "—"}
+                  {pc.usuarioAsignado || "—"}
                 </td>
 
                 <td className="p-3">
@@ -109,7 +111,6 @@ const ListPc = () => {
         </table>
       </div>
 
-      {/* -------- Modal asignar */}
       {selectedPc && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
           <div className="bg-white rounded-xl p-6 w-[95%] max-w-md space-y-4">

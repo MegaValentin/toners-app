@@ -7,12 +7,12 @@ const RestockForm = () => {
   const [restockData, setRestockData] = useState({});
   const [confirmationMessage, setConfirmationMessage] = useState("")
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-  
+
   useEffect(() => {
     const fetchToners = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/toners`, {
-          withCredentials: true, 
+          withCredentials: true,
         });
         setToners(response.data);
         setRestockData(response.data.reduce((acc, toner) => {
@@ -47,7 +47,7 @@ const RestockForm = () => {
 
     try {
       const response = await axios.post(`${apiUrl}/api/restockall`, { restocks }, {
-        withCredentials: true, 
+        withCredentials: true,
       });
       console.log(response);
 
@@ -61,38 +61,100 @@ const RestockForm = () => {
   };
 
   return (
-    <div className="flex justify-center">
-      
-        <form onSubmit={handleSubmit} className="w-11/12 max-w-md mx-auto">
-          <div className="relative h-full mb-3 max-h-96 overflow-y-auto custom-scrollbar">
-            {toners.map((toner) => (
-              <div key={toner._id} className="relative z-0 w-full mb-5 group">
-              <input  type="number"
+    <div className="p-4 sm:p-6 flex justify-center">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-2xl bg-white shadow-xl rounded-2xl border border-gray-200 flex flex-col"
+      >
+
+        {/* HEADER */}
+        <div className="p-5 border-b">
+          <h2 className="text-xl font-bold text-gray-800">
+            Carga de Restock
+          </h2>
+          <p className="text-sm text-gray-500">
+            Ingresá las cantidades recibidas por toner
+          </p>
+        </div>
+
+        {/* LISTA */}
+        <div className="flex-1 overflow-y-auto max-h-[60vh] divide-y">
+
+          {toners.map((toner) => (
+            <div
+              key={toner._id}
+              className="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-gray-50 transition"
+            >
+
+              {/* info toner */}
+              <div className="flex flex-col">
+                <span className="font-semibold text-gray-800">
+                  {toner.toner}
+                </span>
+
+                <span className="text-xs text-gray-500">
+                  Marca: {toner.marca}
+                </span>
+              </div>
+
+              {/* input */}
+              <div className="flex items-center gap-3">
+
+                <span className="text-xs text-gray-500 hidden sm:block">
+                  Cantidad
+                </span>
+
+                <input
+                  type="number"
                   min="0"
                   value={restockData[toner._id]}
-                  onChange={(e) => handleInputChange(toner._id, Number(e.target.value))} 
-                  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
-              <label  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">{toner.toner}</label>
-          </div>
-              
-            ))}
-          </div>
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              Completar Restock
-            </button>
-          </div>
+                  onChange={(e) =>
+                    handleInputChange(toner._id, e.target.value)
+                  }
+                  className="
+                    w-28 px-3 py-2
+                    border rounded-lg
+                    text-sm text-gray-800
+                    focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+                    outline-none
+                    transition
+                  "
+                  placeholder="0"
+                />
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+
+        {/* FOOTER */}
+        <div className="p-5 border-t bg-gray-50 rounded-b-2xl">
+
+          <button
+            type="submit"
+            className="
+              w-full
+              bg-teal-600 hover:bg-teal-700
+              text-white font-semibold
+              py-3 rounded-xl
+              shadow-md
+              transition
+              active:scale-[0.98]
+            "
+          >
+            Guardar Restock
+          </button>
+
           {confirmationMessage && (
-            <div className="mt-4 text-center text-green-500 font-semibold">
+            <div className="mt-3 text-center text-green-600 font-semibold text-sm">
               {confirmationMessage}
             </div>
           )}
-        </form>
-      </div>
-    
+
+        </div>
+      </form>
+    </div>
   );
 };
 

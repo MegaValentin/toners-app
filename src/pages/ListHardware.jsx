@@ -4,6 +4,7 @@ import IconDownload from "../components/Icons/IconDownload"
 import IconDelete from "../components/Icons/IconDelete"
 import IconChek from "../components/Icons/IconCheck"
 import IconEdit from "../components/Icons/IconEdit"
+import IconSee from "../components/Icons/IconSee"
 
 const ListHardware = () => {
     const [hardware, setHardware] = useState([])
@@ -216,7 +217,7 @@ const ListHardware = () => {
                                                 <button
                                                     onClick={() => setViewOrder(order)}
                                                     className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs">
-                                                    Ver
+                                                    <IconSee/>
                                                 </button>
                                                 {!order.confirm && (
                                                     <button
