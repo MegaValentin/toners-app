@@ -1,56 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
 import IconDelete from '../components/Icons/IconDelete';
-import IconUserAssing from '../components/Icons/IconUserAssing';
+
 
 const TaskList = () => {
-    const { user } = useContext(AuthContext);
     const [tasks, setTasks] = useState([]);
-    const [message, setMessage] = useState(null)
+    const [users, setUsers] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [currentAction, setCurrentAction] = useState(null);
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [userSelect, setUserSelect] = useState("");
+    const [loading, setLoading] = useState(true);
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}/api/tasks`, { withCredentials: true });
-                setTasks(response.data);
-            } catch (error) {
-                console.error("Error fetching tasks:", error);
-            }
-        };
-        fetchTasks();
-    }, []);
-
-    const handleAssign = async (taskId) => {
+    const fetchTasks = async () => {
         try {
-            const response = await axios.put(
-                `${apiUrl}/api/task/${taskId}/assign`,
-                { username: user.username }, // Aquí usamos el nombre de usuario del contexto
-                { withCredentials: true }
-            );
-
-            setMessage({ type: "success", text: "Tarea asignada exitosamente" })
-            setTimeout(() => {
-                setMessage("")
-            }, 1000)
-            setTasks(tasks.map(task =>
-                task._id === taskId ? { ...task, estado: "en proceso", usuarioAsignado: user.username } : task
-            ));
+            const response = await axios.get(`${apiUrl}/api/tasks`, { withCredentials: true });
+            setTasks(response.data);
         } catch (error) {
-            if (error.response) {
-                alert(`Hubo un error: ${error.response.data.error}`);
-            } else {
-                setMessage({ type: "success", text: "Hubo un error al asignar la tarea." })
-                setTimeout(() => {
-                    setMessage("")
-                }, 1000)
-            }
+            console.error("Error fetching tasks:", error);
+        } finally {
+            setLoading(false)
         }
     };
+
+    const fetchUsers = async () => {
+        try {
+            const res = await axios.get(`${apiUrl}/api/auth/getuser`, {
+                withCredentials: true
+            })
+            setUsers(res.data)
+        } catch (error) {
+            console.error("Error cargando usuarios", error)
+        }
+    }
+
+    useEffect(() => {
+        fetchTasks();
+        fetchUsers()
+    }, []);
+
+
+    const handleAssign = async () => {
+        if (!selectedTask || !userSelect) return
+
+        try {
+            const user = users.find(u => u._id === userSelect)
+
+            await axios.put(`${apiUrl}/api/task/${selectedTask}/assign`,
+                { username: user.username },
+                { withCredentials: true })
+
+            setSelectedTask(null)
+            setUserSelect("")
+            fetchTasks()
+        } catch (error) {
+            console.error("Error asignado", e)
+        }
+    }
 
     const handleDelete = async (id) => {
         try {
@@ -77,6 +84,8 @@ const TaskList = () => {
 
     const unassignedTasks = tasks.filter(task => task.estado === "pendiente" && !task.usuarioAsignado);
 
+    if (loading) return <div>Cargando...</div>;
+
     return (
         <div className="bg-transparent p-8 rounded-lg w-full mt-10 ">
             {unassignedTasks.length > 0 ? (
@@ -94,12 +103,16 @@ const TaskList = () => {
 
                                     </div>
                                     <div className="inline-flex items-center text-base font-semibold">
-                                        <button
-                                            className="py-2 px-4 text-teal-500 hover:text-teal-800  font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-300"
-                                            onClick={() => handleAssign(task._id)}
-                                        >
-                                            <IconUserAssing />
-                                        </button>
+                                        
+                                            {!task.usuarioAsignado && (
+                                                <button
+                                                    onClick={() => setSelectedTask(task._id)}
+                                                    className="bg-teal-600 text-white px-3 py-1 rounded hover:bg-teal-700"
+                                                >
+                                                    Asignar
+                                                </button>
+                                            )}
+                                        
                                         <button
                                             onClick={() => openModal(task._id)}
                                             className="text-red-700 hover:text-red-500"
@@ -130,6 +143,44 @@ const TaskList = () => {
                                         Eliminar
                                     </button>
                                 </div>
+                            </div>
+                        </div>
+                    )}
+                    {selectedTask && (
+                        <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+                            <div className="bg-white rounded-xl p-6 w-[95%] max-w-md space-y-4">
+
+                                <h3 className="font-semibold">Asignar usuario</h3>
+
+                                <select
+                                    value={userSelect}
+                                    onChange={(e) => setUserSelect(e.target.value)}
+                                    className="w-full border rounded-lg p-2"
+                                >
+                                    <option value="">Seleccione usuario</option>
+                                    {users.map((u) => (
+                                        <option key={u._id} value={u._id}>
+                                            {u.username}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <div className="flex justify-end gap-3">
+                                    <button
+                                        onClick={() => setSelectedTask(null)}
+                                        className="px-3 py-2 bg-gray-200 rounded"
+                                    >
+                                        Cancelar
+                                    </button>
+
+                                    <button
+                                        onClick={handleAssign}
+                                        className="px-3 py-2 bg-teal-600 text-white rounded"
+                                    >
+                                        Guardar
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     )}
