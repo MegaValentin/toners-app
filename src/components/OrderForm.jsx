@@ -10,27 +10,27 @@ const OrderForm = () => {
   const [areas, setAreas] = useState([]);
   const [confirmationMessage, setConfirmationMessage] = useState("")
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-  
+
   useEffect(() => {
     const fetchTonersAndAreas = async () => {
       try {
         const tonersResponse = await axios.get(
-          `${apiUrl}/api/toners` ,{
-            withCredentials: true, 
-          }
+          `${apiUrl}/api/toners`, {
+          withCredentials: true,
+        }
         );
         const areasResponse = await axios.get(
-          `${apiUrl}/api/offices`,  {
-            withCredentials: true, 
-          }
+          `${apiUrl}/api/offices`, {
+          withCredentials: true,
+        }
         );
 
         const sortedAreas = areasResponse.data
-        .map(area => ({
-          ...area,
-          area: area.area.charAt(0).toUpperCase() + area.area.slice(1).toLowerCase()
-        }))
-        .sort((a, b) => a.area.localeCompare(b.area));
+          .map(area => ({
+            ...area,
+            area: area.area.charAt(0).toUpperCase() + area.area.slice(1).toLowerCase()
+          }))
+          .sort((a, b) => a.area.localeCompare(b.area));
 
         setToners(tonersResponse.data);
         setAreas(sortedAreas);
@@ -53,8 +53,8 @@ const OrderForm = () => {
 
       console.log(orderData);
 
-      await axios.post(`${apiUrl}/api/addorders`, orderData , {
-        withCredentials: true, 
+      await axios.post(`${apiUrl}/api/addorders`, orderData, {
+        withCredentials: true,
       });
       setCantidad(1);
       setSelectedToner("");
@@ -63,38 +63,48 @@ const OrderForm = () => {
       setConfirmationMessage("Orden agregada exitosamente")
       setTimeout(() => {
         setConfirmationMessage("")
-      window.location.reload()}, 750)
-      
+        window.location.reload()
+      }, 750)
+
 
     } catch (error) {
       console.error("Error adding order:", error);
       alert(
         "Error adding order: " +
-          (error.response?.data?.message || error.message)
+        (error.response?.data?.message || error.message)
       );
     }
   };
 
   return (
-    <div className="flex justify-center">
-      
-        <form
-          onSubmit={handleSubmit}
-          className="max-w-sm mx-auto">
-        
-          <div className="mb-5 uppercase">
-            <label
-              htmlFor="area"
-              className="block mb-2 text-sm font-medium text-gray-900 "
-            >
+    <div className="flex justify-center px-4 py-8">
+      <div
+        className="w-full max-w-md bg-white dark:bg-gray-800
+        rounded-2xl shadow-xl border dark:border-gray-700 p-6"
+      >
+        <div className="mb-6 text-center">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+            🧾 Nueva Orden
+          </h2>
+          <p className="text-sm text-gray-500 mt-1">
+            Complete los datos del pedido
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
               Área
             </label>
             <select
-              id="area"
               value={selectedArea}
               onChange={(e) => setSelectedArea(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               required
+              className="w-full p-3 rounded-lg border
+              bg-gray-50 dark:bg-gray-900
+              border-gray-300 dark:border-gray-600
+              focus:ring-2 focus:ring-sky-500 focus:outline-none"
             >
               <option value="" disabled>
                 Seleccione un área
@@ -105,19 +115,20 @@ const OrderForm = () => {
                 </option>
               ))}
             </select>
-          <div className="mb-5 uppercase">
-            <label
-              htmlFor="toner"
-              className="block mb-2 text-sm font-medium text-gray-900  mt-5"
-            >
+          </div>
+
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
               Toner
             </label>
             <select
-              id="toner"
               value={selectedToner}
               onChange={(e) => setSelectedToner(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
+              className="w-full p-3 rounded-lg border
+              bg-gray-50 dark:bg-gray-900
+              border-gray-300 dark:border-gray-600
+              focus:ring-2 focus:ring-sky-500 focus:outline-none"
             >
               <option value="" disabled>
                 Seleccione un toner
@@ -129,44 +140,45 @@ const OrderForm = () => {
               ))}
             </select>
           </div>
-          <div className="mb-5">
-            <label
-              htmlFor="cantidad"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-5"
-            >
+
+          <div>
+            <label className="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
               Cantidad
             </label>
             <input
               type="number"
-              id="cantidad"
               value={cantidad}
-              onChange={(e) => setCantidad(Number(e.target.value))}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="Cantidad"
               min="1"
+              onChange={(e) => setCantidad(Number(e.target.value))}
               required
+              className="w-full p-3 rounded-lg border
+              bg-gray-50 dark:bg-gray-900
+              border-gray-300 dark:border-gray-600
+              focus:ring-2 focus:ring-sky-500 focus:outline-none"
             />
           </div>
-          
-          </div>
-          <div className="flex justify-center">
+
           <button
             type="submit"
-            className="w-3/4 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className="w-full bg-emerald-600 hover:bg-emerald-800
+            text-white font-semibold py-3 rounded-xl
+            shadow-md hover:shadow-lg
+            transition-all duration-200"
           >
-            Agregar Orden
+            ➕ Agregar orden
           </button>
 
-          </div>
-
+          {/* CONFIRM */}
           {confirmationMessage && (
-            <div className="mt-4 text-center text-green-500 font-semibold">
+            <div className="text-center p-3 rounded-lg bg-green-100 text-green-700 text-sm font-medium">
               {confirmationMessage}
             </div>
           )}
+
         </form>
       </div>
-    
+    </div>
+
   );
 };
 

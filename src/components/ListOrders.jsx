@@ -39,9 +39,9 @@ const Orders = () => {
     } catch (error) {
       console.error("Error marking order as delivered:", error);
       setErrorMessage(error.response?.data?.message || "Error marking order as delivered");
-      setTimeout(() => 
-      setErrorMessage("")
-      , 1500)
+      setTimeout(() =>
+        setErrorMessage("")
+        , 1500)
     }
   };
 
@@ -70,54 +70,77 @@ const Orders = () => {
   const filteredOrders = orders.filter(order => !order.isDelivered);
 
   return (
-    <div className="flex justify-center">
-
-    <ul className=" divide-y divide-gray-200 dark:divide-gray-700">
-
-    {errorMessage && (
-        <div className="mb-4 text-red-500 text-center">
+    <div className="max-w-5xl mx-auto px-4 py-6">
+      {errorMessage && (
+        <div className="mb-4 p-3 rounded-lg bg-red-100 text-red-700 text-center shadow">
           {errorMessage}
         </div>
       )}
       {confirmationMessage && (
-        <div className="mb-4 text-green-500 text-center">
+        <div className="mb-4 p-3 rounded-lg bg-green-100 text-green-700 text-center shadow">
           {confirmationMessage}
         </div>
       )}
+      {filteredOrders.length === 0 ? (
+        <div className="text-center text-gray-500 mt-16">
+          🎉 No hay órdenes pendientes
+        </div>
+      ) : (
+        <div className="grid gap-5 md:grid-cols-2">
+          {filteredOrders.map((order) => (
+            <div
+              key={order._id}
+              className="bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-xl
+              border border-gray-200 dark:border-gray-700
+              p-5 transition-all duration-300"
+            >
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h2 className="font-bold text-lg text-gray-900 dark:text-gray-100">
+                    {order.tonerName}
+                  </h2>
+                  <p className="text-sm text-gray-500">
+                    Área: {order.areaName}
+                  </p>
+                </div>
 
-      {filteredOrders.map((order) => (
-        <li key={order._id} className="pb-3 sm:pb-4 mt-3">
-          <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-44">
-            <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate"><strong>Toner:</strong> {order.tonerName}</p>
-            <p className="text-sm font-medium text-gray-900 truncate"><strong>Area:</strong> {order.areaName}</p>
-            <p className="text-sm font-medium text-gray-900 truncate"><strong>Cantidad:</strong> {order.cantidad}</p>
-            <p className="text-sm font-medium text-gray-900 truncate"><strong>Fecha:</strong> {new Date(order.fecha).toLocaleString()}</p>
-          </div>
-          <div className="inline-flex items-center text-base font-semibold">
-            <p className="text-sm font-medium text-gray-900 truncate"><strong>Estado:</strong> {order.isDelivered ? "Entregado" : "No Entregado"}</p>
-            {!order.isDelivered && (
-              <>
-              <button
-                onClick={() => handleDelivery(order._id)}
-                className="bg-teal-500 hover:bg-teal-900 text-white px-4 py-2 rounded ml-4"
-              >
-                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
-              </button>
-               <button
-               onClick={() => handleCancelOrder(order._id)}
-               className="bg-red-500 hover:bg-red-900 text-white px-4 py-2 rounded ml-4"
-             >
-               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-             </button>
-              </>
-            )}
-          </div>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </div>
+                <span className="text-xs px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-medium">
+                  Pendiente
+                </span>
+              </div>
+
+              <div className="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+                <p><strong>Cantidad:</strong> {order.cantidad}</p>
+                <p>
+                  <strong>Fecha:</strong>{" "}
+                  {new Date(order.fecha).toLocaleString()}
+                </p>
+              </div>
+
+              <div className="flex gap-3 mt-4">
+                <button
+                  onClick={() => handleDelivery(order._id)}
+                  className="flex-1 bg-emerald-500 hover:bg-emerald-700 
+                  text-white py-2 rounded-lg font-medium
+                  transition"
+                >
+                  ✓ Entregar
+                </button>
+
+                <button
+                  onClick={() => handleCancelOrder(order._id)}
+                  className="flex-1 bg-red-500 hover:bg-red-700 
+                  text-white py-2 rounded-lg font-medium
+                  transition"
+                >
+                  ✕ Cancelar
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

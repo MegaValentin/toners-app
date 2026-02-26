@@ -27,15 +27,11 @@ import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import ErrorBoundary from "./ErrorBoundary.jsx";
 
 function App() {
-  
-
   return (
     <AuthProvider>
       <BrowserRouter>
-        <ErrorBoundary>
-          
+        <ErrorBoundary>        
             <div className="flex flex-col h-screen">
-
             <div className="flex flex-col lg:flex-row flex-grow">
               <Dashborad />
               <div className="flex-1 p-6 bg-gray-100 overflow-y-auto">
@@ -58,20 +54,14 @@ function App() {
                     <Route path="/listhardware" element={<ListHardware/>}/>
                     <Route path="/print" element={<PrintPage/>}/>
                     <Route path="/formpc" element={<PcPage/>}/>
-                    
-
                   </Route>
                 </Routes>
               </div>
             </div>
             </div>
-            
-
-          
         </ErrorBoundary>
       </BrowserRouter>
     </AuthProvider>
   );
 }
-
 export default App;

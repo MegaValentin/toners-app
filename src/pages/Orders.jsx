@@ -26,7 +26,7 @@ const Orders = () => {
 
   return (
     <div className="bg-transparent p-4 sm:p-8 rounded-lg w-full mt-6 sm:mt-10">  
-      <h2 className="text-center text-xl sm:text-2xl font-bold mb-4 sm:mb-6">AGREGAR ORDEN</h2>
+      
 
       {(user.role === 'admin' || user.role === 'superadmin') && (
         <>

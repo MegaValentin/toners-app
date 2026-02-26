@@ -79,120 +79,131 @@ const HistoryOrders = () => {
     return matchesDate && matchesToner && matchesOffice;
   });
   return (
-    <div className="flex justify-center p-4">
-    <div className="w-full max-w-7xl">
-      
-      <div className="my-4 flex flex-col sm:flex-row justify-center gap-4">
-        <input
-          type="date"
-          id="filterDate"
-          value={filterDate}
-          onChange={handleDateChange}
-          className="w-full sm:w-auto p-2 border rounded-md shadow-sm focus:ring focus:ring-sky-500 focus:border-sky-500"
-        />
+    <div className="max-w-7xl mx-auto px-4 py-6">
 
-        <select
-          id="filterToner"
-          value={filterToner}
-          onChange={handleTonerChange}
-          className="w-full sm:w-auto p-2 border rounded-md shadow-sm focus:ring focus:ring-sky-500 focus:border-sky-500"
-        >
-          <option value="">Seleccione un Toner</option>
-          {Array.from(new Set(orders.map((order) => order.tonerName))).map((toner) => (
-            <option key={toner} value={toner}>
-              {toner}
-            </option>
-          ))}
-        </select>
-
-        <select
-          id="filterOffice"
-          value={filterOffice}
-          onChange={handleOfficeChange}
-          className="w-full sm:w-auto p-2 border rounded-md shadow-sm focus:ring focus:ring-sky-500 focus:border-sky-500"
-        >
-          <option value="">Seleccione el Área</option>
-          {Array.from(new Set(orders.map((order) => order.areaName))).map((area) => (
-            <option key={area} value={area}>
-              {area}
-            </option>
-          ))}
-        </select>
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          📜 Historial de órdenes
+        </h1>
+        <p className="text-sm text-gray-500">
+          {filteredOrders.length} registros encontrados
+        </p>
       </div>
 
-      
-      {filteredOrders.length === 0 ? (
-        <div className="text-center text-gray-600 font-semibold my-4">
-          No hay órdenes agregadas para esta fecha.
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-5 mb-6 border dark:border-gray-700">
+        <div className="grid gap-4 md:grid-cols-3">
+          <input
+            type="date"
+            value={filterDate}
+            onChange={(e) => setFilterDate(e.target.value)}
+            className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 dark:bg-gray-900 dark:border-gray-600"
+          />
+
+          <select
+            value={filterToner}
+            onChange={(e) => setFilterToner(e.target.value)}
+            className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 dark:bg-gray-900 dark:border-gray-600"
+          >
+            <option value="">Todos los tóners</option>
+            {Array.from(new Set(orders.map(o => o.tonerName))).map(t => (
+              <option key={t}>{t}</option>
+            ))}
+          </select>
+
+          <select
+            value={filterOffice}
+            onChange={(e) => setFilterOffice(e.target.value)}
+            className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 dark:bg-gray-900 dark:border-gray-600"
+          >
+            <option value="">Todas las áreas</option>
+            {Array.from(new Set(orders.map(o => o.areaName))).map(a => (
+              <option key={a}>{a}</option>
+            ))}
+          </select>
         </div>
-      ) : (
-        <div className="border rounded overflow-hidden">
-          <table className="w-full text-xs lg:text-sm text-left text-gray-400 table-auto">
-            <thead className="text-xs uppercase bg-sky-900 sticky top-0 z-10">
-              <tr className="text-white">
-                <th className="px-2 sm:px-4 py-3">Área</th>
-                <th className="px-2 sm:px-4 py-3">Toner</th>
-                <th className="px-2 sm:px-4 py-3 hidden sm:table-cell">Cantidad</th>
-                <th className="px-2 sm:px-4 py-3">Fecha</th>
-                <th className="px-2 sm:px-4 py-3">Estado</th>
-                <th className="px-2 sm:px-4 py-3"></th>
+      </div>
+
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md border dark:border-gray-700 overflow-hidden">
+        <div className="max-h-[500px] overflow-y-auto">
+
+          <table className="w-full text-sm">
+            <thead className="sticky top-0 bg-sky-900 text-white text-xs uppercase">
+              <tr>
+                <th className="px-4 py-3 text-left">Área</th>
+                <th className="px-4 py-3 text-left">Toner</th>
+                <th className="px-4 py-3 text-left hidden md:table-cell">Cantidad</th>
+                <th className="px-4 py-3 text-left">Fecha</th>
+                <th className="px-4 py-3 text-left">Estado</th>
+                <th className="px-4 py-3"></th>
               </tr>
             </thead>
-            </table>
-            <div className='max-h-[400px] overflow-y-auto'>
-              <table className='w-full text-xs lg:text-sm text-left text-black table-auto'>
+
             <tbody>
               {filteredOrders.map((order) => (
-                <tr key={order._id} className="border-b bg-white text-black hover:bg-gray-100">
-                  <td className="px-2 sm:px-4 py-2 text-gray-900">{order.areaName}</td>
-                  <td className="px-2 sm:px-4 py-2">{order.tonerName}</td>
-                  <td className="px-2 sm:px-4 py-2 text-gray-900 hidden sm:table-cell">{order.cantidad}</td>
-                  <td className="px-2 sm:px-4 py-2 text-gray-900">{order.fecha}</td>
-                  <td className="px-2 sm:px-4 py-2 text-gray-900">
-                    {order.isDelivered ? "Entregado" : "No Entregado"}
+                <tr
+                  key={order._id}
+                  className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                >
+                  <td className="px-4 py-3 font-medium">{order.areaName}</td>
+                  <td className="px-4 py-3">{order.tonerName}</td>
+
+                  <td className="px-4 py-3 hidden md:table-cell">
+                    {order.cantidad}
                   </td>
-                  <td className="px-2 sm:px-4 py-2 text-gray-900">
+
+                  <td className="px-4 py-3">
+                    {new Date(order.fecha).toLocaleString()}
+                  </td>
+
+                  <td className="px-4 py-3">
+                    {order.isDelivered ? (
+                      <span className="px-3 py-1 text-xs rounded-full bg-green-100 text-green-700">
+                        Entregado
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700">
+                        Pendiente
+                      </span>
+                    )}
+                  </td>
+
+                  <td className="px-4 py-3">
                     {order.isDelivered && (
                       <button
                         onClick={() => handleCancelOrder(order._id)}
-                        className="bg-transparent text-white font-bold p-2 rounded focus:outline-none focus:shadow-outline"
                         disabled={loading}
+                        className="text-red-500 hover:text-red-700 transition"
+                        title="Cancelar entrega"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="icon icon-tabler icons-tabler-filled icon-tabler-circle-x text-red-500 hover:text-red-700"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                          <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
-                        </svg>
+                        ✕
                       </button>
                     )}
                   </td>
                 </tr>
               ))}
             </tbody>
-              </table>
-            </div>
-          
-        </div>
-      )}
+          </table>
 
-     
-      <div className="mt-4 flex justify-center">
+          {filteredOrders.length === 0 && (
+            <div className="text-center py-10 text-gray-500">
+              No hay órdenes con esos filtros
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-6 flex justify-center">
         <button
           onClick={handleDownloadReport}
-          className="w-full sm:w-1/2 bg-teal-500 hover:bg-teal-800 hover:border hover:border-teal-500 focus:ring-4 focus:outline-none focus:ring-blue-300 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center shadow-md"
+          className="bg-emerald-600 hover:bg-emerald-800
+          text-white font-medium px-6 py-3 rounded-xl
+          shadow-md hover:shadow-lg transition"
         >
-          Descargar Reporte
+          ⬇ Descargar reporte
         </button>
       </div>
     </div>
-  </div>
-  )
+  );
 
 }
 

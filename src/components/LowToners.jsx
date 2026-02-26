@@ -13,7 +13,7 @@ const LowToners = () => {
     const fetchLowToners = async () => {
       try {
         const response = await axios.get(`${apiUrl}/api/lowstock`, {
-          withCredentials: true, // Ensure credentials (cookies) are sent
+          withCredentials: true, 
         });
         setToners(response.data);
       } catch (error) {
@@ -23,68 +23,78 @@ const LowToners = () => {
   
     fetchLowToners();
   }, []);
+
+  const getStatus = (p) => {
+    const val = parseFloat(p);
+    if (val < 20) return { text: "Crítico", color: "bg-red-500" };
+    if (val < 35) return { text: "Bajo", color: "bg-yellow-400" };
+    return { text: "Aceptable", color: "bg-green-500" };
+  };
   return (
-    
     <div className="flex flex-col items-center w-full px-4 py-6">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-        🔻 Toners con poco stock
-      </h1>
+
+      <div className="mb-6 text-center">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          🔻 Toners con poco stock
+        </h1>
+        <p className="text-sm text-gray-500 mt-1">
+          {toners.length} en alerta
+        </p>
+      </div>
 
       {toners.length === 0 ? (
-        <OkMessage message="No hay tóners con poco stock 🎉" />
+        <div className="mt-10">
+          <OkMessage message="No hay tóners con poco stock 🎉" />
+        </div>
       ) : (
-        <div className="w-full max-w-3xl space-y-4 overflow-y-auto max-h-[550px] custom-scrollbar">
-          {toners.map((toner) => (
-            <div
-              key={toner._id}
-              className="bg-white dark:bg-gray-800 shadow-md rounded-2xl p-4 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition"
-            >
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    {toner.marca} - {toner.toner}
-                  </h2>
-                  <p className="text-sm text-gray-500">
-                    Ideal: <span className="font-medium">{toner.cantidadIdeal}</span> | Actual:{" "}
-                    <span className="font-medium">{toner.cantidadActual}</span> | Faltan:{" "}
-                    <span className="font-medium text-red-500">{toner.faltante}</span>
-                  </p>
+        <div className="w-full max-w-3xl space-y-5 overflow-y-auto max-h-[600px] pr-2">
+          {toners.map((toner) => {
+            const status = getStatus(toner.porcentaje);
+
+            return (
+              <div
+                key={toner._id}
+                className="group bg-gradient-to-br from-white to-gray-50 
+                dark:from-gray-800 dark:to-gray-900
+                shadow-md hover:shadow-xl 
+                rounded-2xl p-5 border border-gray-200 dark:border-gray-700
+                transition-all duration-300"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                      {toner.marca} — {toner.toner}
+                    </h2>
+
+                    <div className="flex gap-3 mt-2 text-sm text-gray-600 dark:text-gray-300">
+                      <span>Ideal: <b>{toner.cantidadIdeal}</b></span>
+                      <span>Actual: <b>{toner.cantidadActual}</b></span>
+                      <span className="text-red-500">
+                        Faltan: <b>{toner.faltante}</b>
+                      </span>
+                    </div>
+                  </div>
+
+                  <span className={`text-xs text-white px-3 py-1 rounded-full ${status.color}`}>
+                    {status.text}
+                  </span>
                 </div>
 
-                <div className="text-sm text-gray-700 dark:text-gray-300 font-medium">
-                  <span
-                    className={
-                      parseFloat(toner.porcentaje) < 20
-                        ? "text-red-600"
-                        : parseFloat(toner.porcentaje) < 35
-                        ? "text-yellow-500"
-                        : "text-green-500"
-                    }
-                  >
+                <div className="relative w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
+                  <div
+                    className={`h-4 rounded-full ${status.color} transition-all duration-700`}
+                    style={{ width: toner.porcentaje }}
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white drop-shadow">
                     {toner.porcentaje}
                   </span>
                 </div>
               </div>
-
-              {/* Barra de progreso */}
-              <div className="mt-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
-                <div
-                  className={`h-3 rounded-full ${
-                    parseFloat(toner.porcentaje) < 20
-                      ? "bg-red-500"
-                      : parseFloat(toner.porcentaje) < 35
-                      ? "bg-yellow-400"
-                      : "bg-green-500"
-                  }`}
-                  style={{ width: toner.porcentaje }}
-                ></div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
-   
   );
 };
 
