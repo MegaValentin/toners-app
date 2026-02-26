@@ -28,9 +28,14 @@ const OrderForm = () => {
         const sortedAreas = areasResponse.data
           .map(area => ({
             ...area,
-            area: area.area.charAt(0).toUpperCase() + area.area.slice(1).toLowerCase()
+            area: area.area.trim().charAt(0).toUpperCase() +
+              area.area.trim().slice(1).toLowerCase()
           }))
-          .sort((a, b) => a.area.localeCompare(b.area));
+          .sort((a, b) =>
+            a.area.localeCompare(b.area, "es", {
+              sensitivity: "base"
+            })
+          );
 
         setToners(tonersResponse.data);
         setAreas(sortedAreas);
@@ -168,7 +173,6 @@ const OrderForm = () => {
             ➕ Agregar orden
           </button>
 
-          {/* CONFIRM */}
           {confirmationMessage && (
             <div className="text-center p-3 rounded-lg bg-green-100 text-green-700 text-sm font-medium">
               {confirmationMessage}
