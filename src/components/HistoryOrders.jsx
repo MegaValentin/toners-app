@@ -7,7 +7,8 @@ const HistoryOrders = () => {
   const [loading, setLoading] = useState(false);
   const [filterDate, setFilterDate] = useState("");
   const [filterToner, setFilterToner] = useState("");
-  const [ filterOffice, setFilterOffice ] = useState("")
+  const [filterOffice, setFilterOffice] = useState("")
+  const [year, setYear] = useState("")
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const fetchOrders = async () => {
@@ -43,7 +44,8 @@ const HistoryOrders = () => {
 
   const handleDownloadReport = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/orders/report`, {
+      const response = await axios.get(`${apiUrl}/api/generate-report`, {
+        params: { year },
         responseType: 'blob',
         withCredentials: true,
       });
@@ -51,9 +53,10 @@ const HistoryOrders = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'Reporte_Ordenes.xlsx');
+      link.setAttribute('download', `Reporte_Ordenes ${year}.xlsx`);
       document.body.appendChild(link);
       link.click();
+      link.remove()
     } catch (error) {
       console.error("Error downloading report:", error);
     }
@@ -79,9 +82,9 @@ const HistoryOrders = () => {
     return matchesDate && matchesToner && matchesOffice;
   });
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-7xl mx-auto">
 
-      <div className="mb-6">
+      <div className="mb-3">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">
           📜 Historial de órdenes
         </h1>
@@ -90,7 +93,7 @@ const HistoryOrders = () => {
         </p>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-5 mb-6 border dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-2 mb-3 border dark:border-gray-700">
         <div className="grid gap-4 md:grid-cols-3">
           <input
             type="date"
@@ -113,7 +116,7 @@ const HistoryOrders = () => {
           <select
             value={filterOffice}
             onChange={(e) => setFilterOffice(e.target.value)}
-            className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 dark:bg-gray-900 dark:border-gray-600"
+            className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-sky-500 dark:bg-gray-900 dark:border-gray-600"
           >
             <option value="">Todas las áreas</option>
             {Array.from(new Set(orders.map(o => o.areaName))).map(a => (
@@ -191,17 +194,37 @@ const HistoryOrders = () => {
           )}
         </div>
       </div>
+      <div className="flex justify-center">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 mt-3 border dark:border-gray-700">
+          <div className="w-11/12 text-sm text-left rtl:text-right text-gray-400 ">
 
-      <div className="mt-6 flex justify-center">
-        <button
-          onClick={handleDownloadReport}
-          className="bg-emerald-600 hover:bg-emerald-800
-          text-white font-medium px-6 py-3 rounded-xl
-          shadow-md hover:shadow-lg transition"
-        >
-          ⬇ Descargar reporte
-        </button>
+            <div>
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="year">
+                Año:
+              </label>
+              <input
+                id="year"
+                type="number"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+
+            <div className="mt-3 flex justify-center">
+              <button
+                onClick={handleDownloadReport}
+                className="bg-emerald-600 hover:bg-emerald-800
+  text-white font-medium px-6 py-3 rounded-xl
+  shadow-md hover:shadow-lg transition"
+              >
+                Descargar reporte anual
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
   );
 

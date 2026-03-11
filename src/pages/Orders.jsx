@@ -79,7 +79,7 @@ const Orders = () => {
 
             <ButtonClose onClick={closeModal} />
             </div>
-            <div className="mt-4">
+            <div >
     <HistoryOrders />
   </div>
           </Modal>
